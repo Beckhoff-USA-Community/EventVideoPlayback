@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TcHmiEditor_SelectBindingWindowDimension>3940;401;830;558</TcHmiEditor_SelectBindingWindowDimension>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolMappedTree>[
+  321.0,
+  50.0,
+  180.0,
+  50.0,
+  269.0,
+  100.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolMappedTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolServerTree>[
+  280.0,
+  300.0,
+  224.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolServerTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolInternalTree>[
+  300.0,
+  300.0,
+  100.0,
+  50.0,
+  65.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolInternalTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_symbolLocalizedTree>[
+  300.0,
+  100.0,
+  100.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_symbolLocalizedTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_ControlsTree>[
+  300.0,
+  300.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_ControlsTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolActionTemplateParametersTree>[
+  200.0,
+  300.0,
+  100.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolActionTemplateParametersTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolUserControlParametersTree>[
+  200.0,
+  300.0,
+  200.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolUserControlParametersTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolHistorizedTree>[
+  200.0,
+  50.0,
+  180.0,
+  80.0,
+  80.0,
+  80.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_SymbolHistorizedTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_RecipesTree>[
+  300.0,
+  150.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_RecipesTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_RecipeTypesTree>[
+  300.0,
+  180.0,
+  150.0,
+  70.0,
+  70.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_RecipeTypesTree>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_ControlTypeAttributesTree>[
+  300.0,
+  300.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_ControlTypeAttributesTree>
+    <TcHmiEditor_SplitAreaStates>{
+  "EditorSettings": [
+    {
+      "Path": "Desktop.view",
+      "DesignAreaSplitSize": "Full",
+      "CodeAreaSplitSize": "Minimized",
+      "Orientation": "Horizontal",
+      "DesignAreaPosition": "Left",
+      "CodeAreaPosition": "Right",
+      "SplitPercentage": 0.5
+    },
+    {
+      "Path": "VideoPlayback\\VideoPlayer.content",
+      "DesignAreaSplitSize": "Full",
+      "CodeAreaSplitSize": "Minimized",
+      "Orientation": "Horizontal",
+      "DesignAreaPosition": "Left",
+      "CodeAreaPosition": "Right",
+      "SplitPercentage": 0.5
+    },
+    {
+      "Path": "VideoPlayback\\EventView.content",
+      "DesignAreaSplitSize": "Full",
+      "CodeAreaSplitSize": "Minimized",
+      "Orientation": "Horizontal",
+      "DesignAreaPosition": "Left",
+      "CodeAreaPosition": "Right",
+      "SplitPercentage": 0.5
+    }
+  ]
+}</TcHmiEditor_SplitAreaStates>
+    <TcHmiEditor_PermissionsWindowDimension>3660;191;1000;700</TcHmiEditor_PermissionsWindowDimension>
+  </PropertyGroup>
+</Project>

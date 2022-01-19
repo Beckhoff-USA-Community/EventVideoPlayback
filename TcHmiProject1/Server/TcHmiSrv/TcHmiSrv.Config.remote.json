@@ -1,0 +1,14 @@
+{
+    "CERTIFICATEEXPIRATION": "P14000D",
+    "REQUIREAUTH": 2,
+    "VIRTUALDIRECTORIES": {
+        "/": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\TcHmiProject1",
+        "/Beckhoff.TwinCAT.HMI.Controls": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.742.0\\runtimes\\native1.12-tchmi",
+        "/Beckhoff.TwinCAT.HMI.Functions": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.742.0\\runtimes\\native1.12-tchmi",
+        "/Beckhoff.TwinCAT.HMI.Vision": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\Packages\\Beckhoff.TwinCAT.HMI.Vision.12.742.0",
+        "/TcHmiDrawing": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\Packages\\TcHmiDrawing.1.0.2\\runtimes\\native1.12-tchmi",
+        "/bin": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\TcHmiProject1\\bin\\",
+        "/bin/framework": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\TcHmiProject1\\bin\\framework",
+        "/framework": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\Packages\\Beckhoff.TwinCAT.HMI.Framework.12.742.0\\runtimes\\native1.12-tchmi"
+    }
+}

@@ -1,0 +1,17 @@
+﻿<div id="VideoPlayback" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="800" data-tchmi-height="640">
+
+<div id="TcHmiEventGrid" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEventGrid" data-tchmi-height="391" data-tchmi-height-unit="px" data-tchmi-left="25" data-tchmi-left-unit="px" data-tchmi-server-interval="1000" data-tchmi-show-menu-bar="true" data-tchmi-top="39" data-tchmi-top-unit="px" data-tchmi-width="738" data-tchmi-width-unit="px" data-tchmi-is-enabled="true" data-tchmi-allow-details-popup="true">
+<script data-tchmi-target-attribute="data-tchmi-filter" type="application/json">
+[{"path":"domain","comparator":"==","value":"TcHmiEventLogger"}]
+</script>
+<script data-tchmi-target-attribute="data-tchmi-columns" type="application/json">
+[{"columnName":"type"},{"columnName":"severity"},{"columnName":"timeAndDateRaised"},{"columnName":"text"}]
+</script>
+<script data-tchmi-target-attribute="data-tchmi-sorting" type="application/json">
+[{"name":"timeRaised","order":"Descending"}]
+</script>
+
+</div>
+<div id="TcHmiButton_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="28" data-tchmi-height-unit="px" data-tchmi-left="115" data-tchmi-left-unit="px" data-tchmi-text="Video Playback (if Available)" data-tchmi-top="440" data-tchmi-top-unit="px" data-tchmi-width="542" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true">
+</div>
+</div>

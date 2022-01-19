@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+  <POU Name="MAIN" Id="{4ee40909-3edd-4b49-a2c1-3171e5e2360e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	iCount				: INT;
+	
+	hr					:	HRESULT;	// ADS return code in hex 16#....70C -> didn't get new image, 000 means all good, success
+	
+	fbCamera			:	FB_VN_SimpleCameraControl;
+	eState				:	ETcVnCameraState;
+	
+	// Images
+	ipImageIn			:	ITcVnImage;
+	ipImageInDisp		:	ITcVnDisplayableImage;
+	ipImageDispColor	:	ITcVnDisplayableImage;
+	ipImageWork			:	ITcVnImage;
+	ipImageColorMap		:	ARRAY [0..2] OF ITcVnImage;
+	ipImageColorMapDisp	:	ARRAY [0..2] OF ITcVnDisplayableImage;
+	ipImageResult		:	ITcVnImage;
+	ipImageResultDisp	:	ITcVnDisplayableImage;
+
+	ipImageTest	:	ITcVnDisplayableImage;
+
+	// Colors
+	iColor				:	INT;
+	aColorTxt			:	ARRAY[0..2] OF STRING 				:= [	'RED',				'GREEN', 			'BLUE'			];
+	aColor				:	ARRAY[0..2] OF TcVnVector4_LREAL	:= [	[150, 0, 0],		[0, 255, 0],		[0, 0, 255]		];
+	aColorRefLow		:	ARRAY[0..2] OF TcVnVector4_LREAL	:= [	[90, 30, 20],		[30, 65, 60], 		[20, 40, 105]	];
+	aColorRefUp			:	ARRAY[0..2] OF TcVnVector4_LREAL 	:= [	[255, 120, 100],	[55, 110, 120], 	[60, 90, 255]	];
+	sText				:	STRING(256);
+	
+	// Contours
+	ipContourList		:	ITcVnContainer;
+	ipIterator			:	ITcVnForwardIterator;
+	ipContour			:	ITcVnContainer;
+	fArea				:	LREAL;
+	aCenter				:	TcVnPoint2_LREAL;
+	fDissimilarity		:	LREAL;
+	
+	// Histogram
+	ipHistogram			:	ITcVnContainer;
+	aHistogramRed		:	ARRAY[0..255] OF UDINT;
+	aHistogramGreen		:	ARRAY[0..255] OF UDINT;
+	aHistogramBlue		:	ARRAY[0..255] OF UDINT;
+	
+	// Loading of reference contours for matching
+	aipReference		:	ARRAY [0..2] OF ITcVnContainer;
+	bReferenceLoaded	:	BOOL := FALSE;
+	nReadId				:	INT := 0;
+	fbReadContainer		:	FB_VN_ReadContainer;
+	asFileNames			:	ARRAY [0..2] OF STRING := ['triangle.xml', 'rectangle.xml', 'circle.xml'];
+	sFilePathAndName	:	STRING(256); // to be generated dynamically
+	
+	// C:\Vision Training\02_ObjectDetection-ColorShape\Sample_Kit\_ContourTemplates
+	// sFilePath			:	STRING(256) := ''; // <- INSERT HERE: absolute path on target machine
+	sFilePath			:	STRING(256) := 'C:\Users\Public\TcVision\ContourTemplates\'; 
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[iCount:=iCount+1;
+ScopeRecordTestCode();
+
+
+IF bReferenceLoaded THEN
+	
+	eState:=fbCamera.GetState();
+	
+	CASE eState OF
+	
+	TCVN_CS_INITIAL,
+	TCVN_CS_OPENING,
+	TCVN_CS_OPENED,
+	TCVN_CS_STARTACQUISITION:
+		hr:= fbCamera.StartAcquisition();
+	
+	TCVN_CS_ACQUIRING:
+		hr:= fbCamera.GetCurrentImage(ipImageIn);
+		IF SUCCEEDED(hr) THEN
+			// display
+			hr:= F_VN_CopyIntoDisplayableImage(ipImageIn, ipImageInDisp, hr);
+			hr:= F_VN_ConvertColorSpace(ipImageIn, ipImageWork, TCVN_CST_Bayer_RG_TO_RGB, hr);
+			hr:= F_VN_CopyIntoDisplayableImage(ipImageWork, ipImageDispColor, hr);
+			
+			//histograms of colors (not necessary)
+			hr:= F_VN_Histogram(ipImageWork, ipHistogram, hr);
+			hr:= F_VN_ExportSubContainer(ipHistogram, 0, ADR(aHistogramRed), 256*4, hr);
+			hr:= F_VN_ExportSubContainer(ipHistogram, 1, ADR(aHistogramGreen), 256*4, hr);
+			hr:= F_VN_ExportSubContainer(ipHistogram, 2, ADR(aHistogramBlue), 256*4, hr);
+			
+			hr:= F_VN_CopyImage(ipImageWork, ipImageResult, hr);
+	
+			FOR iColor:=0 TO 2 DO		// 0=red, 1=green, 2=blue
+				// processing here for color detect...
+				hr:=F_VN_CheckColorRange(ipImageWork, ipImageColorMap[iColor], aColorRefLow[iColor], aColorRefUp[iColor], hr);
+				hr:=F_VN_CopyIntoDisplayableImage(ipImageColorMap[iColor], ipImageColorMapDisp[iColor], hr);
+				// find contours
+				hr:= F_VN_FindContours(ipImageColorMap[iColor], ipContourList, hr);
+				
+				hr:= F_VN_GetForwardIterator(ipContourList, ipIterator, hr);
+				WHILE SUCCEEDED(hr) AND_THEN ipIterator.CheckIfEnd() <> S_OK DO
+					hr:= F_VN_GetContainer(ipIterator, ipContour, hr);
+					hr:= F_VN_IncrementIterator(ipIterator, hr);
+					hr:= F_VN_ContourArea(ipContour, fArea, hr);
+
+					IF fArea > 5000 THEN 	// in pixels
+						// check shape for pattern match
+						hr:= F_VN_MatchContours(
+							ipContour1:= ipContour, 
+							ipContour2:= aipReference[iColor], 
+							eComparisonMethod:= TCVN_CMCM_CONTOURS_MATCH_I1, 
+							fDissimilarity:= fDissimilarity, 
+							hrPrev:= hr);
+						
+						hr:= F_VN_DrawContours(ipContour, -1, ipImageResult, aColor[iColor], 3, hr);
+						
+						// put text or other graphic on object
+						hr:= F_VN_ContourCenterOfMass(ipContour, aCenter ,hr);
+						sText := aColorTxt[iColor];
+						
+						// add text for pattern match
+						IF fDissimilarity < 0.01 THEN
+							sText := concat(sText, ' (Match!)');
+						END_IF
+						
+						hr:=F_VN_PutText(sText, ipImageResult, LREAL_TO_UDINT(aCenter[0]-30), LREAL_TO_UDINT(aCenter[1]+10), TCVN_FT_HERSHEY_PLAIN, 2, aColor[iColor], hr);
+						
+					END_IF
+				END_WHILE
+			END_FOR
+			
+			hr:= F_VN_TransformIntoDisplayableImage(ipImageResult, ipImageResultDisp, hr);
+			
+		END_IF
+	END_CASE
+
+		//	hr:= F_VN_CopyImage(ipImageColorMapDisp[0], ipImageTest, hr);
+			hr:=F_VN_CopyIntoDisplayableImage(ipImageColorMap[0], ipImageTest, hr);
+	
+	
+ELSE
+	
+	sFilePathAndName := concat(sFilePath, asFileNames[nReadId]);
+	
+	fbReadContainer(
+	sFilePath:= sFilePathAndName, 
+	ipDestContainer:= aipReference[nReadId], 
+	nDestTypeGuid:= ContainerType_Vector_TcVnPoint2_DINT, 	// specific container type
+	bRead:= TRUE, 
+	nTimeout:= T#3S, 
+	bBusy=> , 
+	bError=> , 
+	nErrorId=> );
+
+	IF NOT fbReadContainer.bBusy THEN
+		IF nReadId >= 2 THEN
+			bReferenceLoaded := TRUE;
+		ELSE 
+			nReadId := nReadId+1;
+			fbReadContainer(sFilePath:= sFilePathAndName, bRead:= FALSE);
+		END_IF
+	END_IF
+
+END_IF]]></ST>
+    </Implementation>
+    <Action Name="aNotes" Id="{93fdae9e-c808-43ae-a89c-a21c5bc47ec4}">
+      <Implementation>
+        <ST><![CDATA[(*
+
+HRESULT
+All TwinCAT Vision functions return an HRESULT after their execution. Its value indicates whether the
+execution was successful or not.
+
+16#NXXXXCCC ==> Value of N indicates success or failure
+
+SUCCESS codes
+A successful execution is indicated by a POSITVE code. In hexadecimal notation the first digit (N) is between 0 and 7.
+Frequent SUCCESS codes are:
+
+Code 		Name 				Description
+CCC = 000 	S_OK 				Function was executed successfully
+CCC = 001 	S_FALSE 			Function was executed successfully but did not reach a complete result. 
+								(Occurs, for example, with the Code Reading functions if no code was found in the image.)
+CCC = 203 	S_PENDING 			Asynchronous method was started but there is no result yet 
+								(Occurs at the first call of fbCameraControl.StartAcquisition(), for example; at the second call S_OK is returned, for example)
+CCC = 256 	S_WATCHDOGTIMEOUT	Function was aborted by the watchdog.
+
+ERROR codes
+A failed execution is indicated by a NEGATIVE code, or in hexadecimal notation the first digit (N) is >= 8. The
+final digits of the code correspond to the ADS Return Code.
+NOTE If an error code is returned, it means that all returns of the function are invalid. and must therefore not be used.
+
+Common ERROR codes with the TwinCAT Vision API elements are:
+Code 	 	Name 				Description
+CCC = 70A  	NOMEMORY 			Insufficient memory
+CCC = 70B  	INVALIDPARM 		Invalid parameter values
+CCC = 70C  	NOTFOUND 			Not found (file, image, ...)
+CCC = 70E  	INCOMPATIBLE 		Objects do not match
+CCC = 712  	INVALIDSTATE 		The method of an FB was called in an impermissible state.
+CCC = 719  	TIMEOUT 			timeout
+CCC = 71A  	NOINTERFACE 		Interface query failed
+CCC = 71B  	INVALIDINTERFACE 	Wrong interface requested.
+CCC = 71D  	INVALIDOBJID 		Object ID is invalid.
+CCC = 734  	OUTOFRANGE 			Outside the valid range.
+
+*)]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="MAIN">
+      <LineId Id="57" Count="0" />
+      <LineId Id="276" Count="0" />
+      <LineId Id="275" Count="0" />
+      <LineId Id="209" Count="0" />
+      <LineId Id="58" Count="39" />
+      <LineId Id="212" Count="0" />
+      <LineId Id="98" Count="0" />
+      <LineId Id="100" Count="21" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="125" Count="4" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="215" Count="0" />
+      <LineId Id="217" Count="1" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="216" Count="0" />
+      <LineId Id="133" Count="22" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="MAIN.aNotes">
+      <LineId Id="1" Count="0" />
+      <LineId Id="5" Count="3" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="9" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="15" Count="3" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="27" Count="3" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="34" Count="10" />
+      <LineId Id="3" Count="1" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -57,7 +57,7 @@
       <SortPriority>0</SortPriority>
       <SubMember>
         <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>10.10.70.162.1.1</AmsNetId>
+          <AmsNetId>127.0.0.1.1.1</AmsNetId>
           <Area>Local</Area>
           <ArrayLength>256</ArrayLength>
           <BaseSampleTime>1000000</BaseSampleTime>
@@ -139,7 +139,7 @@
           <VariableSize>1024</VariableSize>
         </AdsAcquisition>
         <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>10.10.70.162.1.1</AmsNetId>
+          <AmsNetId>127.0.0.1.1.1</AmsNetId>
           <Area>Local</Area>
           <ArrayLength>256</ArrayLength>
           <BaseSampleTime>1000000</BaseSampleTime>
@@ -221,7 +221,7 @@
           <VariableSize>1024</VariableSize>
         </AdsAcquisition>
         <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>10.10.70.162.1.1</AmsNetId>
+          <AmsNetId>127.0.0.1.1.1</AmsNetId>
           <Area>Local</Area>
           <ArrayLength>256</ArrayLength>
           <BaseSampleTime>1000000</BaseSampleTime>
@@ -303,7 +303,7 @@
           <VariableSize>1024</VariableSize>
         </AdsAcquisition>
         <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>10.10.70.162.1.1</AmsNetId>
+          <AmsNetId>127.0.0.1.1.1</AmsNetId>
           <Area>Local</Area>
           <ArrayLength>0</ArrayLength>
           <BaseSampleTime>1000000</BaseSampleTime>
@@ -396,7 +396,7 @@
           <VariableSize>1475362</VariableSize>
         </AdsAcquisition>
         <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>10.10.70.162.1.1</AmsNetId>
+          <AmsNetId>127.0.0.1.1.1</AmsNetId>
           <Area>Local</Area>
           <ArrayLength>0</ArrayLength>
           <BaseSampleTime>100000</BaseSampleTime>
@@ -486,8 +486,8 @@
       <BarOrientation>Vertical</BarOrientation>
       <Comment />
       <DefaultDisplayWidth>100000000</DefaultDisplayWidth>
-      <DisplayColor>-986896</DisplayColor>
-      <ForeColor>-16777216</ForeColor>
+      <DisplayColor>-13816528</DisplayColor>
+      <ForeColor>-921103</ForeColor>
       <Guid>bae2eca7-cca7-4095-8e73-608e486124ee</Guid>
       <MasterChart>00000000-0000-0000-0000-000000000000</MasterChart>
       <Name>Array Bar Chart</Name>
@@ -497,7 +497,7 @@
       <SubMember>
         <AxisGroup AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-1</DisplayColor>
+          <DisplayColor>-14342874</DisplayColor>
           <Enabled>true</Enabled>
           <Guid>70df089d-923e-4228-9b4f-ae90c60f8f7c</Guid>
           <Name>Axis Group</Name>
@@ -518,9 +518,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-16777216</DisplayColor>
+                  <DisplayColor>-921103</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-16777216</GridColor>
+                  <GridColor>-921103</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>e5e497cc-a238-4638-b623-b78742a1abdf</Guid>
@@ -552,9 +552,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-16777216</DisplayColor>
+                  <DisplayColor>-921103</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-16777216</GridColor>
+                  <GridColor>-921103</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>62a856dc-a7f0-4ba8-bb20-fb56161df063</Guid>
@@ -1192,9 +1192,9 @@
       <AutoStart>true</AutoStart>
       <Comment />
       <DefaultDisplayWidth>100000000</DefaultDisplayWidth>
-      <DisplayColor>-986896</DisplayColor>
+      <DisplayColor>-13816528</DisplayColor>
       <DisplayOverwriteMode>false</DisplayOverwriteMode>
-      <ForeColor>-16777216</ForeColor>
+      <ForeColor>-921103</ForeColor>
       <Guid>e1b2b3ea-511d-4e90-b988-9a9c4379e6fe</Guid>
       <MasterChart>00000000-0000-0000-0000-000000000000</MasterChart>
       <Name>YT Chart</Name>
@@ -1203,8 +1203,8 @@
       <SubMember>
         <OverviewChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-1</DisplayColor>
-          <ForeColor>-16777216</ForeColor>
+          <DisplayColor>-14342874</DisplayColor>
+          <ForeColor>-921103</ForeColor>
           <Guid>dcba83cd-31c4-4800-88dd-965db9de3248</Guid>
           <Name>Overview Chart</Name>
           <OverviewVisible>false</OverviewVisible>
@@ -1262,19 +1262,19 @@
           <SortPriority>100</SortPriority>
           <SubMember>
             <ImageMarker AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-              <AttachToAxis>true</AttachToAxis>
+              <AttachToAxis>false</AttachToAxis>
               <Bandwidth>0</Bandwidth>
               <Comment />
               <DisplayColor>-23296</DisplayColor>
               <Guid>40b0ee18-addb-434c-922f-cef8ac6daff2</Guid>
               <ImageAcquisitionGuid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</ImageAcquisitionGuid>
               <LineStyle>Solid</LineStyle>
-              <Locked>false</Locked>
+              <Locked>true</Locked>
               <Marker3DType>AllPoints</Marker3DType>
               <MarkerType>Circle</MarkerType>
               <Name>ipImageResultDisp</Name>
               <Orientation>Vertical</Orientation>
-              <Position>1.3287097784809E+17</Position>
+              <Position>100</Position>
               <ShowPosition>false</ShowPosition>
               <ShowTitle>true</ShowTitle>
               <SortPriority>100</SortPriority>
@@ -1289,7 +1289,7 @@
                   <Title>ImageStreamStyle_44</Title>
                 </ImageStreamStyle>
               </SubMember>
-              <TimePosition>132870977848090000</TimePosition>
+              <TimePosition>132872209948000000</TimePosition>
               <Title>ipImageResultDisp</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>
@@ -1300,7 +1300,7 @@
         </MarkerContainer>
         <AxisGroup AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-1</DisplayColor>
+          <DisplayColor>-14342874</DisplayColor>
           <Enabled>true</Enabled>
           <Guid>42c04e10-1a96-48ee-8ebe-a318f74990c2</Guid>
           <Name>Axis Group (1)</Name>
@@ -1430,9 +1430,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-16777216</DisplayColor>
+                  <DisplayColor>-921103</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-16777216</GridColor>
+                  <GridColor>-921103</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>c21d6427-dd65-4300-93df-400b337c8985</Guid>
@@ -1464,9 +1464,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-16777216</DisplayColor>
+                  <DisplayColor>-921103</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-16777216</GridColor>
+                  <GridColor>-921103</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>74ef34e9-1d56-4416-bce4-6df0bc0eaa5c</Guid>

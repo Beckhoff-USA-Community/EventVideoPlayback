@@ -59,7 +59,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[iCount:=iCount+1;
+      <ST><![CDATA[iCount:=iCount+10;
 ScopeRecordTestCode();
 
 

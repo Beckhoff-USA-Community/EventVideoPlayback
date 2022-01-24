@@ -4107,15 +4107,16 @@
 			</Properties>
 		</DataType>
 		<DataType>
-			<Name GUID="{31F76320-C797-4148-9E65-24F00B777BC6}" PersistentType="true">VideoAlarmDemoEventClass</Name>
+			<Name GUID="{D5D90088-6121-49B7-A252-FB3582AFDA60}" PersistentType="true">VideoAlarmDemoEventClass</Name>
 			<DisplayName TxtId=""><![CDATA[NewEventClass_DisplayText]]></DisplayName>
 			<EventId>
-				<Name Id="1">TheMainEvent</Name>
+				<Name Id="1">MachineError</Name>
 				<DisplayName TxtId=""><![CDATA[Event_DisplayText]]></DisplayName>
 				<Severity>Verbose</Severity>
 			</EventId>
 			<Hides>
 				<Hide GUID="{E029A791-097C-4F7F-AA3B-B31271C49D09}"/>
+				<Hide GUID="{31F76320-C797-4148-9E65-24F00B777BC6}"/>
 			</Hides>
 		</DataType>
 	</DataTypes>

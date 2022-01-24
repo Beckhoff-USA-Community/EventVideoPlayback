@@ -4,30 +4,75 @@
     <Declaration><![CDATA[PROGRAM ScopeRecordTestCode
 VAR
 	
-EmulateAnAlarm : BOOL;
+ErrorOccured 	: BOOL;
+fbEventLog		: FB_TcEventLogger; 
+fbAlarm 		: FB_TcAlarm;
+bIsInitalized 	: BOOL;
+bRaiseAlarm		: BOOL;
+hr				: HRESULT;
+hrLastError		: HRESULT;
 
+BatchFileDelay	: TON;
+BatchFile		: NT_StartProcess;
+Command			: STRING(1000);
 
+VideoDestinationPath	: STRING(255) := ' C:\Temp\Scope Project_Img_test';
+ScopeImageExportPath	: STRING(255) := ' C:\Temp\Scope Project_Img_test';
+
+EventTimestamp: LTIME;
+bConfirmAlarm: BOOL;
+bClearAlarm: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
+      <ST><![CDATA[BatchFile(PATHSTR:= 'C:\TwinCAT\3.1\Boot\Images2Video.bat');
 
-//Repalce this dumb bool with triggering event from eventlogger
-EmulateAnAlarm;
+IF NOT bIsInitalized THEN
+	bIsInitalized := TRUE;
+	hr := fbAlarm.CreateEx(TC_EVENTS.VideoAlarmDemoEventClass.MachineError, TRUE, 0);
+	IF FAILED(hr) THEN
+		hrLastError := hr;
+	END_IF
+END_IF
+
+//Replace this dumb bool with triggering event from eventlogger
+
+IF ErrorOccured THEN
+	fbAlarm.Raise(0);
+END_IF
 
 //Get the timestamp from event
+IF fbAlarm.bRaised THEN
+	EventTimestamp := ULINT_TO_LTIME(fbAlarm.nTimeRaised);
+	BatchFileDelay(IN := TRUE, PT:= T#15S);
+END_IF
+
+//create batch file command string
+Command := CONCAT('cd C:\Temp', ' Images2Video.bat');
+Command := CONCAT(Command, ' ');
+Command := CONCAT(Command, LTIME_TO_STRING(EventTimestamp));
+Command := CONCAT(Command, VideoDestinationPath);
+Command := CONCAT(Command, ScopeImageExportPath);
 
 // call batch file to make video file from images (default locaiton for batch file should be bootfolder
-// input to batch file needs to be timestamp from event (thrown by eventlogger)]]></ST>
+IF BatchFileDelay.Q THEN
+	BatchFile(COMNDLINE := 'Nathan "C:\Temp\Scope Project_Img_test\\" "C:\Temp\Scope Project_Img_test\[Export]\[Image]\"', START := TRUE);
+	BatchFileDelay.IN := FALSE;
+	//BatchFile(START := FALSE);
+END_IF
+
+// input to batch file needs to be timestamp from event (thrown by eventlogger)
+
+IF bConfirmAlarm THEN
+	fbAlarm.Confirm(0);
+END_IF
+
+IF bClearAlarm THEN
+	fbAlarm.Clear(0, FALSE);
+END_IF]]></ST>
     </Implementation>
     <LineIds Name="ScopeRecordTestCode">
-      <LineId Id="10" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="20" Count="1" />
-      <LineId Id="12" Count="0" />
+      <LineId Id="32" Count="43" />
       <LineId Id="22" Count="0" />
     </LineIds>
   </POU>

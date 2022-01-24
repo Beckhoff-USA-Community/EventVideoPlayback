@@ -4147,6 +4147,9 @@
 					<Name>Task 7</Name>
 					<ImageId>327</ImageId>
 				</Task>
+				<Task Id="8" Priority="30" CycleTime="2000000" AmsPort="353" DisableFpExceptions="true" AdtTasks="true">
+					<Name>VISU_TASK</Name>
+				</Task>
 			</Tasks>
 			<AdditionalProjectFiles>
 				<File>..\VideoPlaybackSupportFiles\Images2Video.bat</File>

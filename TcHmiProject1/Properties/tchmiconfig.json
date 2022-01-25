@@ -95,7 +95,20 @@
   "binding": {
     "symbolError": "Ignore"
   },
-  "packages": [],
+  "packages": [
+    {
+      "name": "Beckhoff.TwinCAT.HMI.Controls",
+      "basePath": "/Beckhoff.TwinCAT.HMI.Controls"
+    },
+    {
+      "name": "Beckhoff.TwinCAT.HMI.Framework",
+      "basePath": "/framework"
+    },
+    {
+      "name": "Beckhoff.TwinCAT.HMI.Functions",
+      "basePath": "/Beckhoff.TwinCAT.HMI.Functions"
+    }
+  ],
   "keyboardLayouts": [
     {
       "url": "KeyboardLayouts/German - compact.keyboard.json"

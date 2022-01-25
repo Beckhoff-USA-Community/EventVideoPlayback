@@ -32,7 +32,7 @@
               <Children />
             </Node>
             <Node>
-              <Title>EmulateAnAlarm</Title>
+              <Title>ErrorOccured</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -88,7 +88,7 @@
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>EmulateAnAlarm</Title>
+                  <Title>ErrorOccured</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />

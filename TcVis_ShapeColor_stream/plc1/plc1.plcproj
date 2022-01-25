@@ -17,6 +17,16 @@
     <LibraryReferences>{3b5b61b0-744d-4236-90c9-f83fd3439d8c}</LibraryReferences>
     <Released>false</Released>
     <CombineIds>true</CombineIds>
+    <DeploymentEvents>
+      <Events>
+        <Event>
+          <CommandType>Copy</CommandType>
+          <DeploymentType>ActivateConfiguration</DeploymentType>
+          <Command1>C:\Temp\Sample TC Project with HMI\Solution\Solution\VideoPlaybackSupportFiles\Images2Video.bat</Command1>
+          <Command2>C:\TwinCAT\3.1\boot</Command2>
+        </Event>
+      </Events>
+    </DeploymentEvents>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GlobalTextList.TcGTLO">
@@ -40,9 +50,6 @@
     <Compile Include="VISUs\Visualization.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="VISU_TASK.TcTTO">
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

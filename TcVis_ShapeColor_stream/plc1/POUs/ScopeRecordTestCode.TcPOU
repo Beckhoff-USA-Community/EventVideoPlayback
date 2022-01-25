@@ -16,16 +16,20 @@ BatchFileDelay	: TON;
 BatchFile		: NT_StartProcess;
 Command			: STRING(1000);
 
-VideoDestinationPath	: STRING(255) := ' C:\Temp\Scope Project_Img_test';
-ScopeImageExportPath	: STRING(255) := ' C:\Temp\Scope Project_Img_test';
+VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
+ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\';
 
 EventTimestamp: LTIME;
 bConfirmAlarm: BOOL;
 bClearAlarm: BOOL;
+
+
+	TestRUN: BOOL;
+	sTEMP: STRING;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[BatchFile(PATHSTR:= 'C:\TwinCAT\3.1\Boot\Images2Video.bat');
+      <ST><![CDATA[
 
 IF NOT bIsInitalized THEN
 	bIsInitalized := TRUE;
@@ -47,18 +51,35 @@ IF fbAlarm.bRaised THEN
 	BatchFileDelay(IN := TRUE, PT:= T#15S);
 END_IF
 
+Command :='';
+(*
+set videofilename=%1
+set videodestinationpath=%2
+set scopeimageexportpath=%3
+
+// Example call - Images2Video Nathan "C:\Temp\Scope Project_Img_test\\" "C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\"
+*)
+sTEMP := LTIME_TO_STRING(EventTimestamp);
+
 //create batch file command string
-Command := CONCAT('cd C:\Temp', ' Images2Video.bat');
-Command := CONCAT(Command, ' ');
-Command := CONCAT(Command, LTIME_TO_STRING(EventTimestamp));
+Command := CONCAT(Command, ' "');
+Command := CONCAT(Command, DELETE(LTIME_TO_STRING(EventTimestamp), 1, 6));
+Command := CONCAT(Command, '" "');
 Command := CONCAT(Command, VideoDestinationPath);
+Command := CONCAT(Command, '" "');
 Command := CONCAT(Command, ScopeImageExportPath);
+Command := CONCAT(Command, '"');
 
 // call batch file to make video file from images (default locaiton for batch file should be bootfolder
-IF BatchFileDelay.Q THEN
-	BatchFile(COMNDLINE := 'Nathan "C:\Temp\Scope Project_Img_test\\" "C:\Temp\Scope Project_Img_test\[Export]\[Image]\"', START := TRUE);
+
+
+IF BatchFileDelay.Q OR TestRUN THEN
+	BatchFile(	PATHSTR:= 'C:\TwinCAT\3.1\Boot\Images2Video.bat', 
+				COMNDLINE := Command,
+				START := TRUE);
 	BatchFileDelay.IN := FALSE;
-	//BatchFile(START := FALSE);
+	BatchFile(START := FALSE);
+TestRUN:=FALSE;
 END_IF
 
 // input to batch file needs to be timestamp from event (thrown by eventlogger)
@@ -71,9 +92,5 @@ IF bClearAlarm THEN
 	fbAlarm.Clear(0, FALSE);
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="ScopeRecordTestCode">
-      <LineId Id="32" Count="43" />
-      <LineId Id="22" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

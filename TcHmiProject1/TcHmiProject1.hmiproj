@@ -115,6 +115,20 @@
   <Target Name="ReBuild" DependsOnTargets="Clean; Build" />
   <Target Name="Clean" DependsOnTargets="BaseClean" />
   <ItemGroup>
+    <Content Include="Functions\CheckforVideo.function.json">
+      <SubType>Content</SubType>
+      <DependentUpon>Functions\CheckforVideo.ts</DependentUpon>
+    </Content>
+    <Content Include="Functions\CheckforVideo.ts">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Functions\OpenSelectedEventVideo.function.json">
+      <SubType>Content</SubType>
+      <DependentUpon>Functions\OpenSelectedEventVideo.ts</DependentUpon>
+    </Content>
+    <Content Include="Functions\OpenSelectedEventVideo.ts">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="LiveImageView\LiveImages.content">
       <SubType>Content</SubType>
     </Content>
@@ -142,6 +156,7 @@
     <Folder Include="KeyboardLayouts\" />
     <Folder Include="Localization" />
     <Folder Include="LiveImageView" />
+    <Folder Include="Functions" />
     <Folder Include="Server\TcHmiEventLogger" />
     <Folder Include="VideoPlayback" />
     <Folder Include="Server\TcHmiVision\" />

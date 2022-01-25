@@ -33,6 +33,16 @@
       "name": "Fonts/Fonts.css",
       "description": "",
       "type": "Stylesheet"
+    },
+    {
+      "name": "Functions/CheckforVideo.js",
+      "description": "",
+      "type": "JavaScript"
+    },
+    {
+      "name": "Functions/OpenSelectedEventVideo.js",
+      "description": "",
+      "type": "JavaScript"
     }
   ],
   "userControls": [],
@@ -67,7 +77,14 @@
       "preloadBindings": false
     }
   ],
-  "userFunctions": [],
+  "userFunctions": [
+    {
+      "url": "Functions/CheckforVideo.js"
+    },
+    {
+      "url": "Functions/OpenSelectedEventVideo.js"
+    }
+  ],
   "symbols": {
     "internal": {
       "myBoolHmi": {

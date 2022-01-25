@@ -28,6 +28,11 @@
     "$(Output).Path/"
   ],
   "include": [
-    "$(Beckhoff.TwinCAT.HMI.Framework).InstallPath/TcHmi.d.ts"
+    "$(Beckhoff.TwinCAT.HMI.Framework).InstallPath/TcHmi.d.ts",
+    "$(Beckhoff.TwinCAT.HMI.Controls).InstallPath/TcHmiEventGrid/TcHmiEventGrid.d.ts"
+  ],
+  "files": [
+    "Functions/CheckforVideo.ts",
+    "Functions/OpenSelectedEventVideo.ts"
   ]
 }

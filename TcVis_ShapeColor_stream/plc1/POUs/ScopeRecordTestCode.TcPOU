@@ -17,16 +17,17 @@ BatchFile		: NT_StartProcess;
 Command			: STRING(1000);
 
 VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
-ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\';
+ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\Export 3\ipImageResultDisp\';
 
-EventTimestamp: LTIME;
+EventTimestamp: TimeStruct;
 bConfirmAlarm: BOOL;
 bClearAlarm: BOOL;
 
 
-	TestRUN: BOOL;
-	sTEMP: STRING;
-	RecordCreated: BOOL;
+	TestRUN			: BOOL;
+	sTEMP			: STRING;
+	sFileName		: STRING;
+	RecordCreated	: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -44,13 +45,12 @@ END_IF
 
 IF ErrorOccured THEN
 	fbAlarm.Raise(0);
-	ErrorOccured := FALSE;
 	RecordCreated := FALSE;
 END_IF
 
 //Get the timestamp from event
 IF fbAlarm.bRaised AND NOT RecordCreated THEN
-	EventTimestamp := ULINT_TO_LTIME(fbAlarm.nTimeRaised);
+	EventTimestamp := FILETIME64_TO_SYSTEMTIME(fbAlarm.nTimeRaised);
 	BatchFileDelay(IN := TRUE, PT:= T#15S);
 END_IF
 
@@ -62,11 +62,16 @@ set scopeimageexportpath=%3
 
 // Example call - Images2Video Nathan "C:\Temp\Scope Project_Img_test\\" "C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\"
 *)
-sTEMP := LTIME_TO_STRING(EventTimestamp);
-
+//convert SystemTime to a format we can use for a filename by replacing characters like ':' and '.'. 
+IF ErrorOccured THEN
+	sTEMP := SYSTEMTIME_TO_STRING(EventTimestamp);
+	FindAndReplaceChar(ADR(sTEMP),':','-',ADR(sFileName),SIZEOF(sFileName));
+	sTEMP := sFileName;
+	FindAndReplaceChar(ADR(sTEMP),'.','-',ADR(sFileName),SIZEOF(sFileName));
+END_IF
 //create batch file command string
 Command := CONCAT(Command, ' "');
-Command := CONCAT(Command, DELETE(LTIME_TO_STRING(EventTimestamp), 1, 6));
+Command := CONCAT(Command, sFileName);
 Command := CONCAT(Command, '" "');
 Command := CONCAT(Command, VideoDestinationPath);
 Command := CONCAT(Command, '" "');
@@ -84,6 +89,7 @@ IF BatchFileDelay.Q OR TestRUN THEN
 	BatchFile(START := FALSE);
 	TestRUN:=FALSE;
 	RecordCreated	:= TRUE;
+	ErrorOccured := FALSE;
 END_IF
 
 // input to batch file needs to be timestamp from event (thrown by eventlogger)

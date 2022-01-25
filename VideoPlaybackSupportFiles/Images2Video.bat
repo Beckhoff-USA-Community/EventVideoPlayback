@@ -37,4 +37,9 @@ for %%f in (%a%) do (@echo file 'file:%%f' >> %tmp%)
 %c% -y -f concat -safe 0 -i %tmp% -framerate 10 %f% %b%
 del /f /q %tmp%
 
+rem TODO: Add code to delete exported images folder if video creation was sucsessful 
+		rem if file %b% exists, then delete images
+
+rem del /f /q %scopeimageexportpath%
+
 exit

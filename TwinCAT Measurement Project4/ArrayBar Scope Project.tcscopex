@@ -84,7 +84,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>3dda7a18-26a6-4072-865e-54971a9dfd60</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>468736</IndexOffset>
+          <IndexOffset>414464</IndexOffset>
           <IsHistorical>false</IsHistorical>
           <Name>aHistogramBlue</Name>
           <Oversample>256</Oversample>
@@ -174,7 +174,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>95b4cd64-d83a-4769-840c-a8f846104911</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>467712</IndexOffset>
+          <IndexOffset>413440</IndexOffset>
           <IsHistorical>false</IsHistorical>
           <Name>aHistogramGreen</Name>
           <Oversample>256</Oversample>
@@ -264,7 +264,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>a6f5061d-3fc5-40db-b45c-588a4f1297c4</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>466688</IndexOffset>
+          <IndexOffset>412416</IndexOffset>
           <IsHistorical>false</IsHistorical>
           <Name>aHistogramRed</Name>
           <Oversample>256</Oversample>
@@ -354,7 +354,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>465808</IndexOffset>
+          <IndexOffset>411536</IndexOffset>
           <IsHistorical>false</IsHistorical>
           <Name>ipImageResultDisp</Name>
           <Oversample>0</Oversample>
@@ -428,7 +428,7 @@
           <VariableSize>1475362</VariableSize>
         </AdsAcquisition>
         <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>10.10.70.162.1.1</AmsNetId>
+          <AmsNetId>127.0.0.1.1.1</AmsNetId>
           <Area>Local</Area>
           <ArrayLength>0</ArrayLength>
           <BaseSampleTime>100000</BaseSampleTime>
@@ -455,7 +455,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>8cd4470d-d1a6-4a77-ac7f-eff856354578</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>471377</IndexOffset>
+          <IndexOffset>411797</IndexOffset>
           <IsHistorical>false</IsHistorical>
           <Name>ErrorOccured</Name>
           <Oversample>0</Oversample>
@@ -1082,12 +1082,12 @@
             </TriggerTimeOffset>
             <ChannelTriggerSet AssemblyName="TwinCAT.Measurement.Scope.API.Model">
               <AcquisitionInterpreterGuid>ae1603aa-69ef-43b0-8f2e-8189d545df15</AcquisitionInterpreterGuid>
-              <ClientTriggerHandle>3</ClientTriggerHandle>
+              <ClientTriggerHandle>1</ClientTriggerHandle>
               <CombineOption>AND</CombineOption>
               <Comment />
               <DisplayColor>Black</DisplayColor>
               <Enabled>true</Enabled>
-              <GroupHandle>3</GroupHandle>
+              <GroupHandle>1</GroupHandle>
               <Guid>43d2d132-d080-41e7-9a18-9b424be61e18</Guid>
               <Name>AnAlarmHappened</Name>
               <ReleaseOption>RisingEdge</ReleaseOption>
@@ -1330,7 +1330,7 @@
               <MarkerType>Circle</MarkerType>
               <Name>ipImageResultDisp</Name>
               <Orientation>Vertical</Orientation>
-              <Position>1.3287536638507E+17</Position>
+              <Position>1.3287606717706E+17</Position>
               <ShowPosition>false</ShowPosition>
               <ShowTitle>true</ShowTitle>
               <SortPriority>100</SortPriority>
@@ -1345,7 +1345,7 @@
                   <Title>ImageStreamStyle_44</Title>
                 </ImageStreamStyle>
               </SubMember>
-              <TimePosition>132875366385070000</TimePosition>
+              <TimePosition>132876067177060000</TimePosition>
               <Title>ipImageResultDisp</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>

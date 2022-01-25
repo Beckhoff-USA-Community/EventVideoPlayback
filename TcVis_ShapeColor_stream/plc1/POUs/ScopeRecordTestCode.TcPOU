@@ -26,6 +26,7 @@ bClearAlarm: BOOL;
 
 	TestRUN: BOOL;
 	sTEMP: STRING;
+	RecordCreated: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -43,10 +44,12 @@ END_IF
 
 IF ErrorOccured THEN
 	fbAlarm.Raise(0);
+	ErrorOccured := FALSE;
+	RecordCreated := FALSE;
 END_IF
 
 //Get the timestamp from event
-IF fbAlarm.bRaised THEN
+IF fbAlarm.bRaised AND NOT RecordCreated THEN
 	EventTimestamp := ULINT_TO_LTIME(fbAlarm.nTimeRaised);
 	BatchFileDelay(IN := TRUE, PT:= T#15S);
 END_IF
@@ -77,9 +80,10 @@ IF BatchFileDelay.Q OR TestRUN THEN
 	BatchFile(	PATHSTR:= 'C:\TwinCAT\3.1\Boot\Images2Video.bat', 
 				COMNDLINE := Command,
 				START := TRUE);
-	BatchFileDelay.IN := FALSE;
+	BatchFileDelay(IN := FALSE);
 	BatchFile(START := FALSE);
-TestRUN:=FALSE;
+	TestRUN:=FALSE;
+	RecordCreated	:= TRUE;
 END_IF
 
 // input to batch file needs to be timestamp from event (thrown by eventlogger)

@@ -49,12 +49,12 @@
             <d n="FbMethods" t="CaseInsensitiveHashtable" ckt="String" cvt="Guid">
               <v>FB_Init</v>
               <v>6855ffce-4ed8-487e-a9de-dfab9713f730</v>
-              <v>FB_Reinit</v>
-              <v>3a6eca6b-9f19-43f4-b106-26110146bce9</v>
               <v>FB_Exit</v>
               <v>dcf06d6e-5cc2-4308-be1e-a1b75d2f43a7</v>
+              <v>FB_Reinit</v>
+              <v>3a6eca6b-9f19-43f4-b106-26110146bce9</v>
             </d>
-            <v n="FbName">"NotImportant"</v>
+            <v n="FbName">"__VisuInitInstantiation_Fb"</v>
             <v n="FbGuid">{ad4726f7-139d-4248-bcdc-72a2578f8972}</v>
           </o>
           <o n="TargetProperties" t="VisualizationTargetProperties">
@@ -480,24 +480,24 @@
               <v>7f669fea-2faf-47e3-bdce-05b557202c02</v>
               <v>ExecuteMouseUp</v>
               <v>003da385-f64f-48a3-be50-e75732ce62fa</v>
-              <v>ExecuteMouseEnter</v>
-              <v>956e0caf-840f-4cd8-b22a-dd84cb2f429a</v>
               <v>FB_Reinit</v>
               <v>78666ff5-f4ac-4020-b201-02b45539eb0d</v>
               <v>GetElementInfo</v>
               <v>1c71fb9f-13bf-48c0-b08c-6e79ca861987</v>
-              <v>abstrGetDefaultCursor</v>
-              <v>a3e87585-924b-4a0b-89ca-872d74d66eee</v>
+              <v>ExecuteMouseMove</v>
+              <v>6dd28a03-613b-4cfd-9dfc-599adc7ffaec</v>
               <v>ExecuteDialogClosed</v>
               <v>3b548ead-d483-4d5a-8831-94fa79dc851f</v>
               <v>ExecuteKeyUp</v>
               <v>90505ab1-7db3-424d-8a8b-d74de03a1f28</v>
               <v>ExecuteKeyDown</v>
               <v>27674d2f-c638-4499-88f8-eae9f9dd978b</v>
-              <v>ExecuteMouseMove</v>
-              <v>6dd28a03-613b-4cfd-9dfc-599adc7ffaec</v>
+              <v>abstrGetDefaultCursor</v>
+              <v>a3e87585-924b-4a0b-89ca-872d74d66eee</v>
               <v>Initialize</v>
               <v>4230a3fd-1ecf-447f-8aea-a91042dd40bb</v>
+              <v>ExecuteMouseEnter</v>
+              <v>956e0caf-840f-4cd8-b22a-dd84cb2f429a</v>
               <v>ExecuteMouseLeave</v>
               <v>c4629c44-c6a5-481a-b383-f004b4e27a2e</v>
               <v>FB_Init</v>
@@ -572,42 +572,5 @@
         <Type n="VisualManagerViewSettings">{ec9b2ec6-92a2-4856-be72-7866fb274c64}</Type>
       </TypeList>
     </XmlArchive>
-    <TargetVisu Name="TargetVisualization" Id="{4c2c4363-d8db-4c3f-a9f8-10519eb635ae}">
-      <XmlArchive>
-        <Data>
-          <o xml:space="preserve" t="TargetVisualizationObject">
-            <o n="ViewSettings" t="TargetVisualizationViewSettings">
-              <v n="StartVisu">"Visualization"</v>
-              <n n="HtmFileName" />
-              <v n="UpdateRate">200</v>
-              <v n="CommBufferSize">50000</v>
-              <v n="BestFit">true</v>
-              <v n="ClientSizeMode" t="VisualClientSizeMode">AutoDetect</v>
-              <v n="ClientSizeX">2000</v>
-              <v n="ClientSizeY">2000</v>
-              <v n="Antialiasing">true</v>
-              <v n="ClientOperationType" t="eDefaultInputSetting">Touchscreen</v>
-              <v n="ScaleTypeIsotropic">true</v>
-              <v n="UseScalingOptionsForDialogs">true</v>
-              <v n="HideCursor">false</v>
-              <v n="UseTitlebar">false</v>
-              <v n="StartTargetvisu">true</v>
-              <v n="WindowWidth">-1</v>
-              <v n="WindowHeight">-1</v>
-              <v n="ClientName">""</v>
-            </o>
-          </o>
-        </Data>
-        <TypeList>
-          <Type n="Boolean">System.Boolean</Type>
-          <Type n="eDefaultInputSetting">{bd122c9a-5824-461f-8b56-d89816d314bf}</Type>
-          <Type n="Int32">System.Int32</Type>
-          <Type n="String">System.String</Type>
-          <Type n="TargetVisualizationObject">{bc63f5fa-d286-4786-994e-7b27e4f97bd5}</Type>
-          <Type n="TargetVisualizationViewSettings">{cb5403ec-4e3b-4965-9be8-913e6068f7cb}</Type>
-          <Type n="VisualClientSizeMode">{c37fe731-4f69-4d98-82fe-4f9aefbe200d}</Type>
-        </TypeList>
-      </XmlArchive>
-    </TargetVisu>
   </VisuManager>
 </TcPlcObject>

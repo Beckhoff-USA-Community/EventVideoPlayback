@@ -15,6 +15,18 @@
     <Implicit_KindOfTask>{e8d388df-5ec0-4c88-8bce-b46873d0baa0}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{65eca6dc-a12c-4f59-937c-cbdb359dd8d8}</Implicit_Jitter_Distribution>
     <LibraryReferences>{3b5b61b0-744d-4236-90c9-f83fd3439d8c}</LibraryReferences>
+    <Released>false</Released>
+    <CombineIds>true</CombineIds>
+    <DeploymentEvents>
+      <Events>
+        <Event>
+          <CommandType>Copy</CommandType>
+          <DeploymentType>ActivateConfiguration</DeploymentType>
+          <Command1>C:\Temp\Sample TC Project with HMI\Solution\Solution\VideoPlaybackSupportFiles\Images2Video.bat</Command1>
+          <Command2>C:\TwinCAT\3.1\boot</Command2>
+        </Event>
+      </Events>
+    </DeploymentEvents>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GlobalTextList.TcGTLO">
@@ -38,9 +50,6 @@
     <Compile Include="VISUs\Visualization.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>Visualization Manager.TcVMO</DependentUpon>
-    </Compile>
-    <Compile Include="VISU_TASK.TcTTO">
-      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +108,14 @@
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_EventLogger">
+      <DefaultResolution>Tc3_EventLogger, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_EventLogger</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>

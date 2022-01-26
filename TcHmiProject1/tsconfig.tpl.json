@@ -9,7 +9,8 @@
       "dom",
       "scripthost",
       "es6",
-      "es2017.intl"
+      "es2017.intl",
+      "ES2018.Promise"
     ],
     "types": [],
     "declaration": true,
@@ -29,7 +30,8 @@
   ],
   "include": [
     "$(Beckhoff.TwinCAT.HMI.Framework).InstallPath/TcHmi.d.ts",
-    "$(Beckhoff.TwinCAT.HMI.Controls).InstallPath/TcHmiEventGrid/TcHmiEventGrid.d.ts"
+    "$(Beckhoff.TwinCAT.HMI.Controls).InstallPath/TcHmiEventGrid/TcHmiEventGrid.d.ts",
+    "$(Beckhoff.TwinCAT.HMI.Controls).InstallPath/TcHmiVideo/TcHmiVideo.d.ts"
   ],
   "files": [
     "Functions/CheckforVideo.ts",

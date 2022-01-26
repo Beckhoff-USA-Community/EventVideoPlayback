@@ -2,13 +2,6 @@
 
 <div id="TcHmiVideo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiVideo" data-tchmi-controls="true" data-tchmi-height="586" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-mute="true" data-tchmi-top="27" data-tchmi-top-unit="px" data-tchmi-width="743" data-tchmi-width-unit="px" data-tchmi-is-enabled="true" data-tchmi-autoplay="true" data-tchmi-loop="true" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
 
-<script data-tchmi-target-attribute="data-tchmi-src-list" type="application/json">
-[
-  {
-    "source": "",
-    "type": "video/mp4"
-  }
-]
-</script>
+
 </div>
 </div>

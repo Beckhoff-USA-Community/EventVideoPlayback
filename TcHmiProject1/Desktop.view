@@ -81,6 +81,6 @@
 ]
 </script>
 </div>
-<div id="TcHmiRegion" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="487" data-tchmi-height-unit="px" data-tchmi-left="16" data-tchmi-left-unit="px" data-tchmi-top="17" data-tchmi-top-unit="px" data-tchmi-width="777" data-tchmi-width-unit="px" data-tchmi-is-enabled="true">
+<div id="TcHmiRegion" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="487" data-tchmi-height-unit="px" data-tchmi-left="16" data-tchmi-left-unit="px" data-tchmi-top="17" data-tchmi-top-unit="px" data-tchmi-width="777" data-tchmi-width-unit="px" data-tchmi-is-enabled="true" data-tchmi-target-content="LiveImageView/LiveImages.content">
 </div>
 </div>

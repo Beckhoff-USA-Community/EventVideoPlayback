@@ -3,9 +3,6 @@
     "REQUIREAUTH": 2,
     "VIRTUALDIRECTORIES": {
         "/": "C:\\Users\\NathanM\\Source\\Repos\\Beckhoff-USA-Community\\EventVideoPlayback\\TcHmiProject1",
-        "/Beckhoff.TwinCAT.HMI.Controls": "C:\\Users\\NathanM\\Source\\Repos\\Beckhoff-USA-Community\\EventVideoPlayback\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.742.0\\runtimes\\native1.12-tchmi",
-        "/Beckhoff.TwinCAT.HMI.Functions": "C:\\Users\\NathanM\\Source\\Repos\\Beckhoff-USA-Community\\EventVideoPlayback\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.742.0\\runtimes\\native1.12-tchmi",
-        "/Beckhoff.TwinCAT.HMI.Vision": "C:\\Users\\NathanM\\Source\\Repos\\Beckhoff-USA-Community\\EventVideoPlayback\\Packages\\Beckhoff.TwinCAT.HMI.Vision.12.742.0",
         "/TcHmiDrawing": "C:\\Users\\NathanM\\Source\\Repos\\Beckhoff-USA-Community\\EventVideoPlayback\\Packages\\TcHmiDrawing.1.0.2\\runtimes\\native1.12-tchmi",
         "/Videos": "C:\\Temp\\Scope Project_Img_test\\",
         "/bin": "C:\\Users\\NathanM\\Source\\Repos\\Beckhoff-USA-Community\\EventVideoPlayback\\TcHmiProject1\\bin\\",

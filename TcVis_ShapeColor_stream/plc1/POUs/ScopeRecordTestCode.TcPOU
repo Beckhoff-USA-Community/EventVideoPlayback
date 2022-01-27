@@ -16,8 +16,9 @@ BatchFileDelay	: TON;
 BatchFile		: NT_StartProcess;
 Command			: STRING(1000);
 
+//ImageName 				: STRING	  := 'ipImageResultDisp';  //name of the image, this can be found in the image pool in scope
 VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
-ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\Export 3\ipImageResultDisp\';
+ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\';
 
 EventTimestamp: TimeStruct;
 bConfirmAlarm: BOOL;

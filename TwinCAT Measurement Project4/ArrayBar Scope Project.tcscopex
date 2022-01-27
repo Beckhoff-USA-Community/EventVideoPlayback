@@ -1082,12 +1082,12 @@
             </TriggerTimeOffset>
             <ChannelTriggerSet AssemblyName="TwinCAT.Measurement.Scope.API.Model">
               <AcquisitionInterpreterGuid>ae1603aa-69ef-43b0-8f2e-8189d545df15</AcquisitionInterpreterGuid>
-              <ClientTriggerHandle>4</ClientTriggerHandle>
+              <ClientTriggerHandle>1</ClientTriggerHandle>
               <CombineOption>AND</CombineOption>
               <Comment />
               <DisplayColor>Black</DisplayColor>
               <Enabled>true</Enabled>
-              <GroupHandle>4</GroupHandle>
+              <GroupHandle>1</GroupHandle>
               <Guid>43d2d132-d080-41e7-9a18-9b424be61e18</Guid>
               <Name>AnAlarmHappened</Name>
               <ReleaseOption>RisingEdge</ReleaseOption>
@@ -1318,19 +1318,19 @@
           <SortPriority>100</SortPriority>
           <SubMember>
             <ImageMarker AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-              <AttachToAxis>false</AttachToAxis>
+              <AttachToAxis>true</AttachToAxis>
               <Bandwidth>0</Bandwidth>
               <Comment />
               <DisplayColor>-23296</DisplayColor>
               <Guid>40b0ee18-addb-434c-922f-cef8ac6daff2</Guid>
               <ImageAcquisitionGuid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</ImageAcquisitionGuid>
               <LineStyle>Solid</LineStyle>
-              <Locked>true</Locked>
+              <Locked>false</Locked>
               <Marker3DType>AllPoints</Marker3DType>
               <MarkerType>Circle</MarkerType>
               <Name>ipImageResultDisp</Name>
               <Orientation>Vertical</Orientation>
-              <Position>100</Position>
+              <Position>1.3287792302701E+17</Position>
               <ShowPosition>false</ShowPosition>
               <ShowTitle>true</ShowTitle>
               <SortPriority>100</SortPriority>
@@ -1345,7 +1345,7 @@
                   <Title>ImageStreamStyle_44</Title>
                 </ImageStreamStyle>
               </SubMember>
-              <TimePosition>132876190090060000</TimePosition>
+              <TimePosition>132877923027010000</TimePosition>
               <Title>ipImageResultDisp</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>

@@ -8,7 +8,7 @@
                     console.log("EventGrid has not  been found");
                     return;
                 }
-                let SelectedEvent = <Server.Events.Alarm> EventGrid.getSelectedEvent();
+                let SelectedEvent = <Server.Events.Event> EventGrid.getSelectedEvent();
                 if (SelectedEvent === null) {
                     console.log("SelectedEvent has been found");
                     return;
@@ -18,16 +18,16 @@
                 //The timestamp uses the UTC timezone, so we need to make sure we use the same here,
                 //the EventGrid displays the local time zone, so the hours will be different.
                 let temp = '';
-                let timeStamp   =   SelectedEvent.timeRaised;
+                let timeStamp   =   SelectedEvent.timeReceived;
                 let tempYear    =   timeStamp.getUTCFullYear().toString();
                 let tempMonth   =   number2String((timeStamp.getUTCMonth() + 1));
                 let tempDate    =   number2String(timeStamp.getUTCDate());
                 let tempHour    =   number2String(timeStamp.getUTCHours());
                 let tempMinutes =   number2String(timeStamp.getUTCMinutes());
                 let tempSeconds =   number2String(timeStamp.getUTCSeconds());
-                let tempMil     = timeStamp.getUTCMilliseconds().toString();
-                //example filename (YYYY-MM-DD-HH-mm-SS-ms): 2022-01-25-21-16-59-506.mp4
-                        
+                let tempMil     =   timeStamp.getUTCMilliseconds().toString();
+
+                //example filename (YYYY-MM-DD-HH-mm-SS-ms): 2022-01-25-21-16-59-506.mp4           
                 let FileName = temp.concat(tempYear, "-", tempMonth, "-", tempDate, "-", tempHour, "-", tempMinutes, "-", tempSeconds, "-", tempMil, ".mp4");
                 //check if the file exists in the virtual directory
                 console.log("FileName: ", FileName);

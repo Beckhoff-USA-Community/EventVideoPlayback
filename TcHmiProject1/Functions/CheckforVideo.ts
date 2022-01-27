@@ -24,7 +24,7 @@
                         }
 
                         if (files.value[FileName] === undefined) {
-                            console.log(FileName, " has been found")
+                            console.log(FileName, " has not been found")
                             resolve(false);
                             return;
                         }
@@ -36,7 +36,7 @@
                 let promise = await check_Promise.then(
                     (value) => { exists = value; },
                     (error) => { console.log(error); });
-                console.log("exists is being returned as:",exists);
+                //console.log("exists is being returned as:",exists);
 
                 return exists;
 

@@ -56,7 +56,7 @@ echo Last folder removed: %PARENT%
 rem : code to delete exported images folder (and Parent) if video creation was sucsessful 
 if exist %b% (
     rem Video file exists
-	RMDIR /S /Q %PARENT%
+	RMDIR /S /Q "%PARENT%"
 	echo Video file found and should be deleted
 ) else (
     rem file doesn't exist
@@ -67,6 +67,10 @@ if exist %b% (
 rem test of how to find export folder(s) in given path
 FOR /D /R "C:\Temp\Scope Project_Img_test\" %%X IN (Export*) DO echo %%X
 ) "
+
+rem delete all export folders from path
+rem FOR /D /R "C:\Temp\Scope Project_Img_test\" %%X IN (Export*) DO (RMDIR /S /Q "%%X")
+rem ) "
 
 
 exit

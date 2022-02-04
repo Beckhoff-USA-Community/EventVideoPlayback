@@ -4139,7 +4139,8 @@
 	</ImageDatas>
 	<Project ProjectGUID="{8F35598F-7819-4BAA-B346-0A73F46ADD3A}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
-			<Settings MaxCpus="12" RouterMemory="267386880">
+			<Settings MaxCpus="12" NonWinCpus="6" RouterMemory="267386880">
+				<Cpu CpuId="9"/>
 				<Cpu CpuId="10"/>
 				<Cpu CpuId="11"/>
 			</Settings>
@@ -4158,7 +4159,7 @@
 				<Task Id="5" Priority="6" CycleTime="100000" AmsPort="352" AdtTasks="true">
 					<Name>VnTask ADS (Camera1)</Name>
 				</Task>
-				<Task Id="6" Priority="1" Affinity="#x00000400" AdtTasks="true" JobTask="true">
+				<Task Id="6" Priority="1" Affinity="#x00000800" AdtTasks="true" JobTask="true">
 					<Name>Task 6</Name>
 					<ImageId>327</ImageId>
 				</Task>

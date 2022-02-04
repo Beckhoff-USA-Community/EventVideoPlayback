@@ -23,7 +23,7 @@
     <EnableTypeScript>true</EnableTypeScript>
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
     <Name>TcHmiProject1</Name>
-    <HmiCommunicationRouterPort>10109</HmiCommunicationRouterPort>
+    <HmiCommunicationRouterPort>10110</HmiCommunicationRouterPort>
     <HmiCommunicationServerAuthPort>13000</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.742.0</HmiInitial>
     <HmiRecent>1.12.752.0</HmiRecent>

@@ -17,24 +17,6 @@
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
   {
-    "event": "btnTrigger.onPressed",
-    "actions": [
-      {
-        "objectType": "Function",
-        "active": true,
-        "fn": "TcHmi.Functions.TcHmiProject1.OpenSelectedEventVideo",
-        "fnParams": [
-          {
-            "objectType": "StaticValue",
-            "valueType": "tchmi:general#/definitions/Number",
-            "value": null
-          }
-        ],
-        "asyncWait": true
-      }
-    ]
-  },
-  {
     "event": "LaunchVideo.onPressed",
     "actions": [
       {

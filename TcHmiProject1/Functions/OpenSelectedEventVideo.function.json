@@ -4,7 +4,7 @@
     "namespace": "TcHmi.Functions.TcHmiProject1",
     "displayName": "OpenSelectedEventVideo",
     "description": "",
-    "waitMode": null,
+    "waitMode": "Asynchronous",
     "category": "",
     "returnValue": {
       "type": "tchmi:general#/definitions/String"
@@ -20,6 +20,18 @@
         "defaultValue": "",
         "required": true,
         "bindable": false,
+        "restParameter": false,
+        "asReference": false,
+        "allowControlAttributeBindingOptions": false
+      },
+      {
+        "name": "par1",
+        "displayName": "Par1",
+        "type": "tchmi:general#/definitions/Number",
+        "description": "",
+        "defaultValue": "",
+        "required": true,
+        "bindable": true,
         "restParameter": false,
         "asReference": false,
         "allowControlAttributeBindingOptions": false

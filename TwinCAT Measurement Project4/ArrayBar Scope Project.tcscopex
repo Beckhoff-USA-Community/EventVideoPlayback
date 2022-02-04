@@ -26,11 +26,11 @@
   <ImagesDeleteMode>Disabled</ImagesDeleteMode>
   <Layout>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;Layout&gt;
-  &lt;Window Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" LastFocused="132884585562340190" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+  &lt;Window Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" LastFocused="132884721141648748" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;Window Guid="bae2eca7-cca7-4095-8e73-608e486124ee" LastFocused="132884654172466756" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;DocumentContainer Dock="5"&gt;
     &lt;SplitLayoutSystem WorkingSize="250, 400" SplitMode="0"&gt;
-      &lt;ControlLayoutSystem WorkingSize="250, 400" Guid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" Collapsed="0" SelectedControl="bae2eca7-cca7-4095-8e73-608e486124ee"&gt;
+      &lt;ControlLayoutSystem WorkingSize="250, 400" Guid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" Collapsed="0" SelectedControl="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe"&gt;
         &lt;Controls&gt;
           &lt;Control Guid="bae2eca7-cca7-4095-8e73-608e486124ee" /&gt;
           &lt;Control Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" /&gt;
@@ -79,7 +79,7 @@
           <DataType>UINT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
+          <FileHandle>1</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>3dda7a18-26a6-4072-865e-54971a9dfd60</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -169,7 +169,7 @@
           <DataType>UINT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
+          <FileHandle>2</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>95b4cd64-d83a-4769-840c-a8f846104911</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -259,7 +259,7 @@
           <DataType>UINT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
+          <FileHandle>3</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>a6f5061d-3fc5-40db-b45c-588a4f1297c4</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -349,7 +349,7 @@
           <DataType>IMAGE</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
+          <FileHandle>4</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -453,7 +453,7 @@
           <DataType>BIT</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
+          <FileHandle>5</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>8cd4470d-d1a6-4a77-ac7f-eff856354578</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -1088,12 +1088,12 @@
             </TriggerTimeOffset>
             <ChannelTriggerSet AssemblyName="TwinCAT.Measurement.Scope.API.Model">
               <AcquisitionInterpreterGuid>ae1603aa-69ef-43b0-8f2e-8189d545df15</AcquisitionInterpreterGuid>
-              <ClientTriggerHandle>2</ClientTriggerHandle>
+              <ClientTriggerHandle>1</ClientTriggerHandle>
               <CombineOption>AND</CombineOption>
               <Comment />
               <DisplayColor>Black</DisplayColor>
               <Enabled>true</Enabled>
-              <GroupHandle>2</GroupHandle>
+              <GroupHandle>1</GroupHandle>
               <Guid>43d2d132-d080-41e7-9a18-9b424be61e18</Guid>
               <Name>AnAlarmHappened</Name>
               <ReleaseOption>RisingEdge</ReleaseOption>
@@ -1333,19 +1333,19 @@
           <SortPriority>100</SortPriority>
           <SubMember>
             <ImageMarker AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-              <AttachToAxis>true</AttachToAxis>
+              <AttachToAxis>false</AttachToAxis>
               <Bandwidth>0</Bandwidth>
               <Comment />
               <DisplayColor>-23296</DisplayColor>
               <Guid>40b0ee18-addb-434c-922f-cef8ac6daff2</Guid>
               <ImageAcquisitionGuid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</ImageAcquisitionGuid>
               <LineStyle>Solid</LineStyle>
-              <Locked>false</Locked>
+              <Locked>true</Locked>
               <Marker3DType>AllPoints</Marker3DType>
               <MarkerType>Circle</MarkerType>
               <Name>ipImageResultDisp</Name>
               <Orientation>Vertical</Orientation>
-              <Position>1.3288458831906E+17</Position>
+              <Position>100</Position>
               <ShowFullArray>true</ShowFullArray>
               <ShowPosition>false</ShowPosition>
               <ShowTitle>true</ShowTitle>
@@ -1361,7 +1361,7 @@
                   <Title>ImageStreamStyle_44</Title>
                 </ImageStreamStyle>
               </SubMember>
-              <TimePosition>132884600810260000</TimePosition>
+              <TimePosition>132884723620440000</TimePosition>
               <Title>ipImageResultDisp</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>

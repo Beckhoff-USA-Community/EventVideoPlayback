@@ -6,8 +6,45 @@
     <Node>
       <Title>ArrayBar Scope Project</Title>
       <Expanded>True</Expanded>
-      <FileName>C:\Users\NathanM\Source\Repos\Beckhoff-USA-Community\EventVideoPlayback\TwinCAT Measurement Project4\ArrayBar Scope Project.tcscopex</FileName>
+      <FileName>C:\Temp\Sample TC Project with HMI\Solution\Solution\TwinCAT Measurement Project4\ArrayBar Scope Project.tcscopex</FileName>
       <Children>
+        <Node>
+          <Title>DataPool</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>aHistogramBlue</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>aHistogramGreen</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>aHistogramRed</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>ErrorOccured</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+            <Node>
+              <Title>ipImageResultDisp</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+          </Children>
+        </Node>
         <Node>
           <Title>DataPool</Title>
           <Expanded>False</Expanded>
@@ -56,6 +93,38 @@
               <FileName></FileName>
               <Children>
                 <Node>
+                  <Title>Channel</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>Channel</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+                <Node>
+                  <Title>Channel</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+          </Children>
+        </Node>
+        <Node>
+          <Title>Array Bar Chart</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>Axis Group</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
                   <Title>aHistogramBlue</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
@@ -88,6 +157,32 @@
               <FileName></FileName>
               <Children>
                 <Node>
+                  <Title>Channel</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+            <Node>
+              <Title>ipImageResultDisp</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children />
+            </Node>
+          </Children>
+        </Node>
+        <Node>
+          <Title>YT Chart</Title>
+          <Expanded>True</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>Axis Group (1)</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
                   <Title>ErrorOccured</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
@@ -111,6 +206,39 @@
             <Node>
               <Title>ImageSubSave</Title>
               <Expanded>True</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>AnAlarmHappened</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+            <Node>
+              <Title>Trigger Group</Title>
+              <Expanded>False</Expanded>
+              <FileName></FileName>
+              <Children>
+                <Node>
+                  <Title>Directory Trigger Set</Title>
+                  <Expanded>False</Expanded>
+                  <FileName></FileName>
+                  <Children />
+                </Node>
+              </Children>
+            </Node>
+          </Children>
+        </Node>
+        <Node>
+          <Title>Trigger</Title>
+          <Expanded>False</Expanded>
+          <FileName></FileName>
+          <Children>
+            <Node>
+              <Title>ImageSubSave</Title>
+              <Expanded>False</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>

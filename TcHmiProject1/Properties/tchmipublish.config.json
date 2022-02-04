@@ -46,7 +46,7 @@
     "abortOnErrors": true,
     "userName": "",
     "encryptedPassword": "",
-    "encryptedTcHmiServerPassword": "22KRyzxsRbksYqqgpqYG1g==",
+    "encryptedTcHmiServerPassword": "PlKkNYX+pI8rusO0YZcAeQ==",
     "tcHmiServerHost": "localhost",
     "tcHmiServerPort": "1010",
     "socketTimeout": "60",

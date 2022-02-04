@@ -97,10 +97,12 @@ END_IF
 
 IF bConfirmAlarm THEN
 	fbAlarm.Confirm(0);
+	bConfirmAlarm := FALSE;
 END_IF
 
 IF bClearAlarm THEN
 	fbAlarm.Clear(0, FALSE);
+	bClearAlarm := FALSE;
 END_IF]]></ST>
     </Implementation>
   </POU>

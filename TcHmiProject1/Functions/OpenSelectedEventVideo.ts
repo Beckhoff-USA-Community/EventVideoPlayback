@@ -32,8 +32,9 @@
                 //check if the file exists in the virtual directory
                 console.log("FileName: ", FileName);
                 let FileExists = false;
-                await CheckforVideo(par1, FileName).then((value) => { FileExists = value; }, (error) => { console.log(error); });
+                await CheckforVideo( FileName).then((value) => { FileExists = value; }, (error) => { console.log(error); });
                 if (!FileExists) {
+                    window.alert("A video file for that event was not found!");
                     return;
                 }
                 //since the file exists, load the video player and set its source to our found video
@@ -44,13 +45,14 @@
                     return;
                 }
                 region.setTargetContent("VideoPlayback/VideoPlayer.content");
+                //give the content time to attach its elements.
                 await sleep(200);
                 let VideoPlayer = TcHmi.Controls.get<TcHmi.Controls.Beckhoff.TcHmiVideo>("TcHmiVideo");
                 if (VideoPlayer === undefined) {
                     console.log("Unable to find TcHmiVideo");
                     return;
                 }
-
+                
 
                 temp = "/Videos/"
                 FileName = temp.concat(FileName);

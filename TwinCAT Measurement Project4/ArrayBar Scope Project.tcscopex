@@ -24,14 +24,13 @@
   <ImageAutoDeleteCapacity>0</ImageAutoDeleteCapacity>
   <ImageAutoDeleteOlderThan>0</ImageAutoDeleteOlderThan>
   <ImagesDeleteMode>Disabled</ImagesDeleteMode>
-  <IsTemplate>false</IsTemplate>
   <Layout>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;Layout&gt;
-  &lt;Window Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" LastFocused="132876173124841268" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
-  &lt;Window Guid="bae2eca7-cca7-4095-8e73-608e486124ee" LastFocused="132875365250280260" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+  &lt;Window Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" LastFocused="132884585562340190" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+  &lt;Window Guid="bae2eca7-cca7-4095-8e73-608e486124ee" LastFocused="132884654172466756" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;DocumentContainer Dock="5"&gt;
     &lt;SplitLayoutSystem WorkingSize="250, 400" SplitMode="0"&gt;
-      &lt;ControlLayoutSystem WorkingSize="250, 400" Guid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" Collapsed="0" SelectedControl="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe"&gt;
+      &lt;ControlLayoutSystem WorkingSize="250, 400" Guid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" Collapsed="0" SelectedControl="bae2eca7-cca7-4095-8e73-608e486124ee"&gt;
         &lt;Controls&gt;
           &lt;Control Guid="bae2eca7-cca7-4095-8e73-608e486124ee" /&gt;
           &lt;Control Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" /&gt;
@@ -44,7 +43,7 @@
   <Name>Scope Project</Name>
   <RecordTime>300000000</RecordTime>
   <ServerVersions>
-    <Version>3.4.3145.10</Version>
+    <Version>3.4.3146.1</Version>
   </ServerVersions>
   <SortPriority>100</SortPriority>
   <StopMode>ClientStop</StopMode>
@@ -80,7 +79,7 @@
           <DataType>UINT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>1</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>3dda7a18-26a6-4072-865e-54971a9dfd60</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -170,7 +169,7 @@
           <DataType>UINT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>2</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>95b4cd64-d83a-4769-840c-a8f846104911</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -260,7 +259,7 @@
           <DataType>UINT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>3</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>a6f5061d-3fc5-40db-b45c-588a4f1297c4</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -350,7 +349,7 @@
           <DataType>IMAGE</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>4</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -407,8 +406,11 @@
           <SortPriority>10</SortPriority>
           <SubMember>
             <ImageSize AssemblyName="TwinCAT.Measurement.Scope.API.Model">
+              <Channels>0</Channels>
               <Comment />
+              <DataSize>0</DataSize>
               <DisplayColor>Black</DisplayColor>
+              <ElementType>0</ElementType>
               <Guid>ec0312a0-d9d5-4c1a-8bfc-8e190a3b728e</Guid>
               <ImageHeight>508</ImageHeight>
               <ImageWidth>968</ImageWidth>
@@ -451,7 +453,7 @@
           <DataType>BIT</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>5</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>8cd4470d-d1a6-4a77-ac7f-eff856354578</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -513,12 +515,15 @@
       <Title>DataPool_49</Title>
     </DataPool>
     <ArrayBarChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
+      <AnchorTimestamp>0</AnchorTimestamp>
       <AssignedCore>0</AssignedCore>
       <AutoStart>true</AutoStart>
       <BarOrientation>Vertical</BarOrientation>
       <Comment />
+      <ConnectedTimeMemberGuid>00000000-0000-0000-0000-000000000000</ConnectedTimeMemberGuid>
       <DefaultDisplayWidth>100000000</DefaultDisplayWidth>
       <DisplayColor>-986896</DisplayColor>
+      <DurationLength>0</DurationLength>
       <ForeColor>-16777216</ForeColor>
       <Guid>bae2eca7-cca7-4095-8e73-608e486124ee</Guid>
       <MasterChart>00000000-0000-0000-0000-000000000000</MasterChart>
@@ -626,7 +631,6 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>d8e97a68-a381-4e78-93d7-d5c307825985</Guid>
-                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: aHistogramBlue</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -746,7 +750,6 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>ca45620c-b84a-4123-bde4-0f422af908e1</Guid>
-                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: aHistogramGreen</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -866,7 +869,6 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>185eaa89-d2a3-4abf-89c1-2a0fcae7bb97</Guid>
-                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: aHistogramRed</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -1005,6 +1007,7 @@
               <EnabledButtons>RunButton PauseButton Splitter1 DisplaywidthTextBox Splitter2 ScrollBackBig ScrollBackSmall ScrollForwardSmall ScrollForwardBig Splitter3 PositionTextBox Splitter4 UndoButton RedoButton Splitter5 PanXButton PanXYButton ZoomXButton ZoomXYButton UnzoomButton ZoomOutMaxButton CopyToClipboard</EnabledButtons>
               <EnabledTimeLabels>All</EnabledTimeLabels>
               <Guid>30f44ccc-846b-45bd-bd2a-eaf50fbde077</Guid>
+              <IndexNavigation>false</IndexNavigation>
               <Name>Chartmenu Style</Name>
               <SortPriority>100</SortPriority>
               <TimeStripFontSize>8.25</TimeStripFontSize>
@@ -1028,7 +1031,10 @@
           <Title>MarkerContainer_37</Title>
         </MarkerContainer>
       </SubMember>
+      <TimeOffset>0</TimeOffset>
+      <TimeRefreshMode>Explicit</TimeRefreshMode>
       <Title>ArrayBarChart_50</Title>
+      <TriggerGroupOffset>0</TriggerGroupOffset>
     </ArrayBarChart>
     <TriggerModule AssemblyName="TwinCAT.Measurement.Scope.API.Model">
       <Comment />
@@ -1082,12 +1088,12 @@
             </TriggerTimeOffset>
             <ChannelTriggerSet AssemblyName="TwinCAT.Measurement.Scope.API.Model">
               <AcquisitionInterpreterGuid>ae1603aa-69ef-43b0-8f2e-8189d545df15</AcquisitionInterpreterGuid>
-              <ClientTriggerHandle>1</ClientTriggerHandle>
+              <ClientTriggerHandle>2</ClientTriggerHandle>
               <CombineOption>AND</CombineOption>
               <Comment />
               <DisplayColor>Black</DisplayColor>
               <Enabled>true</Enabled>
-              <GroupHandle>1</GroupHandle>
+              <GroupHandle>2</GroupHandle>
               <Guid>43d2d132-d080-41e7-9a18-9b424be61e18</Guid>
               <Name>AnAlarmHappened</Name>
               <ReleaseOption>RisingEdge</ReleaseOption>
@@ -1099,7 +1105,6 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>ae1603aa-69ef-43b0-8f2e-8189d545df15</Guid>
-                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Trigger: ErrorOccured</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -1157,6 +1162,7 @@
           <TriggerPrePercent>0</TriggerPrePercent>
           <UsePostTrigger>true</UsePostTrigger>
           <UsePreTrigger>true</UsePreTrigger>
+          <UseServerFileSystem>false</UseServerFileSystem>
           <Visible>true</Visible>
           <VisibleReleaseInfoCapacity>-1</VisibleReleaseInfoCapacity>
         </TriggerGroup>
@@ -1209,16 +1215,20 @@
           <SortPriority>100</SortPriority>
           <SubMember>
             <DirectoryTriggerSet AssemblyName="TwinCAT.Measurement.Scope.API.Model">
+              <ClientTriggerHandle>4294967295</ClientTriggerHandle>
               <Comment />
               <DisplayColor>Black</DisplayColor>
               <Enabled>true</Enabled>
+              <GroupHandle>4294967295</GroupHandle>
               <Guid>9ebedc50-0119-41f7-9faa-78c9c9ba59cd</Guid>
               <IncludeSubdirectories>true</IncludeSubdirectories>
               <Name>Directory Trigger Set</Name>
               <ObservedPath>C:\Temp\Scope Project_Img_test</ObservedPath>
+              <ObservedSystem />
               <SortPriority>100</SortPriority>
               <SubMember />
               <Title>DirectoryTriggerSet_56</Title>
+              <UseServerFileSystem>false</UseServerFileSystem>
             </DirectoryTriggerSet>
             <TriggerTimeOffset AssemblyName="TwinCAT.Measurement.Scope.API.Model">
               <Comment />
@@ -1237,6 +1247,7 @@
           <TriggerPrePercent>0</TriggerPrePercent>
           <UsePostTrigger>true</UsePostTrigger>
           <UsePreTrigger>true</UsePreTrigger>
+          <UseServerFileSystem>false</UseServerFileSystem>
           <Visible>true</Visible>
           <VisibleReleaseInfoCapacity>-1</VisibleReleaseInfoCapacity>
         </TriggerGroup>
@@ -1244,12 +1255,15 @@
       <Title>TriggerModule_60</Title>
     </TriggerModule>
     <YTChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
+      <AnchorTimestamp>0</AnchorTimestamp>
       <AssignedCore>0</AssignedCore>
       <AutoStart>true</AutoStart>
       <Comment />
+      <ConnectedTimeMemberGuid>00000000-0000-0000-0000-000000000000</ConnectedTimeMemberGuid>
       <DefaultDisplayWidth>100000000</DefaultDisplayWidth>
       <DisplayColor>-986896</DisplayColor>
       <DisplayOverwriteMode>false</DisplayOverwriteMode>
+      <DurationLength>0</DurationLength>
       <ForeColor>-16777216</ForeColor>
       <Guid>e1b2b3ea-511d-4e90-b988-9a9c4379e6fe</Guid>
       <MasterChart>00000000-0000-0000-0000-000000000000</MasterChart>
@@ -1297,6 +1311,7 @@
               <EnabledButtons>AllYTMaster</EnabledButtons>
               <EnabledTimeLabels>All</EnabledTimeLabels>
               <Guid>c135b801-1005-4462-ac82-82ae625ed63d</Guid>
+              <IndexNavigation>false</IndexNavigation>
               <Name>Chartmenu Style (1)</Name>
               <SortPriority>100</SortPriority>
               <TimeStripFontSize>8.25</TimeStripFontSize>
@@ -1330,7 +1345,8 @@
               <MarkerType>Circle</MarkerType>
               <Name>ipImageResultDisp</Name>
               <Orientation>Vertical</Orientation>
-              <Position>1.3287792302701E+17</Position>
+              <Position>1.3288458831906E+17</Position>
+              <ShowFullArray>true</ShowFullArray>
               <ShowPosition>false</ShowPosition>
               <ShowTitle>true</ShowTitle>
               <SortPriority>100</SortPriority>
@@ -1345,7 +1361,7 @@
                   <Title>ImageStreamStyle_44</Title>
                 </ImageStreamStyle>
               </SubMember>
-              <TimePosition>132877923027010000</TimePosition>
+              <TimePosition>132884600810260000</TimePosition>
               <Title>ipImageResultDisp</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>
@@ -1453,7 +1469,6 @@
                   <Comment />
                   <DisplayColor>Black</DisplayColor>
                   <Guid>1e508380-901b-41a3-bcf6-5b20b7d6fb22</Guid>
-                  <HideInHierarchy>false</HideInHierarchy>
                   <Name>Y: ErrorOccured</Name>
                   <Offset>0</Offset>
                   <ResultingUnit>
@@ -1552,7 +1567,10 @@
           <Title>AxisGroup_71</Title>
         </AxisGroup>
       </SubMember>
+      <TimeOffset>0</TimeOffset>
+      <TimeRefreshMode>Explicit</TimeRefreshMode>
       <Title>YTChart_61</Title>
+      <TriggerGroupOffset>0</TriggerGroupOffset>
     </YTChart>
   </SubMember>
   <SynchronisationMode>Default</SynchronisationMode>
@@ -1560,7 +1578,6 @@
   <Title>ScopeProject_3</Title>
   <UseAutoSave>false</UseAutoSave>
   <UseFileStore>true</UseFileStore>
-  <UseUserSettings>true</UseUserSettings>
-  <Version>1.0.0.0</Version>
+  <Version>1.0.0.1</Version>
   <ViewDetailLevel>Default</ViewDetailLevel>
 </ScopeProject>

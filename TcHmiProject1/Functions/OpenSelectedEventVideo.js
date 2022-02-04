@@ -43,8 +43,9 @@ var TcHmi;
                     //check if the file exists in the virtual directory
                     console.log("FileName: ", FileName);
                     let FileExists = false;
-                    yield TcHmiProject1.CheckforVideo(par1, FileName).then((value) => { FileExists = value; }, (error) => { console.log(error); });
+                    yield TcHmiProject1.CheckforVideo(FileName).then((value) => { FileExists = value; }, (error) => { console.log(error); });
                     if (!FileExists) {
+                        window.alert("A video file for that event was not found!");
                         return;
                     }
                     //since the file exists, load the video player and set its source to our found video
@@ -55,6 +56,7 @@ var TcHmi;
                         return;
                     }
                     region.setTargetContent("VideoPlayback/VideoPlayer.content");
+                    //give the content time to attach its elements.
                     yield sleep(200);
                     let VideoPlayer = TcHmi.Controls.get("TcHmiVideo");
                     if (VideoPlayer === undefined) {

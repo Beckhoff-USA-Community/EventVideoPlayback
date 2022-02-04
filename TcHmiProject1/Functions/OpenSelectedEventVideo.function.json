@@ -4,7 +4,7 @@
     "namespace": "TcHmi.Functions.TcHmiProject1",
     "displayName": "OpenSelectedEventVideo",
     "description": "",
-    "waitMode": "Asynchronous",
+    "waitMode": null,
     "category": "",
     "returnValue": {
       "type": "tchmi:general#/definitions/String"
@@ -17,21 +17,9 @@
         "displayName": "ctx",
         "type": "tchmi:framework#/definitions/ContextReference",
         "description": "Context Reference",
-        "defaultValue": null,
-        "required": true,
-        "bindable": false,
-        "restParameter": false,
-        "asReference": false,
-        "allowControlAttributeBindingOptions": false
-      },
-      {
-        "name": "par1",
-        "displayName": "Parameter",
-        "type": "tchmi:general#/definitions/Number",
-        "description": "This is an important Parameter which does... This text is used in a tooltip.",
         "defaultValue": "",
         "required": true,
-        "bindable": true,
+        "bindable": false,
         "restParameter": false,
         "asReference": false,
         "allowControlAttributeBindingOptions": false

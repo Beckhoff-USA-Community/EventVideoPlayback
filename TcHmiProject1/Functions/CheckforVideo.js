@@ -13,7 +13,7 @@ var TcHmi;
     (function (Functions) {
         let TcHmiProject1;
         (function (TcHmiProject1) {
-            function CheckforVideo(FileName) {
+            function CheckforVideo(ctx, FileName) {
                 return __awaiter(this, void 0, void 0, function* () {
                     let exists = false;
                     //declare promise to call the List Files function to list the files in the /Videos virtual directory

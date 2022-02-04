@@ -1,7 +1,7 @@
 ﻿module TcHmi {
     export module Functions {
         export module TcHmiProject1 {
-            export async function CheckforVideo( FileName: any): Promise<boolean> {
+            export async function CheckforVideo(ctx: any, FileName: any): Promise<boolean> {
                 let exists = false;
                 //declare promise to call the List Files function to list the files in the /Videos virtual directory
                 //if thre is an error, return rejected. else return resolved.

@@ -29,6 +29,7 @@ bClearAlarm: BOOL;
 	sTEMP			: STRING;
 	sFileName		: STRING;
 	RecordCreated	: BOOL;
+	sDump			: STRING;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -68,7 +69,10 @@ IF ErrorOccured THEN
 	sTEMP := SYSTEMTIME_TO_STRING(EventTimestamp);
 	FindAndReplaceChar(ADR(sTEMP),':','-',ADR(sFileName),SIZEOF(sFileName));
 	sTEMP := sFileName;
-	FindAndReplaceChar(ADR(sTEMP),'.','-',ADR(sFileName),SIZEOF(sFileName));
+	//FindAndReplaceChar(ADR(sTEMP),'.','-',ADR(sFileName),SIZEOF(sFileName));
+	//remove milliseconds from timestamp.
+	FindAndSplitChar(sSeparatorChar:='.',pSrcString:= ADR(sTEMP),pLeftString :=ADR(sFileName),
+	nLeftSize:= SIZEOF(FileName), pRightString := ADR(sDump), nRightSize := SIZEOF(sDump),bSearchFromRight := FALSE);
 END_IF
 //create batch file command string
 Command := CONCAT(Command, ' "');
@@ -97,10 +101,12 @@ END_IF
 
 IF bConfirmAlarm THEN
 	fbAlarm.Confirm(0);
+	bConfirmAlarm := FALSE;
 END_IF
 
 IF bClearAlarm THEN
 	fbAlarm.Clear(0, FALSE);
+	bClearAlarm := FALSE;
 END_IF]]></ST>
     </Implementation>
   </POU>

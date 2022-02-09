@@ -35,7 +35,7 @@
 </script>
 </div>
 
-<div id="TcHmiButton" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="49" data-tchmi-height-unit="px" data-tchmi-left="161" data-tchmi-left-unit="px" data-tchmi-text="Live Images" data-tchmi-top="514" data-tchmi-top-unit="px" data-tchmi-width="120" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true">
+<div id="TcHmiButton" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="49" data-tchmi-height-unit="px" data-tchmi-left="152" data-tchmi-left-unit="px" data-tchmi-text="Live Images" data-tchmi-top="541" data-tchmi-top-unit="px" data-tchmi-width="120" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -58,7 +58,7 @@
 ]
 </script>
 </div>
-<div id="TcHmiButton_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="49" data-tchmi-height-unit="px" data-tchmi-left="387" data-tchmi-left-unit="px" data-tchmi-text="Event View" data-tchmi-top="514" data-tchmi-top-unit="px" data-tchmi-width="120" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true">
+<div id="TcHmiButton_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="49" data-tchmi-height-unit="px" data-tchmi-left="413" data-tchmi-left-unit="px" data-tchmi-text="Event View" data-tchmi-top="541" data-tchmi-top-unit="px" data-tchmi-width="120" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -81,6 +81,6 @@
 ]
 </script>
 </div>
-<div id="TcHmiRegion" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="487" data-tchmi-height-unit="px" data-tchmi-left="16" data-tchmi-left-unit="px" data-tchmi-top="17" data-tchmi-top-unit="px" data-tchmi-width="777" data-tchmi-width-unit="px" data-tchmi-is-enabled="true" data-tchmi-target-content="LiveImageView/LiveImages.content">
+<div id="TcHmiRegion" data-tchmi-type="TcHmi.Controls.System.TcHmiRegion" data-tchmi-height="514" data-tchmi-height-unit="px" data-tchmi-left="21" data-tchmi-left-unit="px" data-tchmi-top="17" data-tchmi-top-unit="px" data-tchmi-width="777" data-tchmi-width-unit="px" data-tchmi-is-enabled="true" data-tchmi-target-content="LiveImageView/LiveImages.content">
 </div>
 </div>

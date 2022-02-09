@@ -37,15 +37,22 @@ var TcHmi;
                     let tempHour = number2String(timeStamp.getUTCHours());
                     let tempMinutes = number2String(timeStamp.getUTCMinutes());
                     let tempSeconds = number2String(timeStamp.getUTCSeconds());
-                    let tempMil = timeStamp.getUTCMilliseconds().toString();
-                    //example filename (YYYY-MM-DD-HH-mm-SS-ms): 2022-01-25-21-16-59-506.mp4           
-                    let FileName = temp.concat(tempYear, "-", tempMonth, "-", tempDate, "-", tempHour, "-", tempMinutes, "-", tempSeconds, "-", tempMil, ".mp4");
+                    let tempSecondsRollOver = number2String(timeStamp.getUTCSeconds());
+                    //let tempMils = timeStamp.getUTCMilliseconds().toString();
+                    //example filename (YYYY-MM-DD-HH-mm-SS-ms): 2022-01-25-21-16-59.mp4           
+                    let FileName = temp.concat(tempYear, "-", tempMonth, "-", tempDate, "-", tempHour, "-", tempMinutes, "-", tempSeconds, ".mp4");
                     //check if the file exists in the virtual directory
                     console.log("FileName: ", FileName);
                     let FileExists = false;
                     yield TcHmiProject1.CheckforVideo(par1, FileName).then((value) => { FileExists = value; }, (error) => { console.log(error); });
+                    //if the first check doesn't succeed, make sure that it is not from the time between raising and receiving the event causing the seconds to roll over to the next.
                     if (!FileExists) {
-                        return;
+                        let FileName = temp.concat(tempYear, "-", tempMonth, "-", tempDate, "-", tempHour, "-", tempMinutes, "-", tempSecondsRollOver, ".mp4");
+                        yield TcHmiProject1.CheckforVideo(par1, FileName).then((value) => { FileExists = value; }, (error) => { console.log(error); });
+                        if (!FileExists) {
+                            window.alert("No accompanying video was found for that event!");
+                            return;
+                        }
                     }
                     //since the file exists, load the video player and set its source to our found video
                     //need to change the region first, as the video player control has not been attached, yet.                       

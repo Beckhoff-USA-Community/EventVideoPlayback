@@ -3176,6 +3176,20 @@
 			</SubItem>
 		</DataType>
 		<DataType>
+			<Name GUID="{4595488E-F19A-4EDD-9C7E-F1EF28BEC8FA}" PersistentType="true">VideoAlarmDemoEventClass</Name>
+			<DisplayName TxtId=""><![CDATA[NewEventClass_DisplayText]]></DisplayName>
+			<EventId>
+				<Name Id="1">MachineError</Name>
+				<DisplayName TxtId=""><![CDATA[An Issue occured on the machine-  maybe we missed a sensor?]]></DisplayName>
+				<Severity>Error</Severity>
+			</EventId>
+			<Hides>
+				<Hide GUID="{E029A791-097C-4F7F-AA3B-B31271C49D09}"/>
+				<Hide GUID="{31F76320-C797-4148-9E65-24F00B777BC6}"/>
+				<Hide GUID="{FF5D8341-FE66-44AD-8413-575C7A178B52}"/>
+			</Hides>
+		</DataType>
+		<DataType>
 			<Name GUID="{2B353D13-18B2-4617-86DF-03B9792C0361}" Namespace="VN" PersistentType="true">TcVnArray7_LREAL</Name>
 			<Comment><![CDATA[Seven-dimensional array of element-type LREAL.]]></Comment>
 			<BitSize>448</BitSize>
@@ -4118,20 +4132,6 @@
 				<Hide GUID="{E029A791-097C-4F7F-AA3B-B31271C49D09}"/>
 			</Hides>
 		</DataType>
-		<DataType>
-			<Name GUID="{4595488E-F19A-4EDD-9C7E-F1EF28BEC8FA}" PersistentType="true">VideoAlarmDemoEventClass</Name>
-			<DisplayName TxtId=""><![CDATA[NewEventClass_DisplayText]]></DisplayName>
-			<EventId>
-				<Name Id="1">MachineError</Name>
-				<DisplayName TxtId=""><![CDATA[An Issue occured on the machine-  maybe we missed a sensor?]]></DisplayName>
-				<Severity>Error</Severity>
-			</EventId>
-			<Hides>
-				<Hide GUID="{E029A791-097C-4F7F-AA3B-B31271C49D09}"/>
-				<Hide GUID="{31F76320-C797-4148-9E65-24F00B777BC6}"/>
-				<Hide GUID="{FF5D8341-FE66-44AD-8413-575C7A178B52}"/>
-			</Hides>
-		</DataType>
 	</DataTypes>
 	<ImageDatas>
 		<ImageData Id="1000">424d360300000000000036000000280000001000000010000000010018000000000000000000c40e0000c40e00000000000000000000554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3be1d7d1e1d7d1e1d7d1e1d7d1e1d7d1e1d7d1e1d7d1dfd6cfdfd6cfdfd6cfdfd6cfdfd6cfdfd6cfdfd6cf554f3b554f3be3dbd4e3dbd4554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3bdfd6cfdfd6cf554f3b554f3be3dbd4e3dbd4554f3bc1b39ac1b399c0b299bfb097beae94bbac90b8a88cb7a488554f3bdfd6cfdfd6cf554f3b554f3bece4dfece4df554f3bc6b9a3c6b8a2c5b7a0c4b59fc2b49bbfb197bdae92baaa8d554f3bdfd6cfdfd6cf554f3b554f3bece4dfece4df554f3bcbbfaacbbeaac9bda9c9bba5c6b8a2c3b59ec0b298bdae93554f3bdfd6cfdfd6cf554f3b554f3bece4dfece4df554f3bcfc6b1d0c4b1cec3afcdc1adcabea8c7baa5c4b69ec0b298554f3be1d7d1dfd6cf554f3b554f3beee6e1eee6e1554f3bd4cabad4cabad2c9b6d1c6b3cec3afcabfa9c8baa4c4b59e554f3be1d7d1dfd6cf554f3b554f3bf2ebe7f2ebe7554f3b554f3b554f3bd7cfbed4cbbad2c7b4cec2af554f3b554f3b554f3be3dbd4e1d7d1554f3b554f3bf2ebe7f2ebe7f5eeebf2ebe7554f3bdad4c4d8cfbfd4cabad0c6b3554f3be7ded9e3dbd4e3dbd4e1d7d1554f3b554f3bf5eeebf5eeebf5eeebf5eeeb554f3bded8cbdad3c4d7cdbdd2c8b6554f3bece4dfe3dbd4e3dbd4e1d7d1554f3b554f3bf5eeebf5eeeb554f3b554f3b554f3be1dbcfdcd6c7d8cfbfd3c9b8554f3b554f3b554f3be3dbd4e1d7d1554f3b554f3bf5eeebf7f0ed554f3be8e3dbe5e1d7e1dbcfddd5c8d8cfbfd3cab7cec4b0c9bda8554f3be3dbd4e1d7d1554f3b554f3bf5eeebf5eeeb554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3be3dbd4e1d7d1554f3b554f3bf5eeebf5eeebf5eeebf5eeebf5eeebf2ebe7f2ebe7eee6e1ece4dfece4dfece4dfe3dbd4e3dbd4e1d7d1554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b554f3b</ImageData>
@@ -4139,9 +4139,9 @@
 	</ImageDatas>
 	<Project ProjectGUID="{8F35598F-7819-4BAA-B346-0A73F46ADD3A}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
-			<Settings MaxCpus="12" RouterMemory="267386880">
-				<Cpu CpuId="10"/>
-				<Cpu CpuId="11"/>
+			<Settings MaxCpus="8" RouterMemory="267386880">
+				<Cpu/>
+				<Cpu CpuId="7"/>
 			</Settings>
 			<Licenses>
 				<Target>
@@ -4158,11 +4158,11 @@
 				<Task Id="5" Priority="6" CycleTime="100000" AmsPort="352" AdtTasks="true">
 					<Name>VnTask ADS (Camera1)</Name>
 				</Task>
-				<Task Id="6" Priority="1" Affinity="#x00000400" AdtTasks="true" JobTask="true">
+				<Task Id="6" Priority="1" Affinity="#x00000001" AdtTasks="true" JobTask="true">
 					<Name>Task 6</Name>
 					<ImageId>327</ImageId>
 				</Task>
-				<Task Id="7" Priority="2" Affinity="#x00000400" AdtTasks="true" JobTask="true">
+				<Task Id="7" Priority="2" Affinity="#x00000001" AdtTasks="true" JobTask="true">
 					<Name>Task 7</Name>
 					<ImageId>327</ImageId>
 				</Task>

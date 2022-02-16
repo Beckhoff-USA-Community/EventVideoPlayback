@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.22" TcVersionFixed="true">
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.22" TcProjectVariant="RealCamera" TcVersionFixed="true">
 	<DataTypes>
 		<DataType>
 			<Name GUID="{DB6B59A0-4FB0-4B14-A83C-AC7A76AD688D}">JobTaskId</Name>
@@ -5371,8 +5371,18 @@
 			</App>
 		</Vision>
 		<Io>
-			<Device Id="1" Disabled="true" DevType="109" DevFlags="#x0004">
+			<Device Id="1" DevType="109" DevFlags="#x0004">
 				<Name>Device 1 (RT-Ethernet Adapter)</Name>
+				<ProjectVariant PvUseDisable="true">
+					<Variant>
+						<Name>RealCamera</Name>
+						<Disable>0</Disable>
+					</Variant>
+					<Variant>
+						<Name>SimulationCamera</Name>
+						<Disable>1</Disable>
+					</Variant>
+				</ProjectVariant>
 				<AddressInfo>
 					<Pnp>
 						<DeviceDesc>Ethernet 4 (TwinCAT-Intel PCI Ethernet Adapter (Gig</DeviceDesc>
@@ -5844,5 +5854,13 @@
 				</Ethernet>
 			</Device>
 		</Io>
+		<Variants SpecificLocalBootFolder="true">
+			<Variant>
+				<Name>SimulationCamera</Name>
+			</Variant>
+			<Variant>
+				<Name>RealCamera</Name>
+			</Variant>
+		</Variants>
 	</Project>
 </TcSmProject>

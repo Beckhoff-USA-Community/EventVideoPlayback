@@ -4139,7 +4139,7 @@
 	</ImageDatas>
 	<Project ProjectGUID="{8F35598F-7819-4BAA-B346-0A73F46ADD3A}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
-			<Settings MaxCpus="12" NonWinCpus="6" RouterMemory="267386880">
+			<Settings MaxCpus="16" RouterMemory="267386880">
 				<Cpu CpuId="9"/>
 				<Cpu CpuId="10"/>
 				<Cpu CpuId="11"/>
@@ -4163,7 +4163,7 @@
 					<Name>Task 6</Name>
 					<ImageId>327</ImageId>
 				</Task>
-				<Task Id="7" Priority="2" Affinity="#x00000800" AdtTasks="true" JobTask="true">
+				<Task Id="7" Priority="2" Affinity="#x00000200" AdtTasks="true" JobTask="true">
 					<Name>Task 7</Name>
 					<ImageId>327</ImageId>
 				</Task>

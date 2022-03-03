@@ -43,7 +43,7 @@
   <Name>Scope Project</Name>
   <RecordTime>300000000</RecordTime>
   <ServerVersions>
-    <Version>3.4.3146.0</Version>
+    <Version>3.4.3146.1</Version>
   </ServerVersions>
   <SortPriority>100</SortPriority>
   <StopMode>ClientStop</StopMode>
@@ -79,7 +79,7 @@
           <DataType>UINT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>1</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>3dda7a18-26a6-4072-865e-54971a9dfd60</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -169,7 +169,7 @@
           <DataType>UINT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>2</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>95b4cd64-d83a-4769-840c-a8f846104911</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -259,7 +259,7 @@
           <DataType>UINT32</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>3</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>a6f5061d-3fc5-40db-b45c-588a4f1297c4</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -349,7 +349,7 @@
           <DataType>IMAGE</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>4</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -453,7 +453,7 @@
           <DataType>BIT</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>5</FileHandle>
+          <FileHandle>0</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>8cd4470d-d1a6-4a77-ac7f-eff856354578</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -1333,19 +1333,19 @@
           <SortPriority>100</SortPriority>
           <SubMember>
             <ImageMarker AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-              <AttachToAxis>false</AttachToAxis>
+              <AttachToAxis>true</AttachToAxis>
               <Bandwidth>0</Bandwidth>
               <Comment />
               <DisplayColor>-23296</DisplayColor>
               <Guid>40b0ee18-addb-434c-922f-cef8ac6daff2</Guid>
               <ImageAcquisitionGuid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</ImageAcquisitionGuid>
               <LineStyle>Solid</LineStyle>
-              <Locked>true</Locked>
+              <Locked>false</Locked>
               <Marker3DType>AllPoints</Marker3DType>
               <MarkerType>Circle</MarkerType>
               <Name>ipImageResultDisp</Name>
               <Orientation>Vertical</Orientation>
-              <Position>100</Position>
+              <Position>1.3290127236601E+17</Position>
               <ShowFullArray>true</ShowFullArray>
               <ShowPosition>false</ShowPosition>
               <ShowTitle>true</ShowTitle>
@@ -1361,7 +1361,7 @@
                   <Title>ImageStreamStyle_44</Title>
                 </ImageStreamStyle>
               </SubMember>
-              <TimePosition>132888978639040000</TimePosition>
+              <TimePosition>132901272366010000</TimePosition>
               <Title>ipImageResultDisp</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>

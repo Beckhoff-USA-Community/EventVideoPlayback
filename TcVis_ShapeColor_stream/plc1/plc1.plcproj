@@ -22,8 +22,8 @@
         <Event>
           <CommandType>Copy</CommandType>
           <DeploymentType>ActivateConfiguration</DeploymentType>
-          <Command1>C:\Temp\Sample TC Project with HMI\Solution\Solution\VideoPlaybackSupportFiles\Images2Video.bat</Command1>
-          <Command2>C:\TwinCAT\3.1\boot</Command2>
+          <Command1>%SOLUTIONPATH%VideoPlaybackSupportFiles\Images2Video.bat</Command1>
+          <Command2>%TC_BOOTPRJPATH%Images2Video.bat</Command2>
         </Event>
       </Events>
     </DeploymentEvents>

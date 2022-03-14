@@ -26,11 +26,7 @@
     <HmiCommunicationRouterPort>10110</HmiCommunicationRouterPort>
     <HmiCommunicationServerAuthPort>13000</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.742.0</HmiInitial>
-<<<<<<< Updated upstream
-    <HmiRecent>1.12.750.1</HmiRecent>
-=======
     <HmiRecent>1.12.754.4</HmiRecent>
->>>>>>> Stashed changes
     <HmiServerNodeAdvancedView>False</HmiServerNodeAdvancedView>
   </PropertyGroup>
   <PropertyGroup>

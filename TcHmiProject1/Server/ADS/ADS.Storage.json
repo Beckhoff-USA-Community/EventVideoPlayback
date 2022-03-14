@@ -1,1 +1,4 @@
-{"configVersion":"1.0.0.37"}
+{
+    "configVersion": "1.0.0.38",
+    "extensionPath": "TcHmiAds/"
+}

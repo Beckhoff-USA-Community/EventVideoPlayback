@@ -18,7 +18,7 @@ Command			: STRING(1000);
 
 //ImageName 				: STRING	  := 'ipImageResultDisp';  //name of the image, this can be found in the image pool in scope
 VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
-ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\';
+ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\ipImageResultDisp\';
 
 EventTimestamp: TimeStruct;
 bConfirmAlarm: BOOL;
@@ -110,11 +110,5 @@ IF bClearAlarm THEN
 	bClearAlarm := FALSE;
 END_IF]]></ST>
     </Implementation>
-    <LineIds Name="ScopeRecordTestCode">
-      <LineId Id="3" Count="19" />
-      <LineId Id="107" Count="0" />
-      <LineId Id="23" Count="53" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

@@ -50,7 +50,8 @@ var TcHmi;
                         let FileName = temp.concat(tempYear, "-", tempMonth, "-", tempDate, "-", tempHour, "-", tempMinutes, "-", tempSecondsRollOver, ".mp4");
                         yield TcHmiProject1.CheckforVideo(par1, FileName).then((value) => { FileExists = value; }, (error) => { console.log(error); });
                         if (!FileExists) {
-                            window.alert("No accompanying video was found for that event!");
+                            let alert = TcHmi.Controls.get("cntnrAlert");
+                            alert === null || alert === void 0 ? void 0 : alert.setVisibility("Visible");
                             return;
                         }
                     }
@@ -70,7 +71,6 @@ var TcHmi;
                     }
                     temp = "/Videos/";
                     FileName = temp.concat(FileName);
-                    console.log("virtual file path: ", FileName);
                     VideoPlayer.setSrcList([{ source: FileName, type: "video/mp4" }]);
                 });
             } //function

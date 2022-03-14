@@ -20,13 +20,13 @@
                 let temp = '';
                 let timeStamp = SelectedEvent.timeReceived;
 
-                let tempYear    =   timeStamp.getUTCFullYear().toString();
-                let tempMonth   =   number2String((timeStamp.getUTCMonth() + 1));
-                let tempDate    =   number2String(timeStamp.getUTCDate());
-                let tempHour    =   number2String(timeStamp.getUTCHours());
-                let tempMinutes =   number2String(timeStamp.getUTCMinutes());
-                let tempSeconds = number2String(timeStamp.getUTCSeconds());
-                let tempSecondsRollOver = number2String(timeStamp.getUTCSeconds());
+                let tempYear            =   timeStamp.getUTCFullYear().toString();
+                let tempMonth           =   number2String((timeStamp.getUTCMonth() + 1));
+                let tempDate            =   number2String(timeStamp.getUTCDate());
+                let tempHour            =   number2String(timeStamp.getUTCHours());
+                let tempMinutes         =   number2String(timeStamp.getUTCMinutes());
+                let tempSeconds         =   number2String(timeStamp.getUTCSeconds());
+                let tempSecondsRollOver =   number2String(timeStamp.getUTCSeconds());
                 //let tempMils = timeStamp.getUTCMilliseconds().toString();
                 
 
@@ -42,7 +42,8 @@
                     let FileName = temp.concat(tempYear, "-", tempMonth, "-", tempDate, "-", tempHour, "-", tempMinutes, "-", tempSecondsRollOver, ".mp4");
                     await CheckforVideo(par1, FileName).then((value) => { FileExists = value; }, (error) => { console.log(error); });
                     if (!FileExists) {
-                        window.alert("No accompanying video was found for that event!");
+                        let alert = TcHmi.Controls.get<TcHmi.Controls.System.TcHmiContainer>("cntnrAlert");
+                        alert?.setVisibility("Visible");
                         return;
                     }
                 }
@@ -64,7 +65,7 @@
 
                 temp = "/Videos/"
                 FileName = temp.concat(FileName);
-                console.log("virtual file path: ", FileName);
+                
                 
                 VideoPlayer.setSrcList([{source:FileName,type:"video/mp4"}]);
                

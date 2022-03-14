@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="ScopeRecordTestCode" Id="{c0c6cb4c-cfa1-4b71-acd5-11c9751fc94e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ScopeRecordTestCode
 VAR
@@ -18,7 +18,7 @@ Command			: STRING(1000);
 
 //ImageName 				: STRING	  := 'ipImageResultDisp';  //name of the image, this can be found in the image pool in scope
 VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
-ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\';
+ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\ipImageResultDisp\';
 
 EventTimestamp: TimeStruct;
 bConfirmAlarm: BOOL;

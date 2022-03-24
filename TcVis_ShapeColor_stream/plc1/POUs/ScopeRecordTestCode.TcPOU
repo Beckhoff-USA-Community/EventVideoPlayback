@@ -18,7 +18,7 @@ Command			: STRING(1000);
 
 //ImageName 				: STRING	  := 'ipImageResultDisp';  //name of the image, this can be found in the image pool in scope
 VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
-ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\';
+ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\ipImageResultDisp\';
 
 EventTimestamp: TimeStruct;
 bConfirmAlarm: BOOL;
@@ -38,6 +38,7 @@ END_VAR
 IF NOT bIsInitalized THEN
 	bIsInitalized := TRUE;
 	hr := fbAlarm.CreateEx(TC_EVENTS.VideoAlarmDemoEventClass.MachineError, TRUE, 0);
+	fbAlarm.SetJsonAttribute('{"CreateVideo":1}');
 	IF FAILED(hr) THEN
 		hrLastError := hr;
 	END_IF
@@ -111,7 +112,9 @@ IF bClearAlarm THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="ScopeRecordTestCode">
-      <LineId Id="3" Count="19" />
+      <LineId Id="3" Count="4" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="8" Count="14" />
       <LineId Id="107" Count="0" />
       <LineId Id="23" Count="53" />
       <LineId Id="2" Count="0" />

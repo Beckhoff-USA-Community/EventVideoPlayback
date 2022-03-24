@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="ImagesToVideo" Id="{4ed94054-832b-00ce-312f-2065dce12fa2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ImagesToVideo
+VAR_INPUT
+	ImageExportPath	: STRING(255);
+	VideoFilePath	: STRING(255);
+	JSONAttribute	: STRING(255);
+	
+END_VAR
+VAR_OUTPUT
+	bBusy	: BOOL;
+	bError	: BOOL;
+	nErrID	: UDINT;
+END_VAR
+VAR
+	Listener	: FB_ListenerBase2;
+	EventFilter	: FB_TcEventFilter;
+	hr			: HRESULT; 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//Listener.Execute();
+
+//Filter out events using JSON attribute
+//IF EventFilter.Clear().JsonAttribute = JSONAttribute THEN
+//	hr := Listener.Subscribe2(EventFilter);
+//END_IF
+
+//Call
+	 ]]></ST>
+    </Implementation>
+    <LineIds Name="ImagesToVideo">
+      <LineId Id="9" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

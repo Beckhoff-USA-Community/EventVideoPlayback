@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.9">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
   <POU Name="MAIN" Id="{4ee40909-3edd-4b49-a2c1-3171e5e2360e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
@@ -83,7 +83,7 @@ IF bReferenceLoaded THEN
 			hr:= F_VN_ConvertColorSpace(ipImageIn, ipImageWork, TCVN_CST_Bayer_RG_TO_RGB, hr);
 			hr:= F_VN_CopyIntoDisplayableImage(ipImageWork, ipImageDispColor, hr);
 			
-			//histograms of colors (not necessary)
+			(*//histograms of colors (not necessary)
 			hr:= F_VN_Histogram(ipImageWork, ipHistogram, hr);
 			hr:= F_VN_ExportSubContainer(ipHistogram, 0, ADR(aHistogramRed), 256*4, hr);
 			hr:= F_VN_ExportSubContainer(ipHistogram, 1, ADR(aHistogramGreen), 256*4, hr);
@@ -130,7 +130,7 @@ IF bReferenceLoaded THEN
 				END_WHILE
 			END_FOR
 			
-			hr:= F_VN_TransformIntoDisplayableImage(ipImageResult, ipImageResultDisp, hr);
+			hr:= F_VN_TransformIntoDisplayableImage(ipImageResult, ipImageResultDisp, hr);*)
 			
 		END_IF
 	END_CASE

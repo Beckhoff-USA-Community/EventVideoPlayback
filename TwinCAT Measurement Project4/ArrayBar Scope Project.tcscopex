@@ -26,8 +26,8 @@
   <ImagesDeleteMode>Disabled</ImagesDeleteMode>
   <Layout>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;Layout&gt;
-  &lt;Window Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" LastFocused="132917442626459712" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
-  &lt;Window Guid="bae2eca7-cca7-4095-8e73-608e486124ee" LastFocused="132917442600763291" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+  &lt;Window Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" LastFocused="132917613218208710" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+  &lt;Window Guid="bae2eca7-cca7-4095-8e73-608e486124ee" LastFocused="132917605961213672" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;DocumentContainer Dock="5"&gt;
     &lt;SplitLayoutSystem WorkingSize="250, 400" SplitMode="0"&gt;
       &lt;ControlLayoutSystem WorkingSize="250, 400" Guid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" Collapsed="0" SelectedControl="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe"&gt;
@@ -522,9 +522,9 @@
       <Comment />
       <ConnectedTimeMemberGuid>00000000-0000-0000-0000-000000000000</ConnectedTimeMemberGuid>
       <DefaultDisplayWidth>100000000</DefaultDisplayWidth>
-      <DisplayColor>-13816528</DisplayColor>
+      <DisplayColor>-986896</DisplayColor>
       <DurationLength>0</DurationLength>
-      <ForeColor>-921103</ForeColor>
+      <ForeColor>-16777216</ForeColor>
       <Guid>bae2eca7-cca7-4095-8e73-608e486124ee</Guid>
       <MasterChart>00000000-0000-0000-0000-000000000000</MasterChart>
       <Name>Array Bar Chart</Name>
@@ -534,7 +534,7 @@
       <SubMember>
         <AxisGroup AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
+          <DisplayColor>-1</DisplayColor>
           <Enabled>true</Enabled>
           <Guid>70df089d-923e-4228-9b4f-ae90c60f8f7c</Guid>
           <Name>Axis Group</Name>
@@ -555,9 +555,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>e5e497cc-a238-4638-b623-b78742a1abdf</Guid>
@@ -589,9 +589,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>62a856dc-a7f0-4ba8-bb20-fb56161df063</Guid>
@@ -1004,7 +1004,7 @@
               </ButtonSize>
               <Comment />
               <DisplayColor>Black</DisplayColor>
-              <EnabledButtons>RunButton PauseButton Splitter1 DisplaywidthTextBox Splitter2 ScrollBackBig ScrollBackSmall ScrollForwardSmall ScrollForwardBig Splitter3 PositionTextBox Splitter4 UndoButton RedoButton Splitter5 PanXButton PanXYButton ZoomXButton ZoomXYButton UnzoomButton ZoomOutMaxButton CopyToClipboard</EnabledButtons>
+              <EnabledButtons>AllArrayMaster</EnabledButtons>
               <EnabledTimeLabels>All</EnabledTimeLabels>
               <Guid>30f44ccc-846b-45bd-bd2a-eaf50fbde077</Guid>
               <IndexNavigation>false</IndexNavigation>
@@ -1027,7 +1027,33 @@
           <Guid>3b6f0b22-8a9c-4b9f-88e1-a2447e058087</Guid>
           <Name>Marker Container (1)</Name>
           <SortPriority>100</SortPriority>
-          <SubMember />
+          <SubMember>
+            <ImageMarker AssemblyName="TwinCAT.Measurement.Scope.API.Model">
+              <AttachToAxis>false</AttachToAxis>
+              <Bandwidth>0</Bandwidth>
+              <Comment />
+              <DisplayColor>Plum</DisplayColor>
+              <Guid>ed8c3b84-1d2f-4450-ae0c-267e155f9ce4</Guid>
+              <ImageAcquisitionGuid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</ImageAcquisitionGuid>
+              <LineStyle>Solid</LineStyle>
+              <Locked>false</Locked>
+              <Marker3DType>AllPoints</Marker3DType>
+              <MarkerType>Circle</MarkerType>
+              <Name>Image</Name>
+              <Orientation>Vertical</Orientation>
+              <Position>11</Position>
+              <ShowFullArray>true</ShowFullArray>
+              <ShowPosition>false</ShowPosition>
+              <ShowTitle>true</ShowTitle>
+              <SortPriority>100</SortPriority>
+              <SubMember />
+              <TimePosition>11000000</TimePosition>
+              <Title>Image</Title>
+              <ValuePrecision>4</ValuePrecision>
+              <Visible>true</Visible>
+              <Width>3</Width>
+            </ImageMarker>
+          </SubMember>
           <Title>MarkerContainer_37</Title>
         </MarkerContainer>
       </SubMember>
@@ -1063,7 +1089,6 @@
     &lt;JPEGProperties /&gt;
   &lt;/Format_Properties&gt;
 &lt;/ExportConfiguration&gt;</ExportConfigurationString>
-          <ExportFileNameMask>Export {I}</ExportFileNameMask>
           <ExportPath>C:\Temp\Scope Project_Img_test</ExportPath>
           <ExportTimeMode>TimeRange</ExportTimeMode>
           <ExportTimeRange>300000000</ExportTimeRange>
@@ -1158,7 +1183,6 @@
             </ChannelTriggerSet>
           </SubMember>
           <SubSaveLength>600000000</SubSaveLength>
-          <SubSaveNameMask>{ScopeProject}({I:4})_{yyyyMMdd_HH'h'mm'm'ss's'}</SubSaveNameMask>
           <SubSavePath>$ScopeProject$\SubSaves</SubSavePath>
           <Title>TriggerGroup_45</Title>
           <TriggerAction>EXPORT</TriggerAction>
@@ -1203,7 +1227,6 @@
     &lt;/CSVProperties&gt;
   &lt;/Format_Properties&gt;
 &lt;/ExportConfiguration&gt;</ExportConfigurationString>
-          <ExportFileNameMask>Export {I}</ExportFileNameMask>
           <ExportPath>$ScopeProject$\Trigger Group Export</ExportPath>
           <ExportTimeMode>SinceLastTrigger</ExportTimeMode>
           <ExportTimeRange>0</ExportTimeRange>
@@ -1217,7 +1240,7 @@
           <ReleaseInfoCapacity>20</ReleaseInfoCapacity>
           <RestartRecord>false</RestartRecord>
           <SeparateDirectoryPerExport>true</SeparateDirectoryPerExport>
-          <SortPriority>101</SortPriority>
+          <SortPriority>100</SortPriority>
           <SubMember>
             <DirectoryTriggerSet AssemblyName="TwinCAT.Measurement.Scope.API.Model">
               <ClientTriggerHandle>4294967295</ClientTriggerHandle>
@@ -1246,7 +1269,6 @@
             </TriggerTimeOffset>
           </SubMember>
           <SubSaveLength>600000000</SubSaveLength>
-          <SubSaveNameMask>{ScopeProject}({I:4})_{yyyyMMdd_HH'h'mm'm'ss's'}</SubSaveNameMask>
           <SubSavePath>$ScopeProject$\SubSaves</SubSavePath>
           <Title>TriggerGroup_57</Title>
           <TriggerAction>NONE</TriggerAction>
@@ -1267,10 +1289,10 @@
       <Comment />
       <ConnectedTimeMemberGuid>00000000-0000-0000-0000-000000000000</ConnectedTimeMemberGuid>
       <DefaultDisplayWidth>100000000</DefaultDisplayWidth>
-      <DisplayColor>-13816528</DisplayColor>
+      <DisplayColor>-986896</DisplayColor>
       <DisplayOverwriteMode>false</DisplayOverwriteMode>
       <DurationLength>0</DurationLength>
-      <ForeColor>-921103</ForeColor>
+      <ForeColor>-16777216</ForeColor>
       <Guid>e1b2b3ea-511d-4e90-b988-9a9c4379e6fe</Guid>
       <MasterChart>00000000-0000-0000-0000-000000000000</MasterChart>
       <Name>YT Chart</Name>
@@ -1279,8 +1301,8 @@
       <SubMember>
         <OverviewChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
-          <ForeColor>-921103</ForeColor>
+          <DisplayColor>-1</DisplayColor>
+          <ForeColor>-16777216</ForeColor>
           <Guid>dcba83cd-31c4-4800-88dd-965db9de3248</Guid>
           <Name>Overview Chart</Name>
           <OverviewVisible>false</OverviewVisible>
@@ -1378,7 +1400,7 @@
         </MarkerContainer>
         <AxisGroup AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <Comment />
-          <DisplayColor>-14342874</DisplayColor>
+          <DisplayColor>-1</DisplayColor>
           <Enabled>true</Enabled>
           <Guid>42c04e10-1a96-48ee-8ebe-a318f74990c2</Guid>
           <Name>Axis Group (1)</Name>
@@ -1399,9 +1421,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>c21d6427-dd65-4300-93df-400b337c8985</Guid>
@@ -1433,9 +1455,9 @@
               <SubMember>
                 <AxisStyle AssemblyName="TwinCAT.Measurement.Scope.API.Model">
                   <Comment />
-                  <DisplayColor>-921103</DisplayColor>
+                  <DisplayColor>-16777216</DisplayColor>
                   <Grid>true</Grid>
-                  <GridColor>-921103</GridColor>
+                  <GridColor>-16777216</GridColor>
                   <GridDivisions>10</GridDivisions>
                   <GridLineWidth>1</GridLineWidth>
                   <Guid>74ef34e9-1d56-4416-bce4-6df0bc0eaa5c</Guid>
@@ -1584,6 +1606,6 @@
   <Title>ScopeProject_3</Title>
   <UseAutoSave>false</UseAutoSave>
   <UseFileStore>true</UseFileStore>
-  <Version>1.0.0.2</Version>
+  <Version>1.0.0.1</Version>
   <ViewDetailLevel>Default</ViewDetailLevel>
 </ScopeProject>

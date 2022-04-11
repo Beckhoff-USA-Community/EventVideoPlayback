@@ -51,30 +51,26 @@
       "url": "LiveImageView/LiveImages.content",
       "preload": false,
       "keepAlive": false,
-      "loadSync": false,
-      "preloadBindings": false
+      "loadSync": false
     },
     {
       "url": "VideoPlayback/EventView.content",
       "preload": false,
       "keepAlive": false,
-      "loadSync": false,
-      "preloadBindings": false
+      "loadSync": false
     },
     {
       "url": "VideoPlayback/VideoPlayer.content",
       "preload": false,
       "keepAlive": false,
-      "loadSync": false,
-      "preloadBindings": false
+      "loadSync": false
     }
   ],
   "views": [
     {
       "url": "Desktop.view",
       "preload": false,
-      "keepAlive": false,
-      "preloadBindings": false
+      "keepAlive": false
     }
   ],
   "userFunctions": [

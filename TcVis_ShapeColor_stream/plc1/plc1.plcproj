@@ -25,12 +25,6 @@
           <Command1>%SOLUTIONPATH%VideoPlaybackSupportFiles\Images2Video.bat</Command1>
           <Command2>%TC_BOOTPRJPATH%Images2Video.bat</Command2>
         </Event>
-        <Event>
-          <CommandType>Copy</CommandType>
-          <DeploymentType>ActivateConfiguration</DeploymentType>
-          <Command1>%SOLUTIONPATH%TwinCAT Measurement Project4\ArrayBar Scope Project.tcscopex</Command1>
-          <Command2>C:\TwinCAT\Functions\TF3300-Scope-Server\Autostart Configs\ArrayBar Scope Project.tcscopex</Command2>
-        </Event>
       </Events>
     </DeploymentEvents>
   </PropertyGroup>

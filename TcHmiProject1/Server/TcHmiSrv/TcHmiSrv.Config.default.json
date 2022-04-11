@@ -49,7 +49,7 @@
         "TcHmiEventLogger": {
             "ENABLED": true,
             "NAME": "TcHmiEventLogger",
-            "PATH": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.EventLogger.12.752.0\\runtimes\\win-x64\\native\\",
+            "PATH": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.EventLogger.12.754.4\\runtimes\\win-x64\\native\\",
             "REQUIRED": false,
             "STARTUPTYPE": 1
         },
@@ -80,7 +80,7 @@
         "TcHmiVision": {
             "ENABLED": true,
             "NAME": "TcHmiVision",
-            "PATH": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Vision.12.752.0\\runtimes\\win\\net472\\",
+            "PATH": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Vision.12.754.4\\runtimes\\win\\net472\\",
             "REQUIRED": false,
             "STARTUPTYPE": 1
         }
@@ -2736,11 +2736,34 @@
             },
             "USEMAPPING": true
         },
+        "TcHmiEventLogger.ClearLoggedEvents": {
+            "ACCESS": 3,
+            "DOMAIN": "TcHmiEventLogger",
+            "DYNAMIC": false,
+            "HIDDEN": true,
+            "MAPPING": "ClearLoggedEvents",
+            "OPTIONS": {},
+            "SCHEMA": {
+                "function": true,
+                "writeValue": {
+                    "properties": {
+                        "targetName": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "targetName"
+                    ],
+                    "type": "object"
+                }
+            },
+            "USEMAPPING": true
+        },
         "TcHmiEventLogger.Config": {
             "ACCESS": 0,
             "CUSTOMERDATA": "",
             "DOMAIN": "TcHmiEventLogger",
-            "DYNAMIC": true,
+            "DYNAMIC": false,
             "HIDDEN": true,
             "MAPPING": "Config",
             "OPTIONS": {},
@@ -2751,7 +2774,7 @@
             "ACCESS": 1,
             "CUSTOMERDATA": "",
             "DOMAIN": "TcHmiEventLogger",
-            "DYNAMIC": true,
+            "DYNAMIC": false,
             "HIDDEN": true,
             "MAPPING": "Diagnostics",
             "OPTIONS": {},
@@ -2824,6 +2847,22 @@
                 "readOnly": true,
                 "transient": true,
                 "type": "object"
+            },
+            "USEMAPPING": true
+        },
+        "TcHmiEventLogger.ListEnabledTargetSystems": {
+            "ACCESS": 3,
+            "DOMAIN": "TcHmiEventLogger",
+            "DYNAMIC": false,
+            "HIDDEN": true,
+            "MAPPING": "ListEnabledTargetSystems",
+            "OPTIONS": {},
+            "SCHEMA": {
+                "function": true,
+                "items": {
+                    "type": "string"
+                },
+                "type": "array"
             },
             "USEMAPPING": true
         },
@@ -3441,6 +3480,8 @@
                 "Logout": 3,
                 "SetLocale": 3,
                 "SubscribeEvents": 3,
+                "TcHmiEventLogger.Diagnostics": 1,
+                "TcHmiEventLogger.ListEnabledTargetSystems": 3,
                 "TcHmiUserManagement.ChangePassword": 3,
                 "Unsubscribe": 3,
                 "UnsubscribeEvents": 3,
@@ -3474,12 +3515,12 @@
     "VIDEOSEGMENTSIZE": 1048576,
     "VIRTUALDIRECTORIES": {
         "/": "..\\..\\TcHmiProject1\\",
-        "/Beckhoff.TwinCAT.HMI.Controls": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.752.0\\runtimes\\native1.12-tchmi",
-        "/Beckhoff.TwinCAT.HMI.Functions": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.752.0\\runtimes\\native1.12-tchmi",
+        "/Beckhoff.TwinCAT.HMI.Controls": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.754.4\\runtimes\\native1.12-tchmi",
+        "/Beckhoff.TwinCAT.HMI.Functions": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.754.4\\runtimes\\native1.12-tchmi",
         "/Beckhoff.TwinCAT.HMI.Vision": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Vision.12.752.0",
         "/TcHmiDrawing": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\Packages\\TcHmiDrawing.1.0.2\\runtimes\\native1.12-tchmi",
         "/bin": "..\\..\\TcHmiProject1\\bin\\",
         "/bin/framework": "..\\..\\TcHmiProject1\\bin\\framework",
-        "/framework": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Framework.12.752.0\\runtimes\\native1.12-tchmi"
+        "/framework": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Framework.12.754.4\\runtimes\\native1.12-tchmi"
     }
 }

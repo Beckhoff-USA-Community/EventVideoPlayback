@@ -132,6 +132,9 @@
     <Content Include="LiveImageView\LiveImages.content">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="packages.config">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="Server\TcHmiEventLogger\TcHmiEventLogger.Config.default.json">
       <SubType>Content</SubType>
     </Content>
@@ -168,9 +171,6 @@
     <Folder Include="Properties" />
     <Content Include=".eslintrc.json">
       <Visible>false</Visible>
-    </Content>
-    <Content Include="packages.config">
-      <SubType>Content</SubType>
     </Content>
     <Content Include="Server\TcHmiVision\TcHmiVision.Config.default.json">
       <SubType>Content</SubType>

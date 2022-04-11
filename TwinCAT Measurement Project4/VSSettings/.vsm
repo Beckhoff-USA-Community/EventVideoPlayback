@@ -5,8 +5,8 @@
   <Children>
     <Node>
       <Title>ArrayBar Scope Project</Title>
-      <Expanded>False</Expanded>
-      <FileName>C:\Users\AlyssaH\Source\Repos\EventVideoPlayback\TwinCAT Measurement Project4\ArrayBar Scope Project.tcscopex</FileName>
+      <Expanded>True</Expanded>
+      <FileName>C:\Temp\Sample TC Project with HMI\Solution\Solution\TwinCAT Measurement Project4\ArrayBar Scope Project.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
@@ -60,7 +60,7 @@
           <Children>
             <Node>
               <Title>ImageSubSave</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
@@ -73,7 +73,7 @@
             </Node>
             <Node>
               <Title>Trigger Group</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>

@@ -26,13 +26,16 @@
   <ImagesDeleteMode>Disabled</ImagesDeleteMode>
   <Layout>&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;Layout&gt;
+<<<<<<< Updated upstream
   &lt;Window Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" LastFocused="132917613218208710" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="1" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
   &lt;Window Guid="bae2eca7-cca7-4095-8e73-608e486124ee" LastFocused="132917605961213672" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+=======
+  &lt;Window Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" LastFocused="132936798684761662" DockedSize="200" PopupSize="0" FloatingLocation="-1, -1" FloatingSize="550, 400" LastOpenDockSituation="Document" LastFixedDockSituation="Document" LastFixedDockLocation="Right" LastFloatingWindowGuid="00000000-0000-0000-0000-000000000000" LastDockContainerCount="0" LastDockContainerIndex="0" DockedWorkingSize="250, 400" DockedWindowGroupGuid="00000000-0000-0000-0000-000000000000" DockedIndexInWindowGroup="0" DockedSplitPath="0" DocumentWorkingSize="250, 400" DocumentWindowGroupGuid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" DocumentIndexInWindowGroup="0" DocumentSplitPath="0" FloatingWorkingSize="250, 400" FloatingWindowGroupGuid="00000000-0000-0000-0000-000000000000" FloatingIndexInWindowGroup="0" FloatingSplitPath="0" /&gt;
+>>>>>>> Stashed changes
   &lt;DocumentContainer Dock="5"&gt;
     &lt;SplitLayoutSystem WorkingSize="250, 400" SplitMode="0"&gt;
       &lt;ControlLayoutSystem WorkingSize="250, 400" Guid="f909e3a8-169c-4d06-8f37-23a2a4f4bf8d" Collapsed="0" SelectedControl="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe"&gt;
         &lt;Controls&gt;
-          &lt;Control Guid="bae2eca7-cca7-4095-8e73-608e486124ee" /&gt;
           &lt;Control Guid="e1b2b3ea-511d-4e90-b988-9a9c4379e6fe" /&gt;
         &lt;/Controls&gt;
       &lt;/ControlLayoutSystem&gt;
@@ -43,7 +46,7 @@
   <Name>Scope Project</Name>
   <RecordTime>300000000</RecordTime>
   <ServerVersions>
-    <Version>3.4.3146.1</Version>
+    <Version>3.4.3146.3</Version>
   </ServerVersions>
   <SortPriority>100</SortPriority>
   <StopMode>ClientStop</StopMode>
@@ -55,276 +58,6 @@
       <Name>DataPool</Name>
       <SortPriority>0</SortPriority>
       <SubMember>
-        <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>127.0.0.1.1.1</AmsNetId>
-          <Area>Local</Area>
-          <ArrayLength>256</ArrayLength>
-          <BaseSampleTime>1000000</BaseSampleTime>
-          <ChannelStyleInformation />
-          <Comment></Comment>
-          <CompressionMode>Uncompressed</CompressionMode>
-          <ContextMask>0</ContextMask>
-          <DataAccess>
-            <DataAccessMode>
-              <Source>TwinCAT</Source>
-              <Protocoll>ADS</Protocoll>
-              <Format>TcBinary</Format>
-              <TimeContext>Present</TimeContext>
-              <TimeTangeInfo>
-                <StartTimeStamp>0</StartTimeStamp>
-                <EndTimeStamp>0</EndTimeStamp>
-              </TimeTangeInfo>
-            </DataAccessMode>
-          </DataAccess>
-          <DataType>UINT32</DataType>
-          <DisplayColor>Black</DisplayColor>
-          <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
-          <ForceOversampling>false</ForceOversampling>
-          <Guid>3dda7a18-26a6-4072-865e-54971a9dfd60</Guid>
-          <IndexGroup>16448</IndexGroup>
-          <IndexOffset>414464</IndexOffset>
-          <IsHistorical>false</IsHistorical>
-          <Name>aHistogramBlue</Name>
-          <Oversample>256</Oversample>
-          <RawUnit>
-            <Transformation>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <ScaleFactor>1</ScaleFactor>
-              <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString>
-              </SourceUnitString>
-              <Symbol>1</Symbol>
-              <TargetUnitString>
-              </TargetUnitString>
-              <TargetUnitValue>0</TargetUnitValue>
-            </Transformation>
-            <Unit>
-              <BaseUnitString>
-              </BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension>
-              </NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ReturnText> (None) </ReturnText>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol>
-              </Symbol>
-            </Unit>
-            <UnitOffsetResult>0</UnitOffsetResult>
-            <UnitScaleResult>1</UnitScaleResult>
-            <UserUnit>
-              <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString>
-              </BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <NameExtension>
-              </NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol>
-              </Symbol>
-              <UserPrefix>none</UserPrefix>
-            </UserUnit>
-          </RawUnit>
-          <SaveOption>IncludeDataInSVDX</SaveOption>
-          <ServerHandle>0</ServerHandle>
-          <SortPriority>10</SortPriority>
-          <SubMember />
-          <SymbolBased>true</SymbolBased>
-          <SymbolName>MAIN.aHistogramBlue</SymbolName>
-          <TargetPort>851</TargetPort>
-          <TimeOffset>0</TimeOffset>
-          <Title>AdsAcquisition_30</Title>
-          <UseLocalServer>true</UseLocalServer>
-          <UseTaskSampleTime>false</UseTaskSampleTime>
-          <UTF8Encoding>false</UTF8Encoding>
-          <VariableSize>1024</VariableSize>
-        </AdsAcquisition>
-        <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>127.0.0.1.1.1</AmsNetId>
-          <Area>Local</Area>
-          <ArrayLength>256</ArrayLength>
-          <BaseSampleTime>1000000</BaseSampleTime>
-          <ChannelStyleInformation />
-          <Comment></Comment>
-          <CompressionMode>Uncompressed</CompressionMode>
-          <ContextMask>0</ContextMask>
-          <DataAccess>
-            <DataAccessMode>
-              <Source>TwinCAT</Source>
-              <Protocoll>ADS</Protocoll>
-              <Format>TcBinary</Format>
-              <TimeContext>Present</TimeContext>
-              <TimeTangeInfo>
-                <StartTimeStamp>0</StartTimeStamp>
-                <EndTimeStamp>0</EndTimeStamp>
-              </TimeTangeInfo>
-            </DataAccessMode>
-          </DataAccess>
-          <DataType>UINT32</DataType>
-          <DisplayColor>Black</DisplayColor>
-          <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
-          <ForceOversampling>false</ForceOversampling>
-          <Guid>95b4cd64-d83a-4769-840c-a8f846104911</Guid>
-          <IndexGroup>16448</IndexGroup>
-          <IndexOffset>413440</IndexOffset>
-          <IsHistorical>false</IsHistorical>
-          <Name>aHistogramGreen</Name>
-          <Oversample>256</Oversample>
-          <RawUnit>
-            <Transformation>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <ScaleFactor>1</ScaleFactor>
-              <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString>
-              </SourceUnitString>
-              <Symbol>1</Symbol>
-              <TargetUnitString>
-              </TargetUnitString>
-              <TargetUnitValue>0</TargetUnitValue>
-            </Transformation>
-            <Unit>
-              <BaseUnitString>
-              </BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension>
-              </NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ReturnText> (None) </ReturnText>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol>
-              </Symbol>
-            </Unit>
-            <UnitOffsetResult>0</UnitOffsetResult>
-            <UnitScaleResult>1</UnitScaleResult>
-            <UserUnit>
-              <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString>
-              </BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <NameExtension>
-              </NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol>
-              </Symbol>
-              <UserPrefix>none</UserPrefix>
-            </UserUnit>
-          </RawUnit>
-          <SaveOption>IncludeDataInSVDX</SaveOption>
-          <ServerHandle>0</ServerHandle>
-          <SortPriority>10</SortPriority>
-          <SubMember />
-          <SymbolBased>true</SymbolBased>
-          <SymbolName>MAIN.aHistogramGreen</SymbolName>
-          <TargetPort>851</TargetPort>
-          <TimeOffset>0</TimeOffset>
-          <Title>AdsAcquisition_30</Title>
-          <UseLocalServer>true</UseLocalServer>
-          <UseTaskSampleTime>false</UseTaskSampleTime>
-          <UTF8Encoding>false</UTF8Encoding>
-          <VariableSize>1024</VariableSize>
-        </AdsAcquisition>
-        <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
-          <AmsNetId>127.0.0.1.1.1</AmsNetId>
-          <Area>Local</Area>
-          <ArrayLength>256</ArrayLength>
-          <BaseSampleTime>1000000</BaseSampleTime>
-          <ChannelStyleInformation />
-          <Comment></Comment>
-          <CompressionMode>Uncompressed</CompressionMode>
-          <ContextMask>0</ContextMask>
-          <DataAccess>
-            <DataAccessMode>
-              <Source>TwinCAT</Source>
-              <Protocoll>ADS</Protocoll>
-              <Format>TcBinary</Format>
-              <TimeContext>Present</TimeContext>
-              <TimeTangeInfo>
-                <StartTimeStamp>0</StartTimeStamp>
-                <EndTimeStamp>0</EndTimeStamp>
-              </TimeTangeInfo>
-            </DataAccessMode>
-          </DataAccess>
-          <DataType>UINT32</DataType>
-          <DisplayColor>Black</DisplayColor>
-          <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
-          <ForceOversampling>false</ForceOversampling>
-          <Guid>a6f5061d-3fc5-40db-b45c-588a4f1297c4</Guid>
-          <IndexGroup>16448</IndexGroup>
-          <IndexOffset>412416</IndexOffset>
-          <IsHistorical>false</IsHistorical>
-          <Name>aHistogramRed</Name>
-          <Oversample>256</Oversample>
-          <RawUnit>
-            <Transformation>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <ScaleFactor>1</ScaleFactor>
-              <SourceUnitPrefix>none</SourceUnitPrefix>
-              <SourceUnitString>
-              </SourceUnitString>
-              <Symbol>1</Symbol>
-              <TargetUnitString>
-              </TargetUnitString>
-              <TargetUnitValue>0</TargetUnitValue>
-            </Transformation>
-            <Unit>
-              <BaseUnitString>
-              </BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <NameExtension>
-              </NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ReturnText> (None) </ReturnText>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol>
-              </Symbol>
-            </Unit>
-            <UnitOffsetResult>0</UnitOffsetResult>
-            <UnitScaleResult>1</UnitScaleResult>
-            <UserUnit>
-              <BaseName>UnitOfOne</BaseName>
-              <BaseUnitString>
-              </BaseUnitString>
-              <BaseUnitValue>0</BaseUnitValue>
-              <Name>None</Name>
-              <NameExtension>
-              </NameExtension>
-              <Offset>0</Offset>
-              <Prefix>none</Prefix>
-              <ScaleFactor>1</ScaleFactor>
-              <Symbol>
-              </Symbol>
-              <UserPrefix>none</UserPrefix>
-            </UserUnit>
-          </RawUnit>
-          <SaveOption>IncludeDataInSVDX</SaveOption>
-          <ServerHandle>0</ServerHandle>
-          <SortPriority>10</SortPriority>
-          <SubMember />
-          <SymbolBased>true</SymbolBased>
-          <SymbolName>MAIN.aHistogramRed</SymbolName>
-          <TargetPort>851</TargetPort>
-          <TimeOffset>0</TimeOffset>
-          <Title>AdsAcquisition_30</Title>
-          <UseLocalServer>true</UseLocalServer>
-          <UseTaskSampleTime>false</UseTaskSampleTime>
-          <UTF8Encoding>false</UTF8Encoding>
-          <VariableSize>1024</VariableSize>
-        </AdsAcquisition>
         <AdsAcquisition AssemblyName="TwinCAT.Measurement.Scope.API.Model">
           <AmsNetId>127.0.0.1.1.1</AmsNetId>
           <Area>Local</Area>
@@ -353,7 +86,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>411536</IndexOffset>
+          <IndexOffset>411432</IndexOffset>
           <IsHistorical>false</IsHistorical>
           <Name>ipImageResultDisp</Name>
           <Oversample>0</Oversample>
@@ -457,7 +190,7 @@
           <ForceOversampling>false</ForceOversampling>
           <Guid>8cd4470d-d1a6-4a77-ac7f-eff856354578</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>411797</IndexOffset>
+          <IndexOffset>410231</IndexOffset>
           <IsHistorical>false</IsHistorical>
           <Name>ErrorOccured</Name>
           <Oversample>0</Oversample>
@@ -514,6 +247,7 @@
       </SubMember>
       <Title>DataPool_49</Title>
     </DataPool>
+<<<<<<< Updated upstream
     <ArrayBarChart AssemblyName="TwinCAT.Measurement.Scope.API.Model">
       <AnchorTimestamp>0</AnchorTimestamp>
       <AssignedCore>0</AssignedCore>
@@ -1062,6 +796,8 @@
       <Title>ArrayBarChart_50</Title>
       <TriggerGroupOffset>0</TriggerGroupOffset>
     </ArrayBarChart>
+=======
+>>>>>>> Stashed changes
     <TriggerModule AssemblyName="TwinCAT.Measurement.Scope.API.Model">
       <Comment />
       <DisplayColor>Black</DisplayColor>
@@ -1115,12 +851,12 @@
             </TriggerTimeOffset>
             <ChannelTriggerSet AssemblyName="TwinCAT.Measurement.Scope.API.Model">
               <AcquisitionInterpreterGuid>ae1603aa-69ef-43b0-8f2e-8189d545df15</AcquisitionInterpreterGuid>
-              <ClientTriggerHandle>2</ClientTriggerHandle>
+              <ClientTriggerHandle>1</ClientTriggerHandle>
               <CombineOption>AND</CombineOption>
               <Comment />
               <DisplayColor>Black</DisplayColor>
               <Enabled>true</Enabled>
-              <GroupHandle>2</GroupHandle>
+              <GroupHandle>1</GroupHandle>
               <Guid>43d2d132-d080-41e7-9a18-9b424be61e18</Guid>
               <Name>AnAlarmHappened</Name>
               <ReleaseOption>RisingEdge</ReleaseOption>
@@ -1373,7 +1109,7 @@
               <MarkerType>Circle</MarkerType>
               <Name>ipImageResultDisp</Name>
               <Orientation>Vertical</Orientation>
-              <Position>1.3290127236601E+17</Position>
+              <Position>1.3294129284925E+17</Position>
               <ShowFullArray>true</ShowFullArray>
               <ShowPosition>false</ShowPosition>
               <ShowTitle>true</ShowTitle>
@@ -1389,7 +1125,7 @@
                   <Title>ImageStreamStyle_44</Title>
                 </ImageStreamStyle>
               </SubMember>
-              <TimePosition>132901272366010000</TimePosition>
+              <TimePosition>132941292849250000</TimePosition>
               <Title>ipImageResultDisp</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>

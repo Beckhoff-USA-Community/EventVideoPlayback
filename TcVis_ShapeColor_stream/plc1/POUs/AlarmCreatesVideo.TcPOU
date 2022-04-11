@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+  <POU Name="AlarmCreatesVideo" Id="{285e3901-0f5f-0d23-118c-3771e9af22f9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK AlarmCreatesVideo
+VAR_INPUT
+	ImageExportPath	: STRING(255);
+	VideoFilePath	: STRING(255);
+	JSONAttribute	: STRING;	
+END_VAR
+VAR_OUTPUT
+	bBusy	: BOOL;
+	bError	: BOOL;
+	nErrID	: UDINT;
+END_VAR
+VAR
+	Listener		: FB_ListenerBase2;
+	JSONFilter		: FB_TcEventFilter;
+	hr				: HRESULT;
+	sJsonAttribute	: STRING;
+	
+	CreateVideo		: ImagesToVideo;
+	CreateVideoFlag	: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Listener.Execute();
+
+//Filter out events using JSON attribute
+JSONFilter.Clear().JsonAttribute.Value.EqualTo(JSONAttribute);
+hr := Listener.Subscribe2(JSONFilter);
+
+IF  sJsonAttribute = JSONAttribute THEN
+	(*CreateVideo(
+	bStart:= , 
+	ImageExportPath:= , 
+	VideoDestinationPath:= , 
+	sFileName:= , 
+	bBusy=> , 
+	bError=> , 
+	nErrID=> ); *)
+	CreateVideoFlag := TRUE;
+END_IF
+	 ]]></ST>
+    </Implementation>
+    <LineIds Name="AlarmCreatesVideo">
+      <LineId Id="17" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="50" Count="6" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

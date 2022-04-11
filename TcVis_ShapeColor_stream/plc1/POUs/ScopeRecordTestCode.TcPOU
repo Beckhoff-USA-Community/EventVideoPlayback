@@ -11,6 +11,7 @@ bIsInitalized 	: BOOL;
 bRaiseAlarm		: BOOL;
 hr				: HRESULT;
 hrLastError		: HRESULT;
+JSONString		: STRING := '{"CreateVideo": 1}';
 
 BatchFileDelay	: TON;
 BatchFile		: NT_StartProcess;
@@ -30,20 +31,30 @@ bClearAlarm: BOOL;
 	sFileName		: STRING;
 	RecordCreated	: BOOL;
 	sDump			: STRING;
+	
+	CreateVideo		: ImagesToVideo;
+	
+//	AlarmCreateVideo	: AlarmCreatesVideo;
+	CreateVideoBool: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[
-
-IF NOT bIsInitalized THEN
+      <ST><![CDATA[IF NOT bIsInitalized THEN
 	bIsInitalized := TRUE;
 	hr := fbAlarm.CreateEx(TC_EVENTS.VideoAlarmDemoEventClass.MachineError, TRUE, 0);
-	fbAlarm.SetJsonAttribute('{"CreateVideo":1}');
 	IF FAILED(hr) THEN
 		hrLastError := hr;
 	END_IF
 END_IF
 
+(*AlarmCreateVideo(
+	ImageExportPath:= ScopeImageExportPath, 
+	VideoFilePath:= VideoDestinationPath, 
+	JSONAttribute:= JSONString, 
+	bBusy=> , 
+	bError=> , 
+	nErrID=> );*)
+	
 //Replace this dumb bool with triggering event from eventlogger
 
 IF ErrorOccured THEN
@@ -51,14 +62,19 @@ IF ErrorOccured THEN
 	RecordCreated := FALSE;
 END_IF
 
+(*IF CreateVideoBool THEN
+	fbAlarm.SetJsonAttribute(JSONSTRING);
+	fbAlarm.Raise(0);
+	RecordCreated := FALSE;
+END_IF*)
+
 //Get the timestamp from event
 IF fbAlarm.bRaised AND NOT RecordCreated THEN
 	EventTimestamp := FILETIME64_TO_SYSTEMTIME(fbAlarm.nTimeRaised);
-	BatchFile(START := FALSE);
-	BatchFileDelay(IN := TRUE, PT:= T#15S);
+	CreateVideo(bStart := TRUE, ImageExportPath := ScopeImageExportPath, VideoDestinationPath := VideoDestinationPath, sFileName := sFileName);
+	RecordCreated := TRUE;
 END_IF
 
-Command :='';
 (*
 set videofilename=%1
 set videodestinationpath=%2
@@ -71,24 +87,11 @@ IF ErrorOccured THEN
 	sTEMP := SYSTEMTIME_TO_STRING(EventTimestamp);
 	FindAndReplaceChar(ADR(sTEMP),':','-',ADR(sFileName),SIZEOF(sFileName));
 	sTEMP := sFileName;
-	//FindAndReplaceChar(ADR(sTEMP),'.','-',ADR(sFileName),SIZEOF(sFileName));
-	//remove milliseconds from timestamp.
 	FindAndSplitChar(sSeparatorChar:='.',pSrcString:= ADR(sTEMP),pLeftString :=ADR(sFileName),
 	nLeftSize:= SIZEOF(FileName), pRightString := ADR(sDump), nRightSize := SIZEOF(sDump),bSearchFromRight := FALSE);
 END_IF
-//create batch file command string
-Command := CONCAT(Command, ' "');
-Command := CONCAT(Command, sFileName);
-Command := CONCAT(Command, '" "');
-Command := CONCAT(Command, VideoDestinationPath);
-Command := CONCAT(Command, '" "');
-Command := CONCAT(Command, ScopeImageExportPath);
-Command := CONCAT(Command, '"');
 
-// call batch file to make video file from images (default locaiton for batch file should be bootfolder
-
-
-IF BatchFileDelay.Q OR TestRUN THEN
+(*IF BatchFileDelay.Q OR TestRUN THEN
 	BatchFile(	PATHSTR:= 'C:\TwinCAT\3.1\Boot\Images2Video.bat', 
 				COMNDLINE := Command,
 				START := TRUE);
@@ -97,9 +100,13 @@ IF BatchFileDelay.Q OR TestRUN THEN
 	TestRUN:=FALSE;
 	RecordCreated	:= TRUE;
 	ErrorOccured := FALSE;
-END_IF
+END_IF*)
 
-// input to batch file needs to be timestamp from event (thrown by eventlogger)
+IF NOT CreateVideo.bBusy AND fbAlarm.bRaised THEN
+	CreateVideo.bStart := FALSE;
+	RecordCreated := TRUE;
+	ErrorOccured := FALSE;
+END_IF
 
 IF bConfirmAlarm THEN
 	fbAlarm.Confirm(0);
@@ -112,11 +119,32 @@ IF bClearAlarm THEN
 END_IF]]></ST>
     </Implementation>
     <LineIds Name="ScopeRecordTestCode">
-      <LineId Id="3" Count="4" />
-      <LineId Id="138" Count="0" />
-      <LineId Id="8" Count="14" />
-      <LineId Id="107" Count="0" />
-      <LineId Id="23" Count="53" />
+      <LineId Id="5" Count="6" />
+      <LineId Id="176" Count="6" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="13" Count="2" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="186" Count="0" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="191" Count="1" />
+      <LineId Id="189" Count="0" />
+      <LineId Id="19" Count="3" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="12" />
+      <LineId Id="41" Count="2" />
+      <LineId Id="55" Count="10" />
+      <LineId Id="230" Count="0" />
+      <LineId Id="229" Count="0" />
+      <LineId Id="231" Count="0" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="235" Count="0" />
+      <LineId Id="232" Count="0" />
+      <LineId Id="68" Count="8" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>

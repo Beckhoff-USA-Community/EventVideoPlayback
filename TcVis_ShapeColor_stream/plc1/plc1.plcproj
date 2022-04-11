@@ -47,6 +47,9 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\AlarmCreatesVideo.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\ScopeRecordTestCode.TcPOU">
       <SubType>Code</SubType>
     </Compile>

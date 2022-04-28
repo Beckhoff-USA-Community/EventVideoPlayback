@@ -3,37 +3,28 @@
   <POU Name="ScopeRecordTestCode" Id="{c0c6cb4c-cfa1-4b71-acd5-11c9751fc94e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ScopeRecordTestCode
 VAR
+	ErrorOccured 	: BOOL;
+	//fbEventLog		: FB_TcEventLogger; 
+	fbAlarm 		: FB_TcAlarm;
+	bIsInitalized 	: BOOL;
+	bRaiseAlarm		: BOOL;
+	hr				: HRESULT;
+	hrLastError		: HRESULT;
+	JSONString		: STRING := '{"CreateVideo": 1}';
 	
-ErrorOccured 	: BOOL;
-fbEventLog		: FB_TcEventLogger; 
-fbAlarm 		: FB_TcAlarm;
-bIsInitalized 	: BOOL;
-bRaiseAlarm		: BOOL;
-hr				: HRESULT;
-hrLastError		: HRESULT;
-JSONString		: STRING := '{"CreateVideo": 1}';
-
-BatchFileDelay	: TON;
-BatchFile		: NT_StartProcess;
-Command			: STRING(1000);
-
-//ImageName 				: STRING	  := 'ipImageResultDisp';  //name of the image, this can be found in the image pool in scope
-VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
-ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\ipImageResultDisp\';
-
-EventTimestamp: TimeStruct;
-bConfirmAlarm: BOOL;
-bClearAlarm: BOOL;
-
-
-	TestRUN			: BOOL;
+	VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
+	ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\ipImageResultDisp\';
+	
+	EventTimestamp: TimeStruct;
+	bConfirmAlarm: BOOL;
+	bClearAlarm: BOOL;
+	
 	sTEMP			: STRING;
 	sFileName		: STRING;
 	RecordCreated	: BOOL;
-	sDump			: STRING;
-	
+	sDump			: STRING;	
 	CreateVideo		: ImagesToVideo;
-	CreateVideoBool: BOOL;
+
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -45,7 +36,6 @@ END_VAR
 	END_IF
 END_IF
 
-//Constantly call create video 
 CreateVideo(ImageExportPath := ScopeImageExportPath, VideoDestinationPath := VideoDestinationPath, JSONAttribute := JSONString, sFileName := sFileName);
 
 IF ErrorOccured THEN
@@ -57,17 +47,10 @@ END_IF
 //Get the timestamp from event
 IF fbAlarm.bRaised AND NOT RecordCreated THEN
 	EventTimestamp := FILETIME64_TO_SYSTEMTIME(fbAlarm.nTimeRaised);
-	CreateVideo(ImageExportPath := ScopeImageExportPath, VideoDestinationPath := VideoDestinationPath, JSONAttribute := JSONString);
+	//CreateVideo(ImageExportPath := ScopeImageExportPath, VideoDestinationPath := VideoDestinationPath, JSONAttribute := JSONString);
 	RecordCreated := TRUE;
 END_IF
 
-(*
-set videofilename=%1
-set videodestinationpath=%2
-set scopeimageexportpath=%3
-
-// Example call - Images2Video Nathan "C:\Temp\Scope Project_Img_test\\" "C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\"
-*)
 //convert SystemTime to a format we can use for a filename by replacing characters like ':' and '.'. 
 IF ErrorOccured THEN
 	sTEMP := SYSTEMTIME_TO_STRING(EventTimestamp);
@@ -84,17 +67,17 @@ END_IF
 
 IF bConfirmAlarm THEN
 	fbAlarm.Confirm(0);
+	fbAlarm.Clear(0, FALSE);
 	bConfirmAlarm := FALSE;
 END_IF
 
-IF bClearAlarm THEN
+(*IF bClearAlarm THEN
 	fbAlarm.Clear(0, FALSE);
 	bClearAlarm := FALSE;
-END_IF]]></ST>
+END_IF*)]]></ST>
     </Implementation>
     <LineIds Name="ScopeRecordTestCode">
       <LineId Id="5" Count="6" />
-      <LineId Id="311" Count="0" />
       <LineId Id="309" Count="0" />
       <LineId Id="14" Count="0" />
       <LineId Id="310" Count="0" />
@@ -105,14 +88,16 @@ END_IF]]></ST>
       <LineId Id="173" Count="0" />
       <LineId Id="234" Count="0" />
       <LineId Id="24" Count="0" />
-      <LineId Id="26" Count="12" />
+      <LineId Id="33" Count="5" />
       <LineId Id="41" Count="2" />
       <LineId Id="230" Count="0" />
       <LineId Id="229" Count="0" />
       <LineId Id="233" Count="0" />
       <LineId Id="235" Count="0" />
       <LineId Id="232" Count="0" />
-      <LineId Id="68" Count="8" />
+      <LineId Id="68" Count="2" />
+      <LineId Id="314" Count="0" />
+      <LineId Id="71" Count="5" />
       <LineId Id="2" Count="0" />
     </LineIds>
   </POU>

@@ -41,7 +41,7 @@
   <Name>Scope Project</Name>
   <RecordTime>300000000</RecordTime>
   <ServerVersions>
-    <Version>3.4.3146.3</Version>
+    <Version>3.4.3146.4</Version>
   </ServerVersions>
   <SortPriority>100</SortPriority>
   <StopMode>ClientStop</StopMode>
@@ -77,11 +77,11 @@
           <DataType>IMAGE</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
+          <FileHandle>1</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>f8e798ac-0dfb-4c59-8b6f-479aa7ef5bec</Guid>
           <IndexGroup>16448</IndexGroup>
-          <IndexOffset>411432</IndexOffset>
+          <IndexOffset>411424</IndexOffset>
           <IsHistorical>false</IsHistorical>
           <Name>ipImageResultDisp</Name>
           <Oversample>0</Oversample>
@@ -181,7 +181,7 @@
           <DataType>BIT</DataType>
           <DisplayColor>Black</DisplayColor>
           <Enabled>true</Enabled>
-          <FileHandle>0</FileHandle>
+          <FileHandle>2</FileHandle>
           <ForceOversampling>false</ForceOversampling>
           <Guid>8cd4470d-d1a6-4a77-ac7f-eff856354578</Guid>
           <IndexGroup>16448</IndexGroup>
@@ -573,7 +573,7 @@
                   <Title>ImageStreamStyle_44</Title>
                 </ImageStreamStyle>
               </SubMember>
-              <TimePosition>132941292849250000</TimePosition>
+              <TimePosition>132956557000470000</TimePosition>
               <Title>ipImageResultDisp</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>

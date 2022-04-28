@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="MAIN" Id="{4ee40909-3edd-4b49-a2c1-3171e5e2360e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	iCount				: INT;	
 	hr					:	HRESULT;	// ADS return code in hex 16#....70C -> didn't get new image, 000 means all good, success
 	fbCamera			:	FB_VN_SimpleCameraControl;
 	eState				:	ETcVnCameraState;
@@ -11,16 +10,13 @@ VAR
 	// Images
 	ipImageIn			:	ITcVnImage;
 	ipImageInDisp		:	ITcVnDisplayableImage;
-	ipImageDispColor	:	ITcVnDisplayableImage;
 	ipImageWork			:	ITcVnImage;
 	ipImageResultDisp	:	ITcVnDisplayableImage;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[iCount:=iCount+10;
-ScopeRecordTestCode();
+      <ST><![CDATA[ScopeRecordTestCode();
 
-//Vision Code
 eState:=fbCamera.GetState();
 	
 CASE eState OF
@@ -85,9 +81,7 @@ CCC = 734  	OUTOFRANGE 			Outside the valid range.
       </Implementation>
     </Action>
     <LineIds Name="MAIN">
-      <LineId Id="57" Count="0" />
       <LineId Id="276" Count="0" />
-      <LineId Id="354" Count="0" />
       <LineId Id="59" Count="14" />
       <LineId Id="335" Count="1" />
       <LineId Id="334" Count="0" />

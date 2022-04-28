@@ -74,16 +74,6 @@ END_IF
 
 ]]></ST>
     </Implementation>
-    <Method Name="OnAlarmRaised" Id="{bbd9c6f0-6eab-0028-1e22-4a15ae2c8602}">
-      <Declaration><![CDATA[METHOD OnAlarmRaised : HRESULT
-VAR_INPUT
-	fbEvent	: REFERENCE TO FB_TcEvent;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[TriggerVideoCreate := TRUE;]]></ST>
-      </Implementation>
-    </Method>
     <LineIds Name="ImagesToVideo">
       <LineId Id="180" Count="0" />
       <LineId Id="183" Count="0" />
@@ -119,9 +109,6 @@ END_VAR
       <LineId Id="144" Count="0" />
       <LineId Id="109" Count="0" />
       <LineId Id="99" Count="0" />
-    </LineIds>
-    <LineIds Name="ImagesToVideo.OnAlarmRaised">
-      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -3517,7 +3517,7 @@
         "/": "..\\..\\TcHmiProject1\\",
         "/Beckhoff.TwinCAT.HMI.Controls": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Controls.12.754.4\\runtimes\\native1.12-tchmi",
         "/Beckhoff.TwinCAT.HMI.Functions": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Functions.12.754.4\\runtimes\\native1.12-tchmi",
-        "/Beckhoff.TwinCAT.HMI.Vision": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Vision.12.752.0",
+        "/Beckhoff.TwinCAT.HMI.Vision": "..\\..\\Packages\\Beckhoff.TwinCAT.HMI.Vision.12.754.4",
         "/TcHmiDrawing": "K:\\SharePoint\\TwinCAT - Presentations\\TFxxxx\\TF7xxx Vision\\Sales Sample TC Project with HMI\\Solution\\Packages\\TcHmiDrawing.1.0.2\\runtimes\\native1.12-tchmi",
         "/bin": "..\\..\\TcHmiProject1\\bin\\",
         "/bin/framework": "..\\..\\TcHmiProject1\\bin\\framework",

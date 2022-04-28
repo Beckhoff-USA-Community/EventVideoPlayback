@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="ScopeRecordTestCode" Id="{c0c6cb4c-cfa1-4b71-acd5-11c9751fc94e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ScopeRecordTestCode
 VAR
@@ -33,8 +33,6 @@ bClearAlarm: BOOL;
 	sDump			: STRING;
 	
 	CreateVideo		: ImagesToVideo;
-	
-//	AlarmCreateVideo	: AlarmCreatesVideo;
 	CreateVideoBool: BOOL;
 END_VAR
 ]]></Declaration>
@@ -47,31 +45,19 @@ END_VAR
 	END_IF
 END_IF
 
-(*AlarmCreateVideo(
-	ImageExportPath:= ScopeImageExportPath, 
-	VideoFilePath:= VideoDestinationPath, 
-	JSONAttribute:= JSONString, 
-	bBusy=> , 
-	bError=> , 
-	nErrID=> );*)
-	
-//Replace this dumb bool with triggering event from eventlogger
+//Constantly call create video 
+CreateVideo(ImageExportPath := ScopeImageExportPath, VideoDestinationPath := VideoDestinationPath, JSONAttribute := JSONString, sFileName := sFileName);
 
 IF ErrorOccured THEN
+	fbAlarm.SetJsonAttribute(JSONSTRING);
 	fbAlarm.Raise(0);
 	RecordCreated := FALSE;
 END_IF
 
-(*IF CreateVideoBool THEN
-	fbAlarm.SetJsonAttribute(JSONSTRING);
-	fbAlarm.Raise(0);
-	RecordCreated := FALSE;
-END_IF*)
-
 //Get the timestamp from event
 IF fbAlarm.bRaised AND NOT RecordCreated THEN
 	EventTimestamp := FILETIME64_TO_SYSTEMTIME(fbAlarm.nTimeRaised);
-	CreateVideo(bStart := TRUE, ImageExportPath := ScopeImageExportPath, VideoDestinationPath := VideoDestinationPath, sFileName := sFileName);
+	CreateVideo(ImageExportPath := ScopeImageExportPath, VideoDestinationPath := VideoDestinationPath, JSONAttribute := JSONString);
 	RecordCreated := TRUE;
 END_IF
 
@@ -91,19 +77,7 @@ IF ErrorOccured THEN
 	nLeftSize:= SIZEOF(FileName), pRightString := ADR(sDump), nRightSize := SIZEOF(sDump),bSearchFromRight := FALSE);
 END_IF
 
-(*IF BatchFileDelay.Q OR TestRUN THEN
-	BatchFile(	PATHSTR:= 'C:\TwinCAT\3.1\Boot\Images2Video.bat', 
-				COMNDLINE := Command,
-				START := TRUE);
-	BatchFileDelay(IN := FALSE);
-	BatchFile(START := FALSE);
-	TestRUN:=FALSE;
-	RecordCreated	:= TRUE;
-	ErrorOccured := FALSE;
-END_IF*)
-
 IF NOT CreateVideo.bBusy AND fbAlarm.bRaised THEN
-	CreateVideo.bStart := FALSE;
 	RecordCreated := TRUE;
 	ErrorOccured := FALSE;
 END_IF
@@ -120,27 +94,21 @@ END_IF]]></ST>
     </Implementation>
     <LineIds Name="ScopeRecordTestCode">
       <LineId Id="5" Count="6" />
-      <LineId Id="176" Count="6" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="183" Count="0" />
-      <LineId Id="13" Count="2" />
+      <LineId Id="311" Count="0" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="272" Count="0" />
       <LineId Id="190" Count="0" />
-      <LineId Id="17" Count="1" />
-      <LineId Id="187" Count="0" />
-      <LineId Id="186" Count="0" />
-      <LineId Id="188" Count="0" />
-      <LineId Id="191" Count="1" />
-      <LineId Id="189" Count="0" />
-      <LineId Id="19" Count="3" />
+      <LineId Id="17" Count="5" />
       <LineId Id="173" Count="0" />
       <LineId Id="234" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="26" Count="12" />
       <LineId Id="41" Count="2" />
-      <LineId Id="55" Count="10" />
       <LineId Id="230" Count="0" />
       <LineId Id="229" Count="0" />
-      <LineId Id="231" Count="0" />
       <LineId Id="233" Count="0" />
       <LineId Id="235" Count="0" />
       <LineId Id="232" Count="0" />

@@ -1,26 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="ImagesToVideo" Id="{4ed94054-832b-00ce-312f-2065dce12fa2}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ImagesToVideo
 VAR_INPUT
-	bStart : BOOL;
-	ImageExportPath 	: STRING(1000);
-	VideoDestinationPath: STRING(1000);
-	sFileName			: STRING;
+	ImageExportPath			: T_MaxString;
+	VideoDestinationPath	: T_MaxString;
+	JSONAttribute			: T_MaxString;	
+	sFileName				: T_MaxString;
 END_VAR
 VAR_OUTPUT
-	bBusy : BOOL;
-	bError : BOOL;
-	nErrID : UDINT;
+	bBusy 	: BOOL;
+	bError 	: BOOL;
+	nErrID 	: UDINT;
 END_VAR
 VAR
-	BatchFile : NT_StartProcess;
-	BatchFileDelay	: TON;
-	Command : STRING(1000);	
+	BatchFile 			: NT_StartProcess;
+	BatchFileDelay		: TON;
+	Command 			: STRING(1000);	
+	TriggerVideoCreate	: BOOL;
+	
+	Listener			: FB_SampleListener;	
+	JSONFilter			: FB_TcEventFilter;
+	hr					: HRESULT;
+	NumAlarmsRaised		: INT := 0;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//BatchFile.START := FALSE;
+      <ST><![CDATA[Listener.Execute();
+
+JSONFilter.Clear().JsonAttribute.Value.EqualTo(JSONAttribute);
+hr := Listener.Subscribe2(JSONFilter);
+
+IF Listener.nAlarms <> NumAlarmsRaised THEN
+	NumAlarmsRaised := NumAlarmsRaised + 1;
+	TriggerVideoCreate := TRUE;
+END_IF
 
 //Call batch file to create video
 Command :='';
@@ -32,11 +47,10 @@ Command := CONCAT(Command, '" "');
 Command := CONCAT(Command, ImageExportPath);
 Command := CONCAT(Command, '"'); 
 
-BatchFileDelay(IN:= bStart,PT := T#15S);
+BatchFileDelay(IN:= TriggerVideoCreate,PT := T#15S);
 
-IF bStart THEN
+IF TriggerVideoCreate THEN
 	bBusy := TRUE;
-	//BatchFile.START := FALSE;
 END_IF
 
 IF BatchFile.BUSY AND bBusy THEN
@@ -53,6 +67,7 @@ IF BatchFileDelay.Q THEN
 	BatchFile(START := FALSE);
 	bBusy := FALSE;
 	nErrID := 0;
+	TriggerVideoCreate := FALSE;
 END_IF
 
 
@@ -60,13 +75,21 @@ END_IF
 ]]></ST>
     </Implementation>
     <LineIds Name="ImagesToVideo">
-      <LineId Id="139" Count="1" />
+      <LineId Id="180" Count="0" />
+      <LineId Id="183" Count="0" />
+      <LineId Id="182" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="189" Count="0" />
+      <LineId Id="193" Count="0" />
       <LineId Id="70" Count="9" />
       <LineId Id="22" Count="0" />
       <LineId Id="132" Count="0" />
       <LineId Id="88" Count="0" />
       <LineId Id="133" Count="0" />
-      <LineId Id="138" Count="0" />
       <LineId Id="146" Count="0" />
       <LineId Id="149" Count="0" />
       <LineId Id="148" Count="0" />
@@ -80,6 +103,7 @@ END_IF
       <LineId Id="93" Count="0" />
       <LineId Id="95" Count="0" />
       <LineId Id="111" Count="1" />
+      <LineId Id="196" Count="0" />
       <LineId Id="90" Count="0" />
       <LineId Id="142" Count="0" />
       <LineId Id="144" Count="0" />

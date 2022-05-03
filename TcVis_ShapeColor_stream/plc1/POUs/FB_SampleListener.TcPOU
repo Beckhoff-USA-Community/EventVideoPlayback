@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="FB_SampleListener" Id="{bd686090-6f59-08cd-2ea1-a60d85597367}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SampleListener EXTENDS FB_ListenerBase2
+VAR_OUTPUT
+		nAlarms	: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="OnAlarmRaised" Id="{22af7b33-730b-0eb5-3e7e-eb19d892f983}">
+      <Declaration><![CDATA[METHOD OnAlarmRaised : HRESULT
+VAR_INPUT
+	fbEvent	: REFERENCE TO FB_TcEvent;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nAlarms := nAlarms+1;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_SampleListener">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_SampleListener.OnAlarmRaised">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

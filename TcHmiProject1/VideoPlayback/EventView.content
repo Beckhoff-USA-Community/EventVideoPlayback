@@ -95,4 +95,6 @@
 ]
 </script>
 </div>
+<div id="TcHmiTextblock_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="46" data-tchmi-height-unit="px" data-tchmi-left="293" data-tchmi-left-unit="px" data-tchmi-text="Alarms and Events" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="229" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="40" data-tchmi-text-vertical-alignment="Bottom">
+</div>
 </div>

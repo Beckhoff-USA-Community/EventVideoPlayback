@@ -4148,13 +4148,8 @@
 	</ImageDatas>
 	<Project ProjectGUID="{8F35598F-7819-4BAA-B346-0A73F46ADD3A}" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
-			<Settings MaxCpus="12" RouterMemory="471859200">
-				<Cpu CpuId="6"/>
-				<Cpu CpuId="7"/>
-				<Cpu CpuId="8"/>
-				<Cpu CpuId="9"/>
-				<Cpu CpuId="10"/>
-				<Cpu CpuId="11"/>
+			<Settings MaxCpus="4" NonWinCpus="2" RouterMemory="471859200">
+				<Cpu CpuId="1"/>
 			</Settings>
 			<Licenses>
 				<Target>
@@ -4172,11 +4167,11 @@
 				<Task Id="5" Priority="6" CycleTime="100000" AmsPort="352" AdtTasks="true">
 					<Name>VnTask ADS (Camera1)</Name>
 				</Task>
-				<Task Id="6" Priority="1" Affinity="#x00000400" AdtTasks="true" JobTask="true">
+				<Task Id="6" Priority="1" AdtTasks="true" JobTask="true">
 					<Name>Task 6</Name>
 					<ImageId>327</ImageId>
 				</Task>
-				<Task Id="7" Priority="2" Affinity="#x00000400" AdtTasks="true" JobTask="true">
+				<Task Id="7" Priority="2" AdtTasks="true" JobTask="true">
 					<Name>Task 7</Name>
 					<ImageId>327</ImageId>
 				</Task>
@@ -12818,6 +12813,57 @@
 				</Camera>
 			</App>
 		</Vision>
+		<Analytics>
+			<Name>ANALYTICS</Name>
+			<ImageId>281</ImageId>
+			<AddiStreamDescription>
+				<Address></Address>
+				<Longitude></Longitude>
+				<Latitude></Latitude>
+			</AddiStreamDescription>
+			<DataLogger GUID="{6BCDA7F9-E251-E4B9-00D3-D2791AB68DC3}">
+				<Name>Data Logger 1</Name>
+				<Name></Name>
+				<ParameterValues>
+					<Value>
+						<Name>Data Format</Name>
+						<EnumText>ANALYTICS_FORMAT_FILE</EnumText>
+					</Value>
+					<Value>
+						<Name>Data Compression</Name>
+						<EnumText>ANALYTICS_COMPRESSION_RL</EnumText>
+					</Value>
+					<Value>
+						<Name>Max. Compression Compare Width</Name>
+						<EnumText>ANALYTICS_COMP_WIDTH_8</EnumText>
+					</Value>
+					<Value>
+						<Name>MQTT Host Name</Name>
+						<String>127.0.0.1</String>
+					</Value>
+					<Value>
+						<Name>MQTT Tcp Port</Name>
+						<Value>1883</Value>
+					</Value>
+					<Value>
+						<Name>MQTT Main Topic</Name>
+						<String>DefaultMainTopic</String>
+					</Value>
+					<Value>
+						<Name>MQTT Client ID</Name>
+						<String></String>
+					</Value>
+					<Value>
+						<Name>MQTT User Name</Name>
+						<String></String>
+					</Value>
+					<Value>
+						<Name>MQTT Password</Name>
+						<String></String>
+					</Value>
+				</ParameterValues>
+			</DataLogger>
+		</Analytics>
 		<Io>
 			<Device Id="1" Disabled="true" DevType="109" DevFlags="#x0004">
 				<Name>Device 1 (RT-Ethernet Adapter)</Name>

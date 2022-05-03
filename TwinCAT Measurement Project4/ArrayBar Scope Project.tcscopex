@@ -557,7 +557,7 @@
               <MarkerType>Circle</MarkerType>
               <Name>ipImageResultDisp</Name>
               <Orientation>Vertical</Orientation>
-              <Position>1.3294129284925E+17</Position>
+              <Position>1.3295417262413E+17</Position>
               <ShowFullArray>true</ShowFullArray>
               <ShowPosition>false</ShowPosition>
               <ShowTitle>true</ShowTitle>
@@ -573,7 +573,11 @@
                   <Title>ImageStreamStyle_44</Title>
                 </ImageStreamStyle>
               </SubMember>
+<<<<<<< Updated upstream
               <TimePosition>132956557000470000</TimePosition>
+=======
+              <TimePosition>132954172626930000</TimePosition>
+>>>>>>> Stashed changes
               <Title>ipImageResultDisp</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>

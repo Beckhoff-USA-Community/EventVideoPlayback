@@ -6,7 +6,7 @@
     <Node>
       <Title>ArrayBar Scope Project</Title>
       <Expanded>True</Expanded>
-      <FileName>C:\Users\AlyssaH\Source\Repos\EventVideoPlayback\TwinCAT Measurement Project4\ArrayBar Scope Project.tcscopex</FileName>
+      <FileName>C:\Temp\Sample TC Project with HMI\Solution\Solution\TwinCAT Measurement Project4\ArrayBar Scope Project.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
@@ -14,13 +14,13 @@
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>ErrorOccured</Title>
+              <Title>ipImageResultDisp</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
             </Node>
             <Node>
-              <Title>ipImageResultDisp</Title>
+              <Title>SomethingBadHappendOnMachine</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -33,12 +33,12 @@
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>Axis Group (1)</Title>
+              <Title>Axis Group</Title>
               <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>ErrorOccured</Title>
+                  <Title>SomethingBadHappendOnMachine</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />
@@ -46,7 +46,7 @@
               </Children>
             </Node>
             <Node>
-              <Title>ipImageResultDisp</Title>
+              <Title>Image</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />
@@ -60,24 +60,11 @@
           <Children>
             <Node>
               <Title>ImageSubSave</Title>
-              <Expanded>False</Expanded>
+              <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
                   <Title>AnAlarmHappened</Title>
-                  <Expanded>False</Expanded>
-                  <FileName></FileName>
-                  <Children />
-                </Node>
-              </Children>
-            </Node>
-            <Node>
-              <Title>Trigger Group</Title>
-              <Expanded>False</Expanded>
-              <FileName></FileName>
-              <Children>
-                <Node>
-                  <Title>Directory Trigger Set</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />

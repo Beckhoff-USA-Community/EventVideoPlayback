@@ -1,7 +1,9 @@
 ﻿<div id="VideoPlayer" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="800" data-tchmi-height="640">
 
-<div id="TcHmiVideo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiVideo" data-tchmi-controls="true" data-tchmi-height="586" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-mute="true" data-tchmi-top="27" data-tchmi-top-unit="px" data-tchmi-width="743" data-tchmi-width-unit="px" data-tchmi-is-enabled="true" data-tchmi-autoplay="true" data-tchmi-loop="true" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+<div id="TcHmiVideo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiVideo" data-tchmi-controls="true" data-tchmi-height="586" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-mute="true" data-tchmi-top="44" data-tchmi-top-unit="px" data-tchmi-width="743" data-tchmi-width-unit="px" data-tchmi-is-enabled="true" data-tchmi-autoplay="true" data-tchmi-loop="true" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
 
 
+</div>
+<div id="TcHmiTextblock_2" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="46" data-tchmi-height-unit="px" data-tchmi-left="147" data-tchmi-left-unit="px" data-tchmi-text="Video Playback of Event" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="493" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="40" data-tchmi-text-vertical-alignment="Center" data-tchmi-text-horizontal-alignment="Center">
 </div>
 </div>

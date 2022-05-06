@@ -1,16 +1,16 @@
 <Node>
-  <Title>TwinCAT Measurement Project4</Title>
+  <Title>TriggerImageExport</Title>
   <Expanded>False</Expanded>
   <FileName></FileName>
   <Children>
     <Node>
-      <Title>ArrayBar Scope Project</Title>
+      <Title>YT Scope Project</Title>
       <Expanded>True</Expanded>
-      <FileName>C:\Users\NathanM\Source\Repos\Beckhoff-USA-Community\EventVideoPlayback\TwinCAT Measurement Project4\ArrayBar Scope Project.tcscopex</FileName>
+      <FileName>C:\Temp\Sample TC Project with HMI\Solution\Solution\TriggerImageExport\YT Scope Project.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -59,12 +59,12 @@
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>ImageSubSave</Title>
+              <Title>Trigger Images</Title>
               <Expanded>True</Expanded>
               <FileName></FileName>
               <Children>
                 <Node>
-                  <Title>AnAlarmHappened</Title>
+                  <Title>Channel Trigger Set</Title>
                   <Expanded>False</Expanded>
                   <FileName></FileName>
                   <Children />

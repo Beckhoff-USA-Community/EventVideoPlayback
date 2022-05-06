@@ -1,41 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.10">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
   <POU Name="ScopeRecordTestCode" Id="{c0c6cb4c-cfa1-4b71-acd5-11c9751fc94e}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM ScopeRecordTestCode
 VAR
+	//Test Bits
+	SomethingBadHappendOnMachine 	: BOOL;
 	
-ErrorOccured 	: BOOL;
-fbEventLog		: FB_TcEventLogger; 
-fbAlarm 		: FB_TcAlarm;
-bIsInitalized 	: BOOL;
-bRaiseAlarm		: BOOL;
-hr				: HRESULT;
-hrLastError		: HRESULT;
-JSONString		: STRING := '{"CreateVideo": 1}';
-
-BatchFileDelay	: TON;
-BatchFile		: NT_StartProcess;
-Command			: STRING(1000);
-
-//ImageName 				: STRING	  := 'ipImageResultDisp';  //name of the image, this can be found in the image pool in scope
-VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
-ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\ipImageResultDisp\';
-
-EventTimestamp: TimeStruct;
-bConfirmAlarm: BOOL;
-bClearAlarm: BOOL;
-
-
-	TestRUN			: BOOL;
+	//Alarm init and handeling
+	fbAlarm 		: FB_TcAlarm;
+	bIsInitalized 	: BOOL;
+	bRaiseAlarm		: BOOL;
+	hr				: HRESULT;
+	hrLastError		: HRESULT;
+	//string used to determine if this particular alarm should generate a video or not. 
+	JSONString		: STRING := '{"CreateVideo": 1}';
+	
+	VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
+	ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\image\';
+	
+	EventTimestamp: TimeStruct;
+	bConfirmAlarm: BOOL;
+	bClearAlarm: BOOL;
+	
 	sTEMP			: STRING;
 	sFileName		: STRING;
 	RecordCreated	: BOOL;
-	sDump			: STRING;
+	sDump			: STRING;	
+	fbCreateVideoOnAlarm		: FB_CreateVidOnAlarm;
 	
-	CreateVideo		: ImagesToVideo;
-	
-//	AlarmCreateVideo	: AlarmCreatesVideo;
-	CreateVideoBool: BOOL;
+	AlarmCount: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -47,105 +40,34 @@ END_VAR
 	END_IF
 END_IF
 
-(*AlarmCreateVideo(
-	ImageExportPath:= ScopeImageExportPath, 
-	VideoFilePath:= VideoDestinationPath, 
+//cyclic call to FB watch for events
+fbCreateVideoOnAlarm(
+	ImageExportPath:= ScopeImageExportPath,  //this needs to match the image export path in scope trigger
+	VideoDestinationPath:= VideoDestinationPath, //this should match the virtual directory set in TC HMI to be able to find the video file.
 	JSONAttribute:= JSONString, 
+	//sFileName:= sFileName, 
 	bBusy=> , 
 	bError=> , 
-	nErrID=> );*)
-	
-//Replace this dumb bool with triggering event from eventlogger
+	nErrID=> );
 
-IF ErrorOccured THEN
-	fbAlarm.Raise(0);
-	RecordCreated := FALSE;
+//Something did not go as planned in the machine sequence, raise an alarm, and associate the video JSON attribute to the riased alarm
+
+IF SomethingBadHappendOnMachine THEN
+	hr:= fbAlarm.SetJsonAttribute(JSONSTRING);
+	hr:= fbAlarm.Raise(0);
+	IF FAILED(hr) THEN
+		hrLastError := hr;
+	END_IF
+SomethingBadHappendOnMachine:=FALSE;
 END_IF
 
-(*IF CreateVideoBool THEN
-	fbAlarm.SetJsonAttribute(JSONSTRING);
-	fbAlarm.Raise(0);
-	RecordCreated := FALSE;
-END_IF*)
-
-//Get the timestamp from event
-IF fbAlarm.bRaised AND NOT RecordCreated THEN
-	EventTimestamp := FILETIME64_TO_SYSTEMTIME(fbAlarm.nTimeRaised);
-	CreateVideo(bStart := TRUE, ImageExportPath := ScopeImageExportPath, VideoDestinationPath := VideoDestinationPath, sFileName := sFileName);
-	RecordCreated := TRUE;
-END_IF
-
-(*
-set videofilename=%1
-set videodestinationpath=%2
-set scopeimageexportpath=%3
-
-// Example call - Images2Video Nathan "C:\Temp\Scope Project_Img_test\\" "C:\Temp\Scope Project_Img_test\Export 1\ipImageResultDisp\"
-*)
-//convert SystemTime to a format we can use for a filename by replacing characters like ':' and '.'. 
-IF ErrorOccured THEN
-	sTEMP := SYSTEMTIME_TO_STRING(EventTimestamp);
-	FindAndReplaceChar(ADR(sTEMP),':','-',ADR(sFileName),SIZEOF(sFileName));
-	sTEMP := sFileName;
-	FindAndSplitChar(sSeparatorChar:='.',pSrcString:= ADR(sTEMP),pLeftString :=ADR(sFileName),
-	nLeftSize:= SIZEOF(FileName), pRightString := ADR(sDump), nRightSize := SIZEOF(sDump),bSearchFromRight := FALSE);
-END_IF
-
-(*IF BatchFileDelay.Q OR TestRUN THEN
-	BatchFile(	PATHSTR:= 'C:\TwinCAT\3.1\Boot\Images2Video.bat', 
-				COMNDLINE := Command,
-				START := TRUE);
-	BatchFileDelay(IN := FALSE);
-	BatchFile(START := FALSE);
-	TestRUN:=FALSE;
-	RecordCreated	:= TRUE;
-	ErrorOccured := FALSE;
-END_IF*)
-
-IF NOT CreateVideo.bBusy AND fbAlarm.bRaised THEN
-	CreateVideo.bStart := FALSE;
-	RecordCreated := TRUE;
-	ErrorOccured := FALSE;
-END_IF
 
 IF bConfirmAlarm THEN
 	fbAlarm.Confirm(0);
+	fbAlarm.Clear(0, FALSE);
 	bConfirmAlarm := FALSE;
 END_IF
-
-IF bClearAlarm THEN
-	fbAlarm.Clear(0, FALSE);
-	bClearAlarm := FALSE;
-END_IF]]></ST>
+]]></ST>
     </Implementation>
-    <LineIds Name="ScopeRecordTestCode">
-      <LineId Id="5" Count="6" />
-      <LineId Id="176" Count="6" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="183" Count="0" />
-      <LineId Id="13" Count="2" />
-      <LineId Id="190" Count="0" />
-      <LineId Id="17" Count="1" />
-      <LineId Id="187" Count="0" />
-      <LineId Id="186" Count="0" />
-      <LineId Id="188" Count="0" />
-      <LineId Id="191" Count="1" />
-      <LineId Id="189" Count="0" />
-      <LineId Id="19" Count="3" />
-      <LineId Id="173" Count="0" />
-      <LineId Id="234" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="26" Count="12" />
-      <LineId Id="41" Count="2" />
-      <LineId Id="55" Count="10" />
-      <LineId Id="230" Count="0" />
-      <LineId Id="229" Count="0" />
-      <LineId Id="231" Count="0" />
-      <LineId Id="233" Count="0" />
-      <LineId Id="235" Count="0" />
-      <LineId Id="232" Count="0" />
-      <LineId Id="68" Count="8" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

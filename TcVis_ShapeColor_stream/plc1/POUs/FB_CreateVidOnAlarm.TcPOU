@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.11">
+  <POU Name="FB_CreateVidOnAlarm" Id="{4ed94054-832b-00ce-312f-2065dce12fa2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_CreateVidOnAlarm EXTENDS FB_ListenerBase2
+VAR_INPUT
+	ImageExportPath			: T_MaxString;
+	VideoDestinationPath	: T_MaxString;
+	JSONAttribute			: T_MaxString;	
+
+END_VAR
+VAR_OUTPUT
+	bBusy 	: BOOL;
+	bError 	: BOOL;
+	nErrID 	: UDINT;
+END_VAR
+VAR
+	//Settings creation of the Video
+	BatchFileFullPath: STRING := 'C:\TwinCAT\3.1\Boot\Images2Video.bat'; //Full Path to Batch file
+	DelayTimebeforeCallingBatch : TIME := T#15S; //Delay time after alarm trigger, this value should match the 'post' trigger time in scope image export trigger
+	
+	//text retrieval of message
+	fbRequestEventText : FB_RequestEventText;
+	{attribute 'TcEncoding':='UTF-8'}
+	sLastMessageText : STRING;
+	bReqText : BOOL;
+	
+	
+	//Internal Vars
+	CallBatchFile 		: NT_StartProcess;
+	BatchFileDelay		: TON;
+	Command 			: STRING(1000);	
+	TriggerVideoCreate	: BOOL;	
+	JSONFilter			: FB_TcEventFilter;
+	hr					: HRESULT;
+	sFileName			: T_MaxString;
+	EventTimestamp		: TimeStruct;
+	sDump				: STRING;
+	_fbEvent 			: FB_TcEvent;
+	NumAlarmsRaised		: INT := 0;
+	nCntAlarmsRaised	: INT;
+	Step				:INT;
+	sJsonAttribute 		: STRING (10000);	
+	bSubscribe			: BOOL :=TRUE;
+	bSubscribed			: BOOL;
+	bUnSubscribe		: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Execute();
+
+
+IF bSubscribe THEN 
+	bSubscribe := FALSE;
+	JSONFilter.Clear().JsonAttribute.Value.EqualTo(JSONAttribute); //define all events (messages and alarms) from this eventclass   
+	hr := Subscribe2(JSONFilter); //subscribe to retrieve defined events
+	IF SUCCEEDED(hr) THEN	
+		bSubscribed := TRUE;
+	END_IF
+END_IF 
+
+IF bUnSubscribe THEN 
+	bUnSubscribe := FALSE;
+	hr := Unsubscribe();
+	IF SUCCEEDED(hr) THEN	
+		bSubscribed := FALSE;
+	END_IF
+END_IF 
+
+(*
+IF nAlarms <> NumAlarmsRaised THEN
+	NumAlarmsRaised := NumAlarmsRaised + 1;
+	TriggerVideoCreate := TRUE;
+END_IF
+*)
+
+CASE Step OF
+	0: 
+		IF TriggerVideoCreate THEN
+			EventTimestamp := FILETIME64_TO_SYSTEMTIME(_fbevent.nTimestamp);
+			//CreateVideo(ImageExportPath := ScopeImageExportPath, VideoDestinationPath := VideoDestinationPath, JSONAttribute := JSONString);
+		
+		//Get timestamp, convert it to a format that can be used for a file name, and build up the filename for the video
+			sFileName := SYSTEMTIME_TO_STRING(EventTimestamp);
+			FindAndReplaceChar(ADR(sFileName),':','-',ADR(sFileName),SIZEOF(sFileName));
+			sFileName := sFileName;
+			FindAndSplitChar(sSeparatorChar:='.',pSrcString:= ADR(sFileName),pLeftString :=ADR(sFileName),
+			nLeftSize:= SIZEOF(FileName), pRightString := ADR(sDump), nRightSize := SIZEOF(sDump),bSearchFromRight := FALSE);
+		
+			//Create Commandline agrument to call batch file will passed in args
+			Command :='';
+			Command := CONCAT(Command, ' "');
+			Command := CONCAT(Command, sFileName);
+			Command := CONCAT(Command, '" "');
+			Command := CONCAT(Command, VideoDestinationPath);
+			Command := CONCAT(Command, '" "');
+			Command := CONCAT(Command, ImageExportPath);
+			Command := CONCAT(Command, '"'); 
+			
+			bBusy := TRUE;
+			Step:= Step+10;
+		END_IF 
+
+	10:
+		//Call NT_StartProcess to make sure it's called with a False "Start"
+			CallBatchFile(	PATHSTR:= BatchFileFullPath, 
+						COMNDLINE := Command,
+						START := FALSE);
+		
+		Step:= Step+10;
+		
+	20:
+		IF BatchFileDelay.Q THEN
+			CallBatchFile(	PATHSTR:= BatchFileFullPath, 
+						COMNDLINE := Command,
+						START := TRUE);
+			BatchFileDelay(IN := FALSE);
+			CallBatchFile(START := FALSE);
+			bBusy := FALSE;
+			nErrID := 0;
+			TriggerVideoCreate := FALSE;
+			
+			Step:=0;
+		END_IF
+	
+END_CASE
+
+//Delay time after alarm trigger, this value should match the 'post' trigger time in scope image export trigger
+		BatchFileDelay(IN:= TriggerVideoCreate,PT := DelayTimebeforeCallingBatch);
+
+
+
+
+
+]]></ST>
+    </Implementation>
+    <Method Name="Execute" Id="{a94e3ce6-120b-0332-3395-f71f4fe98bc2}">
+      <Declaration><![CDATA[METHOD Execute : HRESULT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Execute := SUPER^.Execute(); //retrieve events
+
+//retrieve the text of a message
+IF 	bReqText AND fbRequestEventText.bError THEN 
+	sLastMessageText := 'Error';
+	bReqText := FALSE; 
+ELSIF bReqText AND NOT  fbRequestEventText.bBusy THEN
+	fbRequestEventText.GetString(sLastMessageText, SIZEOF(sLastMessageText));
+	bReqText := FALSE;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="OnAlarmRaised" Id="{831e6d10-305c-0127-3a9c-3f507dca575d}">
+      <Declaration><![CDATA[METHOD OnAlarmRaised : HRESULT
+VAR_INPUT
+	fbEvent	: REFERENCE TO FB_TcEvent;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+
+TriggerVideoCreate := TRUE;
+_fbEvent:=fbevent;
+
+hr := fbEvent.GetJsonAttribute(sJsonAttribute, SIZEOF(sJsonAttribute));
+nCntAlarmsRaised := nCntAlarmsRaised + 1;
+
+OnAlarmRaised := S_OK; // in order to receive more callbacks (Set <> S_OK in order to cancel the callbacks for this program cycle.)
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

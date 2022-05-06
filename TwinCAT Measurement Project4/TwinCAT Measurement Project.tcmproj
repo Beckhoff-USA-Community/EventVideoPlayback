@@ -3,11 +3,11 @@
   <PropertyGroup>
     <ProjectGuid>{062fdfc7-660f-4ab2-9569-c33dd1ca86f7}</ProjectGuid>
     <AssemblyName>TwinCAT Measurement Project4</AssemblyName>
-    <Name>TwinCAT Measurement Project4</Name>
+    <Name>TwinCAT Measurement Project</Name>
     <RootNamespace>TwinCAT Measurement Project4</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="ArrayBar Scope Project.tcscopex">
+    <Content Include="TriggerImageExport.tcscopex">
       <SubType>Content</SubType>
     </Content>
   </ItemGroup>

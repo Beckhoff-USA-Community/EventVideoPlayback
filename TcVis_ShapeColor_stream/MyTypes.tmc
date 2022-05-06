@@ -2,25 +2,21 @@
 <TcModuleClass>
 	<DataTypes>
 		<DataType>
-			<Name GUID="{38D7E2D9-FA94-4C81-AF01-27042BFB3C52}" PersistentType="true">VideoAlarmDemoEventClass</Name>
+			<Name GUID="{3697EFA1-02BF-4376-83E3-0EC8E25883F6}" PersistentType="true">VideoAlarmDemoEventClass</Name>
 			<DisplayName TxtId=""><![CDATA[NewEventClass_DisplayText]]></DisplayName>
 			<EventId>
 				<Name Id="1">MachineError</Name>
-				<DisplayName TxtId=""><![CDATA[An Issue occured on the machine-  maybe we missed a sensor?]]></DisplayName>
+				<DisplayName TxtId=""><![CDATA[Unexpected Vacuum Loss -  maybe a block was dropped?]]></DisplayName>
 				<Severity>Error</Severity>
-				<Properties>
-					<Property>
-						<Name>Property1</Name>
-						<Value>Test</Value>
-						<Desc><![CDATA[JSON Test]]></Desc>
-					</Property>
-				</Properties>
 			</EventId>
 			<Hides>
 				<Hide GUID="{E029A791-097C-4F7F-AA3B-B31271C49D09}"/>
 				<Hide GUID="{31F76320-C797-4148-9E65-24F00B777BC6}"/>
 				<Hide GUID="{FF5D8341-FE66-44AD-8413-575C7A178B52}"/>
 				<Hide GUID="{4595488E-F19A-4EDD-9C7E-F1EF28BEC8FA}"/>
+				<Hide GUID="{38D7E2D9-FA94-4C81-AF01-27042BFB3C52}"/>
+				<Hide GUID="{A0FB4B4D-FDAC-47E0-A84F-B28E693CE5AD}"/>
+				<Hide GUID="{B127DACF-18E9-4538-8ED8-26F01612EFC4}"/>
 			</Hides>
 		</DataType>
 	</DataTypes>

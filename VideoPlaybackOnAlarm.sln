@@ -7,7 +7,7 @@ Project("{B1E792BE-AA5F-4E3C-8C82-674BF9C0715B}") = "TcVis_ShapeColor_stream", "
 EndProject
 Project("{FE7A1B72-C5B7-4D7C-BB7D-76384D4DE8E1}") = "TcHmiProject1", "TcHmiProject1\TcHmiProject1.hmiproj", "{71FAFF16-9704-4C04-BA58-81E51C312969}"
 EndProject
-Project("{FD9F1D59-E000-42F3-8744-88DE1BE93C06}") = "TwinCAT Measurement Project4", "TwinCAT Measurement Project4\TwinCAT Measurement Project4.tcmproj", "{062FDFC7-660F-4AB2-9569-C33DD1CA86F7}"
+Project("{FD9F1D59-E000-42F3-8744-88DE1BE93C06}") = "TwinCAT Measurement Project", "TwinCAT Measurement Project4\TwinCAT Measurement Project.tcmproj", "{062FDFC7-660F-4AB2-9569-C33DD1CA86F7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AlarmVideoPlayback", "AlarmVideoPlayback", "{A7DDD7DD-C4CA-421C-BDB9-37335C018700}"
 	ProjectSection(SolutionItems) = preProject

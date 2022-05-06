@@ -31,46 +31,14 @@ rem (was at end of previous line) -crf
 
 set tmp="%TEMP%\list.tmp"
 
-rem pause
 
 
 for %%f in (%a%) do (@echo file 'file:%%f' >> %tmp%)
 %c% -y -f concat -safe 0 -i %tmp% -framerate 10 %f% %b%
 del /f /q %tmp%
 
+rmdir /Q /S %scopeimageexportpath%
+rmdir /Q /S %scopeimageexportpath:~1,-1%
 
 
-
-rem : Get parent dir of scope image export path to delete the 'export 1' folder
-Set d=%scopeimageexportpath:~1,-2%
-rem set d=%d:~-1%
-set d="%d%"
-
-set FOLDER=%d%
-for /D %%D in (%FOLDER%) do (
-    set PARENT=%%~dpD
-)
-echo Last folder removed: %PARENT%
-
-
-rem : code to delete exported images folder (and Parent) if video creation was sucsessful 
-if exist %b% (
-    echo Video file exists
-	rem RMDIR /S /Q "%PARENT%"
-	echo Video file found and should be deleted
-) else (
-    rem file doesn't exist
-)
-
-
-
-rem test of how to find export folder(s) in given path
-FOR /D /R "C:\Temp\Scope Project_Img_test\" %%X IN (Export*) DO echo %%X
-) "
-
-rem delete all export folders from path
-rem FOR /D /R "C:\Temp\Scope Project_Img_test\" %%X IN (Export*) DO (RMDIR /S /Q "%%X")
-rem ) "
-
-pause
 exit

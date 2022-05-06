@@ -16,7 +16,7 @@ VAR
 	JSONString		: STRING := '{"CreateVideo": 1}';
 	
 	VideoDestinationPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\';
-	ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\ipImageResultDisp\';
+	ScopeImageExportPath	: STRING(255) := 'C:\Temp\Scope Project_Img_test\image\';
 	
 	EventTimestamp: TimeStruct;
 	bConfirmAlarm: BOOL;
@@ -51,13 +51,14 @@ fbCreateVideoOnAlarm(
 	nErrID=> );
 
 //Something did not go as planned in the machine sequence, raise an alarm, and associate the video JSON attribute to the riased alarm
-	//SomethingBadHappendOnMachine:=FALSE;
+
 IF SomethingBadHappendOnMachine THEN
 	hr:= fbAlarm.SetJsonAttribute(JSONSTRING);
 	hr:= fbAlarm.Raise(0);
 	IF FAILED(hr) THEN
 		hrLastError := hr;
 	END_IF
+SomethingBadHappendOnMachine:=FALSE;
 END_IF
 
 

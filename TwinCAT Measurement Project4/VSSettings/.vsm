@@ -1,20 +1,20 @@
 <Node>
-  <Title>TwinCAT Measurement Project4</Title>
+  <Title>TwinCAT Measurement Project</Title>
   <Expanded>False</Expanded>
   <FileName></FileName>
   <Children>
     <Node>
-      <Title>ArrayBar Scope Project</Title>
+      <Title>TriggerImageExport</Title>
       <Expanded>True</Expanded>
-      <FileName>C:\Users\NathanM\Source\Repos\Beckhoff-USA-Community\EventVideoPlayback\TwinCAT Measurement Project4\ArrayBar Scope Project.tcscopex</FileName>
+      <FileName>C:\Users\NathanM\Source\Repos\Beckhoff-USA-Community\EventVideoPlayback\TwinCAT Measurement Project4\TriggerImageExport.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
-              <Title>ipImageResultDisp</Title>
+              <Title>ipImageResultDisp (1)</Title>
               <Expanded>False</Expanded>
               <FileName></FileName>
               <Children />

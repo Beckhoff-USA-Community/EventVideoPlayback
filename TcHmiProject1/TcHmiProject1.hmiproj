@@ -12,7 +12,7 @@
     <HmiTitle>Vision Monitor Demo</HmiTitle>
     <HmiVerboseLevel>2</HmiVerboseLevel>
     <HmiVersion>1.0.0.0</HmiVersion>
-    <HmiCommunicationServerPort>3000</HmiCommunicationServerPort>
+    <HmiCommunicationServerPort>3001</HmiCommunicationServerPort>
     <HmiLogTcHmiServerMessages>false</HmiLogTcHmiServerMessages>
     <HmiLogDesignerModeComMessages>false</HmiLogDesignerModeComMessages>
     <HmiServerVersion>Latest</HmiServerVersion>
@@ -24,9 +24,9 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
     <Name>TcHmiProject1</Name>
     <HmiCommunicationRouterPort>10110</HmiCommunicationRouterPort>
-    <HmiCommunicationServerAuthPort>13000</HmiCommunicationServerAuthPort>
+    <HmiCommunicationServerAuthPort>13001</HmiCommunicationServerAuthPort>
     <HmiInitial>1.12.742.0</HmiInitial>
-    <HmiRecent>1.12.750.1</HmiRecent>
+    <HmiRecent>1.12.754.4</HmiRecent>
     <HmiServerNodeAdvancedView>False</HmiServerNodeAdvancedView>
   </PropertyGroup>
   <PropertyGroup>
@@ -144,6 +144,15 @@
     <Content Include="Server\TcHmiEventLogger\TcHmiEventLogger.Storage.json">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Server\TcHmiVision\TcHmiVision.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiVision\TcHmiVision.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiVision\TcHmiVision.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="VideoPlayback\EventView.content">
       <SubType>Content</SubType>
     </Content>
@@ -161,8 +170,8 @@
     <Folder Include="LiveImageView" />
     <Folder Include="Functions" />
     <Folder Include="Server\TcHmiEventLogger" />
+    <Folder Include="Server\TcHmiVision" />
     <Folder Include="VideoPlayback" />
-    <Folder Include="Server\TcHmiVision\" />
     <Folder Include="Themes" />
     <Folder Include="Themes\Base\" />
     <Folder Include="Server">
@@ -171,15 +180,6 @@
     <Folder Include="Properties" />
     <Content Include=".eslintrc.json">
       <Visible>false</Visible>
-    </Content>
-    <Content Include="Server\TcHmiVision\TcHmiVision.Config.default.json">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Server\TcHmiVision\TcHmiVision.Config.remote.json">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="Server\TcHmiVision\TcHmiVision.Storage.json">
-      <SubType>Content</SubType>
     </Content>
     <Content Include="tsconfig.tpl.json">
       <SubType>Content</SubType>

@@ -1,35 +1,6 @@
 ﻿[
   {
-    "serverExtensions": [
-      {
-        "publishServerExtension": true,
-        "name": "ADS"
-      },
-      {
-        "publishServerExtension": true,
-        "name": "TcHmiEventLogger"
-      },
-      {
-        "publishServerExtension": true,
-        "name": "TcHmiLua"
-      },
-      {
-        "publishServerExtension": true,
-        "name": "TcHmiSqliteLogger"
-      },
-      {
-        "publishServerExtension": true,
-        "name": "TcHmiSrv"
-      },
-      {
-        "publishServerExtension": true,
-        "name": "TcHmiUserManagement"
-      },
-      {
-        "publishServerExtension": true,
-        "name": "TcHmiVision"
-      }
-    ],
+    "serverExtensions": [],
     "isNew": false,
     "profileName": "local",
     "publishMode": "TcHmi",
@@ -46,7 +17,7 @@
     "abortOnErrors": true,
     "userName": "",
     "encryptedPassword": "",
-    "encryptedTcHmiServerPassword": "22KRyzxsRbksYqqgpqYG1g==",
+    "encryptedTcHmiServerPassword": "PlKkNYX+pI8rusO0YZcAeQ==",
     "tcHmiServerHost": "localhost",
     "tcHmiServerPort": "1010",
     "socketTimeout": "60",

@@ -1,6 +1,6 @@
-﻿<div id="VideoPlayer" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="800" data-tchmi-height="640">
+﻿<div id="VideoPlayer" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="100" data-tchmi-height="100" data-tchmi-width-unit="%" data-tchmi-height-unit="%">
 
-<div id="TcHmiVideo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiVideo" data-tchmi-controls="true" data-tchmi-height="586" data-tchmi-height-unit="px" data-tchmi-left="20" data-tchmi-left-unit="px" data-tchmi-mute="true" data-tchmi-top="44" data-tchmi-top-unit="px" data-tchmi-width="743" data-tchmi-width-unit="px" data-tchmi-is-enabled="true" data-tchmi-autoplay="true" data-tchmi-loop="true" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+<div id="TcHmiVideo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiVideo" data-tchmi-controls="true" data-tchmi-height="80" data-tchmi-height-unit="%" data-tchmi-left="5" data-tchmi-left-unit="%" data-tchmi-mute="true" data-tchmi-top="10" data-tchmi-top-unit="%" data-tchmi-width="90" data-tchmi-width-unit="%" data-tchmi-is-enabled="true" data-tchmi-autoplay="true" data-tchmi-loop="true" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
 
 
 </div>

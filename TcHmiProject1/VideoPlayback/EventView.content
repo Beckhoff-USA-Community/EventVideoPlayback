@@ -1,6 +1,6 @@
-﻿<div id="VideoPlayback" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="800" data-tchmi-height="640">
+﻿<div id="VideoPlayback" data-tchmi-type="TcHmi.Controls.System.TcHmiContent" data-tchmi-top="0" data-tchmi-left="0" data-tchmi-width="100" data-tchmi-height="100" data-tchmi-width-unit="%" data-tchmi-height-unit="%">
 
-<div id="TcHmiEventGrid" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEventGrid" data-tchmi-height="391" data-tchmi-height-unit="px" data-tchmi-left="25" data-tchmi-left-unit="px" data-tchmi-server-interval="1000" data-tchmi-show-menu-bar="true" data-tchmi-top="39" data-tchmi-top-unit="px" data-tchmi-width="632" data-tchmi-width-unit="px" data-tchmi-is-enabled="true" data-tchmi-allow-details-popup="true" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+<div id="TcHmiEventGrid" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiEventGrid" data-tchmi-height="70" data-tchmi-height-unit="%" data-tchmi-left="5" data-tchmi-left-unit="%" data-tchmi-server-interval="1000" data-tchmi-show-menu-bar="true" data-tchmi-top="10" data-tchmi-top-unit="%" data-tchmi-width="90" data-tchmi-width-unit="%" data-tchmi-is-enabled="true" data-tchmi-allow-details-popup="true" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
 <script data-tchmi-target-attribute="data-tchmi-filter" type="application/json">
 [{"path":"domain","comparator":"==","value":"TcHmiEventLogger"}]
 </script>
@@ -12,7 +12,7 @@
 </script>
 
 </div>
-<div id="LaunchVideo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="36" data-tchmi-left-unit="px" data-tchmi-text="Video Playback (if Available)" data-tchmi-top="440" data-tchmi-top-unit="px" data-tchmi-width="600" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true">
+<div id="LaunchVideo" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="5" data-tchmi-height-unit="%" data-tchmi-left="12.5" data-tchmi-left-unit="%" data-tchmi-text="Video Playback (if Available)" data-tchmi-top="82" data-tchmi-top-unit="%" data-tchmi-width="75" data-tchmi-width-unit="%" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true" data-tchmi-min-height="30">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -38,7 +38,7 @@
 ]
 </script>
 </div>
-<div id="btnTrigger" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="426" data-tchmi-left-unit="px" data-tchmi-text="Trigger Test Event " data-tchmi-top="480" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px">
+<div id="btnTrigger" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="5" data-tchmi-height-unit="%" data-tchmi-left="50" data-tchmi-left-unit="%" data-tchmi-text="Trigger Test Event " data-tchmi-top="90" data-tchmi-top-unit="%" data-tchmi-width="12.5" data-tchmi-width-unit="%" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true" data-tchmi-right-unit="px" data-tchmi-bottom-unit="px" data-tchmi-min-height="30" data-tchmi-min-width="100">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -48,11 +48,11 @@
       {
         "objectType": "WriteToSymbol",
         "active": true,
-        "symbolExpression": "%s%PLC1.ScopeRecordTestCode.bRaiseAlarm%/s%",
+        "symbolExpression": "%s%PLC1.ScopeRecordTestCode.SomethingBadHappendOnMachine%/s%",
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/BOOL",
-          "value": false
+          "value": true
         },
         "asyncWait": true
       }
@@ -61,7 +61,7 @@
 ]
 </script>
 </div>
-<div id="btnClearAlarm" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="30" data-tchmi-height-unit="px" data-tchmi-left="536" data-tchmi-left-unit="px" data-tchmi-text="Clear Active Alarm" data-tchmi-top="480" data-tchmi-top-unit="px" data-tchmi-width="100" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true">
+<div id="btnClearAlarm" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiButton" data-tchmi-height="5" data-tchmi-height-unit="%" data-tchmi-left="65" data-tchmi-left-unit="%" data-tchmi-text="Clear Active Alarm" data-tchmi-top="90" data-tchmi-top-unit="%" data-tchmi-width="12.5" data-tchmi-width-unit="%" data-tchmi-word-wrap="true" data-tchmi-is-enabled="true" data-tchmi-min-height="30" data-tchmi-min-width="100">
 
 <script data-tchmi-target-attribute="data-tchmi-trigger" type="application/json">
 [
@@ -78,23 +78,12 @@
           "value": true
         },
         "asyncWait": true
-      },
-      {
-        "objectType": "WriteToSymbol",
-        "active": true,
-        "symbolExpression": "%s%PLC1.ScopeRecordTestCode.bClearAlarm%/s%",
-        "value": {
-          "objectType": "StaticValue",
-          "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
-        },
-        "asyncWait": true
       }
     ]
   }
 ]
 </script>
 </div>
-<div id="TcHmiTextblock_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="46" data-tchmi-height-unit="px" data-tchmi-left="293" data-tchmi-left-unit="px" data-tchmi-text="Alarms and Events" data-tchmi-top="0" data-tchmi-top-unit="px" data-tchmi-width="229" data-tchmi-width-unit="px" data-tchmi-word-wrap="true" data-tchmi-text-font-size="40" data-tchmi-text-vertical-alignment="Bottom">
+<div id="TcHmiTextblock_1" data-tchmi-type="TcHmi.Controls.Beckhoff.TcHmiTextblock" data-tchmi-height="8.3" data-tchmi-height-unit="%" data-tchmi-left="25" data-tchmi-left-unit="%" data-tchmi-text="Alarms and Events" data-tchmi-top="0" data-tchmi-top-unit="%" data-tchmi-width="50" data-tchmi-width-unit="%" data-tchmi-word-wrap="true" data-tchmi-text-font-size="40" data-tchmi-text-vertical-alignment="Top" data-tchmi-text-horizontal-alignment="Center" data-tchmi-min-height="50">
 </div>
 </div>

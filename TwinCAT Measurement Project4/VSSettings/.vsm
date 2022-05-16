@@ -6,11 +6,11 @@
     <Node>
       <Title>TriggerImageExport</Title>
       <Expanded>True</Expanded>
-      <FileName>C:\Users\NathanM\Source\Repos\Beckhoff-USA-Community\EventVideoPlayback\TwinCAT Measurement Project4\TriggerImageExport.tcscopex</FileName>
+      <FileName>C:\Users\NathanM\Source\Repos\EventVideoPlayback\TwinCAT Measurement Project4\TriggerImageExport.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -29,7 +29,7 @@
         </Node>
         <Node>
           <Title>YT Chart</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>
@@ -55,7 +55,7 @@
         </Node>
         <Node>
           <Title>Trigger</Title>
-          <Expanded>False</Expanded>
+          <Expanded>True</Expanded>
           <FileName></FileName>
           <Children>
             <Node>

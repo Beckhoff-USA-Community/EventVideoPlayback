@@ -105,5 +105,8 @@
   ]
 }</TcHmiEditor_SplitAreaStates>
     <TcHmiEditor_PermissionsWindowDimension>3660;191;1000;700</TcHmiEditor_PermissionsWindowDimension>
+    <TcHmiEditor_SelectBindingWindowColumnWidths_m_extensionLocalizationsTree>[
+  300.0
+]</TcHmiEditor_SelectBindingWindowColumnWidths_m_extensionLocalizationsTree>
   </PropertyGroup>
 </Project>

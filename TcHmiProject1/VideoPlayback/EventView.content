@@ -52,7 +52,7 @@
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
+          "value": false
         },
         "asyncWait": true
       }
@@ -75,7 +75,7 @@
         "value": {
           "objectType": "StaticValue",
           "valueType": "tchmi:general#/definitions/BOOL",
-          "value": true
+          "value": false
         },
         "asyncWait": true
       }

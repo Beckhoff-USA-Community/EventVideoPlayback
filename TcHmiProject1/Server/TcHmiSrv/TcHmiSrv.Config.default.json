@@ -33,8 +33,8 @@
     "DISCOVERY": 2,
     "ENABLE_SERVER_UPDATE": true,
     "ENDPOINTS": [
-        "http://127.0.0.1:13000",
-        "http://127.0.0.1:3000"
+        "http://127.0.0.1:13001",
+        "http://127.0.0.1:3001"
     ],
     "ETAGENABLED": true,
     "EXTENSIONS": {
@@ -2434,6 +2434,33 @@
             "HIDDEN": false,
             "MAPPING": "PLC1::MAIN::myBool",
             "OPTIONS": {},
+            "SCHEMA": {
+                "$ref": "tchmi:general#/definitions/BOOL"
+            },
+            "USEMAPPING": true
+        },
+        "PLC1.ScopeRecordTestCode.SomethingBadHappendOnMachine": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::ScopeRecordTestCode::SomethingBadHappendOnMachine",
+            "SCHEMA": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:general#/definitions/BOOL"
+                    },
+                    {
+                        "comment": "Test Bits"
+                    }
+                ]
+            },
+            "USEMAPPING": true
+        },
+        "PLC1.ScopeRecordTestCode.bConfirmAlarm": {
+            "ACCESS": 3,
+            "DOMAIN": "ADS",
+            "DYNAMIC": true,
+            "MAPPING": "PLC1::ScopeRecordTestCode::bConfirmAlarm",
             "SCHEMA": {
                 "$ref": "tchmi:general#/definitions/BOOL"
             },

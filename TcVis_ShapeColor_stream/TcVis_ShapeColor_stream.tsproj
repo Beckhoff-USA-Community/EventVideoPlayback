@@ -3566,7 +3566,7 @@
 			</AdditionalProjectFiles>
 		</System>
 		<Plc>
-			<Project Disabled="true" GUID="{953159BB-3E78-42EE-8310-D1DAEC584533}" Name="plc1" PrjFilePath="plc1\plc1.plcproj" TmcFilePath="plc1\plc1.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
+			<Project GUID="{953159BB-3E78-42EE-8310-D1DAEC584533}" Name="plc1" PrjFilePath="plc1\plc1.plcproj" TmcFilePath="plc1\plc1.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
 				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="plc1\plc1.tmc">
 					<Name>plc1 Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>

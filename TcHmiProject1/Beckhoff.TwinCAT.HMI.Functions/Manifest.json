@@ -1,5 +1,5 @@
 {
-    "$schema": "../../TcHmiFramework/Schema/Manifest.Schema.json",
+    "$schema": "../TcHmiFramework/Schema/Manifest.Schema.json",
     "apiVersion": 1,
     "modules": [
         {
@@ -85,6 +85,11 @@
             "type": "Function",
             "basePath": "",
             "descriptionFile": "GetLocale.function.json"
+        },
+        {
+            "type": "Function",
+            "basePath": "",
+            "descriptionFile": "GetLocalizedText.function.json"
         },
         {
             "type": "Function",

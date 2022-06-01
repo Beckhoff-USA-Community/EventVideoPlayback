@@ -5,11 +5,11 @@
     "namespace": "TcHmi.Controls.Beckhoff",
     "displayName": "File Explorer",
     "version": {
-        "full": "1.12.754.4",
+        "full": "1.12.756.1",
         "major": 1,
         "minor": 12,
-        "build": 754,
-        "revision": 4
+        "build": 756,
+        "revision": 1
     },
     "visible": true,
     "themeable": "Standard",
@@ -259,21 +259,41 @@
             "displayName": "Create",
             "description": "Controls the ability to create folders and upload files. This defaults to true.",
             "visible": true,
-            "defaultValueInternal": true
+            "defaultValueInternal": true,
+            "dependsOn": [
+                "operate"
+            ]
         },
         {
             "name": "rename",
             "displayName": "Rename",
             "description": "Controls the ability to rename files and folders. This defaults to true.",
             "visible": true,
-            "defaultValueInternal": true
+            "defaultValueInternal": true,
+            "dependsOn": [
+                "operate"
+            ]
         },
         {
             "name": "delete",
             "displayName": "Delete",
             "description": "Controls the ability to delete files and folders. This defaults to true.",
             "visible": true,
-            "defaultValueInternal": true
+            "defaultValueInternal": true,
+            "dependsOn": [
+                "operate"
+            ]
+        },
+        {
+            "name": "cut",
+            "displayName": "Cut",
+            "description": "Internal access right used for the cut button.",
+            "visible": false,
+            "defaultValueInternal": true,
+            "dependsOn": [
+                "delete",
+                "create"
+            ]
         }
     ],
     "dataTypes": [

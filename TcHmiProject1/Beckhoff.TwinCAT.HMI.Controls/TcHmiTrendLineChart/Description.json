@@ -5,11 +5,11 @@
     "namespace": "TcHmi.Controls.Beckhoff",
     "displayName": "Trend Line Chart",
     "version": {
-        "full": "1.12.754.4",
+        "full": "1.12.756.1",
         "major": 1,
         "minor": 12,
-        "build": 754,
-        "revision": 4
+        "build": 756,
+        "revision": 1
     },
     "visible": true,
     "themeable": "Standard",
@@ -1525,12 +1525,6 @@
             "displayName": "YAxisGenerated",
             "description": "Default value for auto generated Y-Axes.",
             "type": "tchmi:framework#/definitions/TcHmi.Controls.Beckhoff.TcHmiTrendLineChart.ChartYAxisDefinition"
-        },
-        {
-            "name": "LoadingTheme",
-            "displayName": "LoadingTheme",
-            "description": "Color of the loading spinner",
-            "type": "tchmi:framework#/definitions/SolidColor"
         },
         {
             "name": "TooltipFontColor",

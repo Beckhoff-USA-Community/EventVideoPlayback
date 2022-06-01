@@ -5,11 +5,11 @@
     "namespace": "TcHmi.Controls.Beckhoff",
     "displayName": "Radio Button",
     "version": {
-        "full": "1.12.754.4",
+        "full": "1.12.756.1",
         "major": 1,
         "minor": 12,
-        "build": 754,
-        "revision": 4
+        "build": 756,
+        "revision": 1
     },
     "visible": true,
     "themeable": "Standard",
@@ -174,6 +174,25 @@
             "heritable": true,
             "defaultValue": "Label",
             "defaultValueInternal": null
+        },
+        {
+            "name": "data-tchmi-ignore-escape-sequences",
+            "propertyName": "IgnoreEscapeSequences",
+            "propertySetterName": "setIgnoreEscapeSequences",
+            "propertyGetterName": "getIgnoreEscapeSequences",
+            "displayName": "IgnoreEscapeSequences",
+            "visible": true,
+            "themeable": "Advanced",
+            "displayPriority": 100,
+            "type": "tchmi:general#/definitions/Boolean",
+            "category": "Text",
+            "description": "When set to true a backslash in a text will be shown verbatim in the HMI.",
+            "readOnly": false,
+            "bindable": true,
+            "defaultBindingMode": "OneWay",
+            "heritable": true,
+            "defaultValue": null,
+            "defaultValueInternal": false
         },
         {
             "name": "data-tchmi-text-position",

@@ -5,11 +5,11 @@
     "namespace": "TcHmi.Controls.Beckhoff",
     "displayName": "Event Grid",
     "version": {
-        "full": "1.12.754.4",
+        "full": "1.12.756.1",
         "major": 1,
         "minor": 12,
-        "build": 754,
-        "revision": 4
+        "build": 756,
+        "revision": 1
     },
     "visible": true,
     "themeable": "Standard",
@@ -141,7 +141,9 @@
                     "columnName": "timeAndDateRaised"
                 },
                 {
-                    "columnName": "text"
+                    "columnName": "text",
+                    "width": 1,
+                    "widthUnit": "factor"
                 }
             ],
             "defaultValueInternal": []
@@ -492,6 +494,25 @@
             "heritable": true,
             "defaultValue": null,
             "defaultValueInternal": "px"
+        },
+        {
+            "name": "data-tchmi-ignore-escape-sequences",
+            "propertyName": "IgnoreEscapeSequences",
+            "propertySetterName": "setIgnoreEscapeSequences",
+            "propertyGetterName": "getIgnoreEscapeSequences",
+            "displayName": "IgnoreEscapeSequences",
+            "visible": true,
+            "themeable": "Advanced",
+            "displayPriority": 100,
+            "type": "tchmi:general#/definitions/Boolean",
+            "category": "Common",
+            "description": "When set to true a backslash in an event text will be shown verbatim in the HMI. This affects all columns.",
+            "readOnly": false,
+            "bindable": true,
+            "defaultBindingMode": "OneWay",
+            "heritable": true,
+            "defaultValue": null,
+            "defaultValueInternal": false
         },
         {
             "name": "data-tchmi-show-menu-bar",

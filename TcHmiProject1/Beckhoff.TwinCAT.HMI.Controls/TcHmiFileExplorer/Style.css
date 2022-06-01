@@ -82,7 +82,3 @@
     display: flex;
     align-items: center;
 }
-
-.TcHmi_Controls_Beckhoff_TcHmiFileExplorer .TcHmi_Controls_Beckhoff_TcHmiFileExplorer-operate-disallowed {
-    cursor: not-allowed;
-}

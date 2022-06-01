@@ -48,7 +48,7 @@
                                 "displayName": "Width Unit",
                                 "category": "General",
                                 "displayPriority": 10,
-                                "description": "Width unit of this column",
+                                "description": "Width unit of this column. px defines an absolute width, % is relative to the control witdth and factor can be used to divide the available space into fractions.",
                                 "defaultValue": null,
                                 "defaultValueInternal": "px"
                             },
@@ -89,7 +89,7 @@
                                 "$ref": "tchmi:framework#/definitions/MeasurementValue"
                             },
                             "widthUnit": {
-                                "$ref": "tchmi:framework#/definitions/MeasurementUnit"
+                                "$ref": "tchmi:framework#/definitions/MeasurementUnitOrFactor"
                             },
                             "sortable": {
                                 "type": "boolean",
@@ -136,7 +136,7 @@
                                 "displayName": "Width Unit",
                                 "category": "General",
                                 "displayPriority": 10,
-                                "description": "Width unit of this column",
+                                "description": "Width unit of this column. px defines an absolute width, % is relative to the control witdth and factor can be used to divide the available space into fractions.",
                                 "defaultValue": null,
                                 "defaultValueInternal": "px"
                             },
@@ -162,7 +162,7 @@
                                 "$ref": "tchmi:framework#/definitions/MeasurementValue"
                             },
                             "widthUnit": {
-                                "$ref": "tchmi:framework#/definitions/MeasurementUnit"
+                                "$ref": "tchmi:framework#/definitions/MeasurementUnitOrFactor"
                             },
                             "sortable": {
                                 "type": "boolean",

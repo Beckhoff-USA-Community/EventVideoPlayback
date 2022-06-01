@@ -5,11 +5,11 @@
     "namespace": "TcHmi.Controls.Beckhoff",
     "displayName": "Password Input",
     "version": {
-        "full": "1.12.754.4",
+        "full": "1.12.756.1",
         "major": 1,
         "minor": 12,
-        "build": 754,
-        "revision": 4
+        "build": 756,
+        "revision": 1
     },
     "visible": true,
     "themeable": "Standard",
@@ -72,6 +72,25 @@
             "heritable": true,
             "defaultValue": null,
             "defaultValueInternal": ""
+        },
+        {
+            "name": "data-tchmi-ignore-escape-sequences",
+            "propertyName": "IgnoreEscapeSequences",
+            "propertySetterName": "setIgnoreEscapeSequences",
+            "propertyGetterName": "getIgnoreEscapeSequences",
+            "displayName": "IgnoreEscapeSequences",
+            "visible": false,
+            "themeable": "Advanced",
+            "displayPriority": 100,
+            "type": "tchmi:general#/definitions/Boolean",
+            "category": "Text",
+            "description": "Not useful to change with passwords",
+            "readOnly": false,
+            "bindable": true,
+            "defaultBindingMode": "OneWay",
+            "heritable": true,
+            "defaultValue": null,
+            "defaultValueInternal": true
         }
     ],
     "attributeCategories": [],

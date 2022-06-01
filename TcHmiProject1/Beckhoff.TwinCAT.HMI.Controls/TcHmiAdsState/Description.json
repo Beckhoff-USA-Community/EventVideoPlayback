@@ -5,11 +5,11 @@
     "namespace": "TcHmi.Controls.Beckhoff",
     "displayName": "ADS State",
     "version": {
-        "full": "1.12.754.4",
+        "full": "1.12.756.1",
         "major": 1,
         "minor": 12,
-        "build": 754,
-        "revision": 4
+        "build": 756,
+        "revision": 1
     },
     "visible": true,
     "themeable": "Standard",
@@ -107,7 +107,7 @@
             "displayPriority": 100,
             "type": "tchmi:general#/definitions/Number",
             "category": "Common",
-            "description": "Sets the interval for the ADS state subscription in milliseconds. This migth be expensive performance wise, so do not set to a very low value.",
+            "description": "Sets the interval for the ADS state subscription in milliseconds. This might be expensive performance wise, so do not set to a very low value.",
             "defaultValue": 500,
             "defaultValueInternal": null,
             "readOnly": false,

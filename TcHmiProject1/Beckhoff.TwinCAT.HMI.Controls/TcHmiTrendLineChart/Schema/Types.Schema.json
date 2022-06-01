@@ -373,6 +373,15 @@
                     "defaultValueInternal": 2
                 },
                 {
+                    "name": "showAxis",
+                    "category": "General",
+                    "displayName": "showAxis",
+                    "displayPriority": 10,
+                    "description": "",
+                    "defaultValue": null,
+                    "defaultValueInternal": true
+                },
+                {
                     "name": "showLabels",
                     "category": "General",
                     "displayName": "showLabels",
@@ -475,6 +484,9 @@
                 "decimalPlaces": {
                     "type": "number",
                     "minimum": 0
+                },
+                "showAxis": {
+                    "type": "boolean"
                 },
                 "showLabels": {
                     "type": "boolean"

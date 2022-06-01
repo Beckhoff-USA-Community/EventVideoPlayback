@@ -12,6 +12,24 @@
         },
         {
             "type": "Resource",
+            "path": "./Helpers/TcHmiContentTabs/TcHmiContentTabs.js"
+        },
+        {
+            "type": "Resource",
+            "path": "./Helpers/TcHmiContentTabs/Style.css"
+        },
+        {
+            "type": "Resource",
+            "theme": "Base-Dark",
+            "path": "./Helpers/TcHmiContentTabs/Themes/Base-Dark/Style.css"
+        },
+        {
+            "type": "Resource",
+            "theme": "Base",
+            "path": "./Helpers/TcHmiContentTabs/Themes/Base/Style.css"
+        },
+        {
+            "type": "Resource",
             "path": "./TcHmiCharting/TcHmiCharting.js"
         },
         {

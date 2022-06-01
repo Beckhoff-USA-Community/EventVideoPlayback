@@ -6,7 +6,7 @@
     <Node>
       <Title>TriggerImageExport</Title>
       <Expanded>True</Expanded>
-      <FileName>C:\Users\NathanM\Source\Repos\EventVideoPlayback\TwinCAT Measurement Project4\TriggerImageExport.tcscopex</FileName>
+      <FileName>C:\Users\NathanM\Source\Repos\Beckhoff-USA-Community\EventVideoPlayback\TwinCAT Measurement Project4\TriggerImageExport.tcscopex</FileName>
       <Children>
         <Node>
           <Title>DataPool</Title>

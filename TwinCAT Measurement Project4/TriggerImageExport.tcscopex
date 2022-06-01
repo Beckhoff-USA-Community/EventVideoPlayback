@@ -464,7 +464,7 @@
               <MarkerType>Circle</MarkerType>
               <Name>Image</Name>
               <Orientation>Vertical</Orientation>
-              <Position>1.3296537741537E+17</Position>
+              <Position>1.3298492343215E+17</Position>
               <ShowFullArray>true</ShowFullArray>
               <ShowPosition>false</ShowPosition>
               <ShowTitle>true</ShowTitle>
@@ -480,7 +480,7 @@
                   <Title>ImageStreamStyle_42</Title>
                 </ImageStreamStyle>
               </SubMember>
-              <TimePosition>132972046030410000</TimePosition>
+              <TimePosition>132984923432150000</TimePosition>
               <Title>Image</Title>
               <ValuePrecision>4</ValuePrecision>
               <Visible>true</Visible>

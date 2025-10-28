@@ -14,8 +14,7 @@
     <authors>Beckhoff Automation LLC</authors>
 
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <licenseUrl>
-      https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/LICENSE.md</licenseUrl>
+	<license type="file">LICENSE.md</license>
     <icon>icon.png</icon>
     <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
 
@@ -41,5 +40,6 @@
   <files>
     <file src="EventVideoPlayback_64x64.png" target="icon.png" />
     <file src="tools\**" target="tools" />
+	<file src="LICENSE.md" target="LICENSE.md"/>
   </files>
 </package>

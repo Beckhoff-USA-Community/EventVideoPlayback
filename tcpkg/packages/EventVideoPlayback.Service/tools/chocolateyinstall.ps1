@@ -1,6 +1,6 @@
 $ErrorActionPreference = 'Stop'
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$serviceDir = Join-Path $toolsDir "service"
+$serviceDir = Join-Path $toolsDir "bin"
 $serviceName = "EventVideoPlaybackService"
 $serviceDisplayName = "EventVideoPlayback Service"
 $serviceDescription = "Background service for video playback event management"

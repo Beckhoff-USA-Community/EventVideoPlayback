@@ -7,8 +7,7 @@
     <authors>Beckhoff Automation LLC</authors>
     <copyright>(c) Beckhoff Automation LLC</copyright>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <licenseUrl>
-      https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/LICENSE.md</licenseUrl>
+	<license type="file">LICENSE.md</license>
     <icon>icon.png</icon>
     <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
     <icon>icon.png</icon>
@@ -19,5 +18,6 @@
     <file src="TF1000-Base.png" target="icon.png" />
     <file src="tools\**" target="tools" />
     <file src="bin\**" target="tools\docs" />
+	<file src="LICENSE.md" target="LICENSE.md"/>
   </files>
 </package>

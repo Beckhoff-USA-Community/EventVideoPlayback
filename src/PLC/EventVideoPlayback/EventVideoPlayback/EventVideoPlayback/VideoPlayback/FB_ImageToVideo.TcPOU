@@ -1,0 +1,810 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ImageToVideo" Id="{2699abec-4207-4a9e-b9d0-841022ea24d5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ImageToVideo EXTENDS FB_ListenerBase2
+VAR_INPUT
+END_VAR
+
+VAR_OUTPUT
+END_VAR
+
+VAR
+	//Base FB
+	Error_FailedToWriteImagesToDisk : BOOL;
+	_Busy							: BOOL := FALSE;
+	_Error							: BOOL;
+	_ErrorID						: UDINT;
+
+	// Cyclic FB
+	_InitComplete : BOOL;
+	SequenceState : INT;
+
+	// Reset
+	_Reset				: BOOL;
+	TriggerVideoCapture : BOOL;
+	VideoCaptureState	: INT;
+
+	//Interface
+
+	// Ring Buffer information
+	BufferImageRing		 : ARRAY[1..Parameters_EventVideoPlayback.MAX_NUMBER_IMAGES_2_VIDEO] OF ITcVnImage;
+	BufferIndex			 : UINT := 1;
+	CurrentBufferMax	 : UINT;
+	WriteImageWaitResult : BOOL;
+	ipImageToSave		 : ITcVnImage;
+	WriteFileState		 : INT;
+	sImageToSaveName	 : STRING;
+	fbWriteImage		 : FB_VN_WriteImage;
+	_fbEvent			 : REFERENCE TO FB_TcEvent;
+	BufferHasRolledOver	 : BOOL := FALSE;
+
+	// Video creation vars
+	writeADS   : ADSWRITE;
+	DoWrite	   : BOOL;
+	JSONData   : T_MaxString;
+	JsonWriter : FB_JsonSaxWriter;
+
+	//Check connection to service
+	writeADSConnection : ADSWRITE;
+
+	//filename vars
+	TimeDateStamp					: T_MaxString;
+	GetTimeZone						: FB_GetTimeZoneInformation;
+	TimeZoneInfo					: ST_TimeZoneInformation;
+	SystemTimeToTzSpecificLocalTime : FB_SystemTimeToTzSpecificLocalTime;
+
+	// Json vars to send to the C# app
+	JsonFileName	: T_MaxString;
+	JsonImageSource : T_MaxString;
+
+	// Properties to build image
+	_VideoOutputDirectory : STRING := 'C:\TcAlarmVideo';
+	_FramesPerSecond	  : UINT   := 10; //Set to 10 so no divide by zero if not setup
+	_CameraName			  : STRING := 'Camera1';
+	_JSONAttribute		  : T_MaxString;
+	_ReductionFactor	  : LREAL := 0.25;
+
+	// Alarm data
+	sJsonAttribute	 : STRING(10000);
+	JSONFilter		 : FB_TcEventFilter;
+	_Subscribe		 : BOOL := TRUE;
+	_Unsubscribe	 : BOOL;
+	_Subscribed		 : BOOL;
+	MissedEventCount : UDINT;
+
+	// Image count value
+	ImageWriteCount : UINT;
+
+	// Delay after alarm to wait then do work
+	AfterEventDelay	  : TON;
+	_TimeAfterEvent	  : TIME := T#3S;
+	_TimeBeforeEvent  : TIME := T#7S;
+	VideoCaptureAlarm : ARRAY[1..4] OF FB_TcAlarm;
+
+	// Calculation of Video length variables
+	VideoLengthCalculated					: LREAL;
+	VideoAskedLength						: LREAL;
+	Error_VideoConfigTooLongForBufferSize	: BOOL;
+	Error_ImageBufferOrRouterMemoryTooSmall : BOOL;
+	ImageMemCheckSize						: ULINT := 0;
+	RouterMem								: FB_GetRouterStatusInfo;
+	RouterInfo								: ST_TcRouterStatusInfo;
+	NumberOfFramesPossibleByMemory			: ULINT;
+	CheckConnection							: BYTE := 1;
+	Check3rdParty_TON						: TON;
+	Check3rdPartyRunning					: BOOL;
+	DelayTON								: TON;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="I_BaseFB" Id="{f094686e-7891-4068-929f-8a727f5fa462}" />
+    <Folder Name="I_CyclicFB" Id="{8d7d7c38-8b82-469c-8b3e-e00dc5b2fa20}" />
+    <Folder Name="ListenerBase2" Id="{97f055e9-af5e-42ef-afd6-629b16c01eaf}" />
+    <Folder Name="Method" Id="{c8d9100b-95bf-4cf2-aac4-926e3efcf7b6}" />
+    <Folder Name="Properties" Id="{01061cde-7221-4fb9-86e5-57ea53618717}" />
+    <Method Name="AddImage" Id="{d6afcfa4-885a-4b7a-96df-7bf54c966958}" FolderPath="Method\">
+      <Declaration><![CDATA[METHOD AddImage
+VAR_INPUT
+	ipImageIn : ITcVnImage;
+END_VAR
+
+VAR
+	hrWD1					 : HRESULT;
+	tStop1					 : DINT := 20000;
+	tRest1					 : DINT;
+	hr						 : HRESULT;
+	///PixelFormat				 : TcVnPixelFormat;
+	ImageInfo				 : TcVnImageInfo;
+	ImagePixelFormatChannels : BYTE;
+	ImageEffectivePixelSize	 : UINT;
+	ImageInWidth			 : UDINT;
+	ImageInHeight			 : UDINT;
+	ImageSmallWidth			 : UDINT;
+	ImageSmallHeight		 : UDINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT WriteImageWaitResult AND NOT _ERROR THEN
+	hrWD1 := F_VN_StartRelWatchdog(tStop1, S_OK);
+
+	// reduce the image if needed
+	hr						 := F_VN_GetImageInfo(ipImage := ipImageIn, stImageInfo := ImageInfo, hrPrev := hr);
+	ImagePixelFormatChannels := ImageInfo.stPixelFormat.nChannels;
+	ImageEffectivePixelSize	 := ImageInfo.stPixelFormat.nElementSize;
+	ImageInWidth			 := ImageInfo.nWidth;
+	ImageInHeight			 := ImageInfo.nHeight;
+	IF _ReductionFactor <> 1 THEN
+		ImageSmallWidth	 := LREAL_TO_UDINT(UDINT_TO_LREAL(ImageInWidth) * _ReductionFactor);
+		ImageSmallHeight := LREAL_TO_UDINT(UDINT_TO_LREAL(ImageInHeight) * _ReductionFactor);
+
+		// Image Width and Height must be even for video conversion
+		IF (ImageSmallWidth MOD 2) <> 0 THEN // Check if "Odd"
+			ImageSmallWidth := ImageSmallWidth - 1;
+		END_IF
+
+		IF (ImageSmallHeight MOD 2) <> 0 THEN // Check if "Odd"
+			ImageSmallHeight := ImageSmallHeight - 1;
+		END_IF
+
+		hr := F_VN_ResizeImage(ipImageIn,
+							   BufferImageRing[BufferIndex],
+							   ImageSmallWidth,
+							   ImageSmallHeight,
+							   1,
+							   hr);
+	ELSE
+		hr := F_VN_CopyImage(ipImageIn, BufferImageRing[BufferIndex], hr);
+	END_IF
+
+	hrWD1		:= F_VN_StopWatchdog(hrWD1, tRest => tRest1);
+	BufferIndex := BufferIndex + 1;
+	IF BufferIndex > CurrentBufferMax THEN
+		BufferHasRolledOver := TRUE;
+		BufferIndex			:= 1;
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Busy" Id="{ccbb0dec-838f-46e4-85a7-c72d036ab9f7}" FolderPath="I_BaseFB\">
+      <Declaration><![CDATA[PROPERTY Busy : BOOL]]></Declaration>
+      <Get Name="Get" Id="{a8a6efb9-92aa-4848-888a-fcd49584a512}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Busy := _Busy;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="CameraName" Id="{e4cdef8f-51e2-04ed-3588-14c23e76c196}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY CameraName : STRING]]></Declaration>
+      <Set Name="Set" Id="{f300cdb3-04a7-0d8c-3a1f-a0ccf51a5f91}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_CameraName := CameraName;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="CyclicLogic" Id="{a45ed927-9782-499f-8aba-ec4707a538c3}" FolderPath="I_CyclicFB\">
+      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+VAR_INPUT
+END_VAR
+
+VAR
+	hr				: HRESULT;
+	tmpIndex		: UINT;
+	systemTimeNow	: TIMESTRUCT;
+	tmpString		: STRING;
+	EventTimestamp1 : TimeStruct;
+	EventTimestamp2 : TimeStruct;
+	sDump			: STRING;
+	TmpMemory		: ULINT;
+END_VAR
+
+VAR_INST
+	x : UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT _InitComplete THEN
+	_InitComplete := Initialize();
+	RETURN;
+END_IF
+
+// Call the Listener Execute
+Execute();
+
+// Subscribe to the event logger to messages with the JSON Attribute
+IF _Subscribe THEN
+	_Subscribe := FALSE;
+	JSONFilter.Clear().JsonAttribute.Value.EqualTo(_JSONAttribute); // define all events (messages and alarms) from this eventclass   
+	hr := Subscribe2(JSONFilter);									// subscribe to retrieve defined events
+	IF SUCCEEDED(hr) THEN
+		_Subscribed := TRUE;
+	END_IF
+END_IF
+
+IF _Unsubscribe THEN
+	_Unsubscribe := FALSE;
+	hr			 := Unsubscribe();
+	IF SUCCEEDED(hr) THEN
+		_Subscribed := FALSE;
+	END_IF
+END_IF
+
+// This is the state engine for when an alarm occurs that needs a video
+CASE VideoCaptureState OF
+	0:
+		IF TriggerVideoCapture THEN
+			_Busy			  := TRUE;
+			x				  := 1;
+			VideoCaptureState := 10;
+		END_IF
+
+	10: // wait for delay time to capture images after event
+		IF AfterEventDelay.Q THEN
+			VideoCaptureState := 15;
+		END_IF
+
+	15: // save images needed for video playback
+		WriteImageWaitResult := TRUE;
+		tmpIndex			 := BufferIndex + x - 1;
+		IF tmpIndex > CurrentBufferMax THEN
+			tmpIndex := tmpIndex - CurrentBufferMax;
+		END_IF
+
+		IF WriteImage(Index := x, BufferImageSaveNameIndex := TmpIndex) THEN
+			x := x + 1;
+		END_IF
+
+		IF x > CurrentBufferMax THEN
+			TriggerVideoCapture	 := FALSE;
+			VideoCaptureState	 := 20;
+			WriteImageWaitResult := FALSE;
+		END_IF
+
+	20: // Build string paths and names
+
+		// Time is UTC and we need it in local time zone. 
+		EventTimestamp1 := FILETIME64_TO_SYSTEMTIME(_fbevent.nTimestamp);
+		SystemTimeToTzSpecificLocalTime(in := EventTimestamp1, tzInfo := TimeZoneInfo, out => EventTimestamp2);
+		TimeDateStamp := SYSTEMTIME_TO_STRING(EventTimestamp2);
+		FindAndReplaceChar(ADR(TimeDateStamp),
+						   ':',
+						   '-',
+						   ADR(TimeDateStamp),
+						   SIZEOF(TimeDateStamp));
+
+		FindAndSplitChar(sSeparatorChar	  := '.',
+						 pSrcString		  := ADR(TimeDateStamp),
+						 pLeftString	  := ADR(TimeDateStamp),
+						 nLeftSize		  := SIZEOF(TimeDateStamp),
+						 pRightString	  := ADR(sDump),
+						 nRightSize		  := SIZEOF(sDump),
+						 bSearchFromRight := FALSE);
+
+		// FileName string creation
+		JsonFileName := CONCAT(_VideoOutputDirectory, '\');
+		JsonFileName := CONCAT(JsonFileName, _CameraName);
+		JsonFileName := CONCAT(JsonFileName, '\');
+		JsonFileName := CONCAT(JsonFileName, TimeDateStamp);
+		JsonFileName := CONCAT(JsonFileName, '.mp4');
+		
+		
+
+		// image source string creation
+		JsonImageSource	  := CONCAT(_VideoOutputDirectory, '\');
+		JsonImageSource	  := CONCAT(JsonImageSource, _CameraName);
+		JsonImageSource	  := CONCAT(JsonImageSource, '\');
+		JsonImageSource	  := CONCAT(JsonImageSource, 'images');
+		VideoCaptureState := 30;
+		
+
+	30: // setup JSON pairs
+		MEMSET(ADR(JSONData), 0, SIZEOF(JSONData));
+		JsonWriter.ResetDocument();
+		JsonWriter.StartObject();
+		JsonWriter.AddKeyString('ImagePathSource', JsonImageSource);
+		JsonWriter.AddKeyString('VideoFilename', JsonFileName);
+		JsonWriter.AddKeyNumber('VideoFPS', _FramesPerSecond);
+		JsonWriter.EndObject();
+		JSONData		  := JsonWriter.GetDocument();
+		VideoCaptureState := 40;
+		
+
+	40: // write JSON data
+		DoWrite			  := TRUE;
+		VideoCaptureState := 45;
+
+	45:
+		IF writeADS.BUSY AND NOT writeADS.ERR THEN
+			VideoCaptureState := 50;
+		ELSIF writeADS.ERR THEN
+			_ErrorID		  := writeADS.ERRID;
+			VideoCaptureState := 999;
+		END_IF
+
+	50: // wait for write to be done
+		IF NOT writeADS.BUSY AND NOT writeADS.ERR THEN
+			DoWrite			  := FALSE;
+			VideoCaptureState := 60;
+		ELSIF writeADS.ERR THEN
+			_ErrorID		  := writeADS.ERRID;
+			VideoCaptureState := 999;
+		END_IF
+
+	60: // extra scan
+		VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].Clear(0, 0);
+		_Busy			  := FALSE;
+		VideoCaptureState := 0;
+
+	999: // error handling
+		VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].Clear(0, 0);
+		VideoCaptureAlarm[E_VideoAlarm.ImageToVideoService].Raise(0);
+		DoWrite			  := FALSE;
+		_Busy			  := FALSE;
+		_Error			  := TRUE;
+		VideoCaptureState := 1000;
+
+	1000:
+		IF _Reset OR NOT VideoCaptureAlarm[E_VideoAlarm.ImageToVideoService].bRaised THEN
+			_Error			  := FALSE;
+			_ErrorID		  := 0;
+			VideoCaptureState := 0;
+			_Reset			  := FALSE;
+		END_IF
+END_CASE
+
+writeADS(NETID	 := '',
+		 PORT	 := Parameters_EventVideoPlayback.ADS_PORT_FOR_IMAGE_TO_VIDEO,
+		 IDXGRP	 := 1,
+		 IDXOFFS := 1,
+		 WRITE	 := DoWrite,
+		 LEN	 := TO_UDINT(LEN(JSONData)),
+		 SRCADDR := ADR(JSONData),
+		 TMOUT	 := T#10S);
+
+AfterEventDelay(IN := VideoCaptureState = 10, PT := _TimeAfterEvent);
+
+(* Calculations for checking the video FPS, TimeBefore + TimeAfter, And Parameter.Maxbuffer size while related to image size
+	The parameters that can be adjusted
+		1. FramesPerSecond
+		2. Time Before Event
+		3. Time Afeter Event
+		4. MAX Number of Frames
+		5. Reduction Factor
+		
+	Fixed Parameters
+		1. The memmory - 50% of router memory (Parameter_Vision.MAX_PERCENT_ROUTER_MEM_FOR_BUFFER in %)	
+*)
+
+// Monitor the actual needed buffer size
+CurrentBufferMax := TO_UINT((TO_LREAL(_TimeAfterEvent) + TO_LREAL(_TimeBeforeEvent)) / 1000.0 * TO_LREAL(_FramesPerSecond));
+IF CurrentBufferMax > Parameters_EventVideoPlayback.MAX_NUMBER_IMAGES_2_VIDEO THEN
+	CurrentBufferMax := TO_UINT(Parameters_EventVideoPlayback.MAX_NUMBER_IMAGES_2_VIDEO);
+END_IF
+
+// Calculated Video length from parameters
+VideoLengthCalculated := CurrentBufferMax * 1000 / _FramesPerSecond;
+VideoAskedLength	  := TO_LREAL(_TimeAfterEvent + _TimeBeforeEvent);
+IF VideoAskedLength > VideoLengthCalculated THEN
+	Error_VideoConfigTooLongForBufferSize := TRUE;
+ELSE
+	Error_VideoConfigTooLongForBufferSize := FALSE;
+END_IF
+
+(* Check to see if enough memory for what is expected
+   Get the index to last picture taken*)
+tmpIndex := BufferIndex - 1;
+IF tmpIndex < 1 THEN
+	tmpIndex := CurrentBufferMax;
+END_IF
+
+// Get Image size
+F_VN_ExportImageSize(ipImage := BufferImageRing[tmpIndex], ImageMemCheckSize, S_OK);
+IF ImageMemCheckSize > 0 THEN
+	IF RouterInfo.maxMem = 0 THEN										  // Larger than 4095MB
+		TmpMemory := TO_ULINT(Parameters_EventVideoPlayback.LARGE_ROUTER_MEMORY) * 1024 * 1024; //Check to see if user put in a value
+	ELSE
+		TmpMemory := RouterInfo.maxMem;
+	END_IF
+
+	NumberOfFramesPossibleByMemory := TO_ULINT(TO_LREAL(TmpMemory) * TO_LREAL(Parameters_EventVideoPlayback.MAX_PERCENT_ROUTER_MEM_FOR_BUFFER) / 100.0 / TO_LREAL(ImageMemCheckSize));
+END_IF
+
+// Is the size of the buffer Larger than that based on parameters than is given
+IF CurrentBufferMax > NumberOfFramesPossibleByMemory AND ImageMemCheckSize > 0 THEN
+	Error_ImageBufferOrRouterMemoryTooSmall := TRUE;
+ELSE
+	Error_ImageBufferOrRouterMemoryTooSmall := FALSE;
+END_IF
+
+// Set alarm if out of range for configuration
+IF Error_VideoConfigTooLongForBufferSize THEN
+	_Error := TRUE;
+	VideoCaptureAlarm[E_VideoAlarm.VideoConfigTooLongForBufferSize].Raise();
+END_IF
+
+IF Error_ImageBufferOrRouterMemoryTooSmall THEN
+	_Error := TRUE;
+	VideoCaptureAlarm[E_VideoAlarm.RouterMemoryTooSmall].Raise();
+END_IF
+
+// Check if 3rd party app is connected to ADS 
+Check3rdParty_TON(IN := VideoCaptureAlarm[E_VideoAlarm.ImageToVideoService].bRaised AND NOT Check3rdPartyRunning, PT := T#5S);
+IF VideoCaptureAlarm[E_VideoAlarm.ImageToVideoService].bRaised AND (Check3rdParty_TON.Q OR Check3rdPartyRunning) THEN
+	Check3rdPartyRunning := TRUE;
+
+	// Do an ADS write to C# App to see if it is running
+	writeADSConnection(PORT	   := Parameters_EventVideoPlayback.ADS_PORT_FOR_IMAGE_TO_VIDEO,
+					   IDXGRP  := 10,
+					   IDXOFFS := 10,
+					   LEN	   := SIZEOF(CheckConnection),
+					   SRCADDR := ADR(CheckConnection),
+					   WRITE   := TRUE,
+					   TMOUT   := T#3S);
+
+	IF NOT writeADSConnection.BUSY THEN
+		writeADSConnection(WRITE := FALSE);
+		IF NOT writeADSConnection.ERR THEN
+			VideoCaptureAlarm[E_VideoAlarm.ImageToVideoService].Clear(0, 0);
+			_Error	 := FALSE;
+			_ErrorID := 0;
+		END_IF
+
+		Check3rdPartyRunning := FALSE;
+	END_IF
+END_IF
+
+// If Reset then clear the alarm
+IF _Reset THEN
+	IF VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].bRaised THEN
+		VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].Clear(0,0);
+	END_IF
+	_Reset := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Error" Id="{2a11e0e7-1b92-4530-8ba4-bb24a785ca93}" FolderPath="I_BaseFB\">
+      <Declaration><![CDATA[PROPERTY Error : BOOL]]></Declaration>
+      <Get Name="Get" Id="{bc5b4af7-7208-47b3-85f4-75023fc88bfb}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Error := _Error;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ErrorID" Id="{e42c558a-0a5c-4071-b956-2bb78ef957bf}" FolderPath="I_BaseFB\">
+      <Declaration><![CDATA[PROPERTY ErrorID : UDINT]]></Declaration>
+      <Get Name="Get" Id="{813e648f-25d3-442b-bb4b-8107751d20e9}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ErrorID := _ErrorID;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="FramesPerSecond" Id="{2794357e-43a7-0a8f-0e1e-7a734ceac7dc}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY FramesPerSecond : UINT]]></Declaration>
+      <Set Name="Set" Id="{b29710f5-6241-068f-139e-9a8e976b55c4}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_FramesPerSecond := FramesPerSecond;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="InitComplete" Id="{6098a5b7-3796-4b71-8688-bfb08f704320}" FolderPath="I_BaseFB\">
+      <Declaration><![CDATA[PROPERTY InitComplete : BOOL]]></Declaration>
+      <Get Name="Get" Id="{81542641-5245-44a8-87c1-aebfebfbf480}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[InitComplete := _InitComplete;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Initialize" Id="{2692978a-1e77-45c5-8290-3652c94063d1}" FolderPath="Method\">
+      <Declaration><![CDATA[METHOD Initialize : BOOL
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE SequenceState OF
+	// Get the Timezone
+	0:
+		GetTimeZone(sNetID	 := '',
+					bExecute := TRUE,
+					tTimeout := T#5S,
+					tzInfo	 => TimeZoneInfo);
+
+		IF NOT GetTimeZone.bBusy AND NOT GetTimeZone.bError THEN
+			GetTimeZone(sNetID := '', bExecute := FALSE);
+			SequenceState := 10;
+		ELSIF GetTimeZone.bError THEN
+			_Error		  := TRUE;
+			_ErrorID	  := 16#FFFFFFFF;
+			SequenceState := 10;
+		END_IF
+
+	// Get the router memory
+	10:
+		RouterMem(sNetId   := '',
+				  bExecute := TRUE,
+				  tTimeout := T#3S,
+				  bBusy	   =>,
+				  bError   =>,
+				  nErrID   =>,
+				  info	   => RouterInfo);
+
+		IF NOT RouterMem.bBusy THEN
+			RouterMem(sNetId := '', bExecute := FALSE);
+			SequenceState := 20;
+		END_IF
+
+	// Create alarms
+	20:
+		_JSONAttribute := CONCAT(STR1 := '{CreateVid: 1, CameraName: "', STR2 := _CameraName);
+		_JSONAttribute := CONCAT(STR1 := _JSONAttribute, STR2 := '"}',);
+		VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].CreateEx(stEventEntry := TC_EVENTS.VideoAlarm.Camera1Alarm, bWithConfirmation := FALSE, ipSourceInfo := 0);
+		VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].SetJsonAttribute(sJsonAttribute := _JSONAttribute);
+		VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].ipArguments.AddString(value := _CameraName);
+		VideoCaptureAlarm[E_VideoAlarm.ImageToVideoService].CreateEx(stEventEntry := TC_EVENTS.VideoAlarm.ImageToVideoService, bWithConfirmation := FALSE, ipSourceInfo := 0);
+		VideoCaptureAlarm[E_VideoAlarm.RouterMemoryTooSmall].CreateEx(stEventEntry := TC_EVENTS.VideoAlarm.RouterMemoryTooSmall, bWithConfirmation := FALSE, ipSourceInfo := 0);
+		VideoCaptureAlarm[E_VideoAlarm.VideoConfigTooLongForBufferSize].CreateEx(stEventEntry := TC_EVENTS.VideoAlarm.VideoConfigTooLongForBufferSize, bWithConfirmation := FALSE, ipSourceInfo := 0);
+		SequenceState := 30;
+
+	30: // This delay is to make sure we can talk to the ADS server correctly and not fail. Timing tested at 10s
+		IF DelayTON.Q THEN
+			SequenceState := 35;
+		END_IF
+
+	35:
+		// Do an ADS write to C# App to see if it is running
+		writeADSConnection(NETID   := '',
+						   PORT	   := Parameters_EventVideoPlayback.ADS_PORT_FOR_IMAGE_TO_VIDEO,
+						   IDXGRP  := 10,
+						   IDXOFFS := 10,
+						   LEN	   := SIZEOF(CheckConnection),
+						   SRCADDR := ADR(CheckConnection),
+						   WRITE   := TRUE,
+						   TMOUT   := T#10S);
+
+		IF NOT writeADSConnection.BUSY THEN
+			writeADSConnection(WRITE := FALSE);
+			IF writeADSConnection.ERR THEN
+				VideoCaptureAlarm[E_VideoAlarm.ImageToVideoService].Raise(0);
+				_Error	 := TRUE;
+				_ErrorID := writeADSConnection.ERRID;
+			END_IF
+
+			SequenceState := 40;
+		END_IF
+
+	40:
+		Initialize := TRUE;
+END_CASE
+
+DelayTON(IN := SequenceState = 30, PT := T#3S);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="IsImageBufferOrRouterMemoryTooSmall" Id="{d7da6870-5180-4628-ad40-8067d8896635}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsImageBufferOrRouterMemoryTooSmall : bool]]></Declaration>
+      <Get Name="Get" Id="{fb63b9c9-0608-4be4-aa01-b8c2fd81072d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsImageBufferOrRouterMemoryTooSmall := Error_ImageBufferOrRouterMemoryTooSmall;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="IsTooLongForBufferFPS" Id="{5d985bb3-104d-4d66-b8af-1a64e807be67}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY IsTooLongForBufferFPS : bool]]></Declaration>
+      <Get Name="Get" Id="{ba27a5fe-e721-474b-be9e-46454827fc54}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IsTooLongForBufferFPS := Error_VideoConfigTooLongForBufferSize;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="JsonAttribute" Id="{bc5c6c9f-27e5-45e1-a6fc-10942dc86275}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY JsonAttribute : T_MaxString]]></Declaration>
+      <Set Name="Set" Id="{5f19d56c-26af-4e98-bfe1-6db55793388a}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_JSONAttribute := JsonAttribute;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="OnAlarmRaised" Id="{a4216244-1602-09d6-0b03-bc06f4eb6cd4}" FolderPath="ListenerBase2\">
+      <Declaration><![CDATA[METHOD OnAlarmRaised : HRESULT
+VAR_INPUT
+	fbEvent : REFERENCE TO FB_TcEvent;
+END_VAR
+
+VAR
+	hr : HRESULT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// This is where we actually do the work
+IF NOT TriggerVideoCapture  AND BufferHasRolledOver THEN
+	TriggerVideoCapture := TRUE;
+	ImageWriteCount		:= 1;
+	hr					:= fbEvent.GetJsonAttribute(sJsonAttribute, SIZEOF(sJsonAttribute));
+	_fbEvent			REF= fbevent;
+ELSE
+	MissedEventCount := MissedEventCount + 1;
+END_IF
+
+OnAlarmRaised := S_OK;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="ReductionFactor" Id="{e7c1975c-171a-423c-b46e-fd49a7ac01d7}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY ReductionFactor : LREAL]]></Declaration>
+      <Set Name="Set" Id="{48310df7-a11a-4c06-b689-997afa81dd7d}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_ReductionFactor := ReductionFactor;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Reset" Id="{de2b7674-77b7-46bd-a0ea-4c6052e3c6d4}" FolderPath="Method\">
+      <Declaration><![CDATA[METHOD Reset
+VAR_INPUT
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF VideoCaptureAlarm[E_VideoAlarm.RouterMemoryTooSmall].bRaised THEN
+	VideoCaptureAlarm[E_VideoAlarm.RouterMemoryTooSmall].Clear(0,0);	
+END_IF
+IF VideoCaptureAlarm[E_VideoAlarm.VideoConfigTooLongForBufferSize].bRaised THEN
+	VideoCaptureAlarm[E_VideoAlarm.VideoConfigTooLongForBufferSize].Clear(0,0);	
+END_IF
+_Error := FALSE;
+_ErrorID := 0;
+_Reset := TRUE;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="SubscribedEvents" Id="{fa27ebeb-13ea-0182-05e6-7047decd22f3}" FolderPath="ListenerBase2\">
+      <Declaration><![CDATA[PROPERTY SubscribedEvents : BOOL]]></Declaration>
+      <Get Name="Get" Id="{ece6223f-0ef0-0646-29e9-970c8168bc95}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[SubscribedEvents := _Subscribed;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="SubscribeEvents" Id="{71454155-952e-0eb2-314d-87c5203208ce}" FolderPath="ListenerBase2\">
+      <Declaration><![CDATA[PROPERTY SubscribeEvents : BOOL]]></Declaration>
+      <Set Name="Set" Id="{964adbeb-75d6-0d60-3180-1f7e4d4a1a67}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Subscribe := SubscribeEvents;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="TimeAfterEvent" Id="{a61fddf6-6152-0777-3afd-46836a8aa557}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY TimeAfterEvent : TIME]]></Declaration>
+      <Set Name="Set" Id="{1981a076-88fc-0427-377c-cb6fd7370037}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_TimeAfterEvent := TimeAfterEvent;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="TimeBeforeEvent" Id="{1aa13f19-75de-4546-b1a4-369e949efbe9}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY TimeBeforeEvent : TIME]]></Declaration>
+      <Set Name="Set" Id="{dc460ac9-796d-4731-a912-ff44c2867fa5}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_TimeBeforeEvent := TimeBeforeEvent;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="TriggerAlarmForVideoCapture" Id="{2355e316-b6d2-49ed-9430-7db9c90ea34b}" FolderPath="Method\">
+      <Declaration><![CDATA[METHOD PUBLIC TriggerAlarmForVideoCapture
+VAR_INPUT
+	LogEntryName : STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].bRaised AND BufferHasRolledOver THEN
+	VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].ipArguments.Clear().AddString(LogEntryName).AddString(_CameraName);
+	VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].Raise(0);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="UnsubscribeEvents" Id="{752ce0f7-bc09-0370-158c-993e9a9082a9}" FolderPath="ListenerBase2\">
+      <Declaration><![CDATA[PROPERTY UnsubscribeEvents : BOOL]]></Declaration>
+      <Set Name="Set" Id="{6e6813a4-c831-0192-1157-e8b7eb471407}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_Unsubscribe := UnsubscribeEvents;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="VideoOutputDirectory" Id="{338cb32a-2e12-02b7-2a0b-cfa934436f1b}" FolderPath="Properties\">
+      <Declaration><![CDATA[PROPERTY VideoOutputDirectory : STRING]]></Declaration>
+      <Set Name="Set" Id="{5d78897d-a29a-0c23-3af8-a7a2fcb5135e}">
+        <Declaration><![CDATA[VAR
+END_VAR]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_VideoOutputDirectory := VideoOutputDirectory;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="WriteImage" Id="{196768c3-fed0-05e7-0363-23a08fbc093e}" FolderPath="Method\">
+      <Declaration><![CDATA[METHOD WriteImage : BOOL
+VAR_INPUT
+	BufferImageSaveNameIndex : UINT;
+	Index					 : UINT;
+END_VAR
+
+VAR
+	SysTimeAtImageSave : ULINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE WriteFileState OF
+	0:
+		sImageToSaveName := CONCAT(STR1 := _VideoOutputDirectory, '\');
+		sImageToSaveName := CONCAT(STR1 := sImageToSaveName, _CameraName);
+		sImageToSaveName := CONCAT(STR1 := sImageToSaveName, '\Images\Image');
+		CASE Index OF // Add leading zeros to index number of image name
+			0..9:
+				sImageToSaveName := CONCAT(sImageToSaveName, '000');
+				sImageToSaveName := CONCAT(sImageToSaveName, TO_STRING(Index));
+
+			10..99:
+				sImageToSaveName := CONCAT(sImageToSaveName, '00');
+				sImageToSaveName := CONCAT(sImageToSaveName, TO_STRING(Index));
+
+			100..999:
+				sImageToSaveName := CONCAT(sImageToSaveName, '0');
+				sImageToSaveName := CONCAT(sImageToSaveName, TO_STRING(Index));
+
+		ELSE
+			sImageToSaveName := CONCAT(sImageToSaveName, TO_STRING(Index));
+		END_CASE;
+
+		sImageToSaveName := CONCAT(sImageToSaveName, '.png');
+		ipImageToSave	 := BufferImageRing[BufferImageSaveNameIndex];
+
+		// Copy write image here
+		fbWriteImage(ipImage   := ipImageToSave,
+					 sFilePath := sImageToSaveName,
+					 nTimeout  := T#500MS,
+					 bWrite	   := TRUE);
+
+		WriteFileState := 10;
+
+	10:
+		// sFilePath must contain the full path, image name and type
+		fbWriteImage(sFilePath := '', bWrite := FALSE); // This updates the Busy
+		IF NOT fbWriteImage.bBusy AND NOT fbWriteImage.bError THEN
+			fbWriteImage(sFilePath := sImageToSaveName, bWrite := FALSE);
+			WriteFileState		:= 0;
+			Error_FailedToWriteImagesToDisk := FALSE;
+			WriteImage			:= TRUE;
+		ELSIF fbWriteImage.bError THEN
+			fbWriteImage(sFilePath := sImageToSaveName, bWrite := FALSE);
+
+			// Failure to write to disk
+			Error_FailedToWriteImagesToDisk := TRUE;
+			WriteFileState		:= 0;
+		END_IF
+
+ELSE
+	WriteFileState := 0;
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

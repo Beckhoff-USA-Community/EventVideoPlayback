@@ -1,0 +1,204 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "definitions": {
+    "TcHmi.Controls.EventVision.EventVisionControl": {
+        "type": "object",
+        "frameworkInstanceOf": "TcHmi.Controls.System.TcHmiControl",
+        "frameworkControlType": "EventVisionControl",
+        "frameworkControlNamespace": "TcHmi.Controls.EventVision"
+    },
+    "TcHmi.Controls.EventVision.TimeStruct": {
+        "type": "object",
+        "title": "Time Struct",
+        "properties": {
+            "wDay": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "wDay",
+                        "description": "Day of the month: 1..31",
+                        "displayPriority": 4
+                    }
+                ]
+            },
+            "wDayOfWeek": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "wDayOfWeek",
+                        "description": "Day of the week: 0..6 (Sunday = 0, Monday = 1, .. , Saturday = 6 and so on)",
+                        "displayPriority": 3
+                    }
+                ]
+            },
+            "wHour": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "wHour",
+                        "description": "Hour: 0..23",
+                        "displayPriority": 5
+                    }
+                ]
+            },
+            "wMilliseconds": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "wMilliseconds",
+                        "description": "Milliseconds: 0..999",
+                        "displayPriority": 8
+                    }
+                ]
+            },
+            "wMinute": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "wMinute",
+                        "description": "Minute: 0..59",
+                        "displayPriority": 6
+                    }
+                ]
+            },
+            "wMonth": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "wMonth",
+                        "description": "Month: 1..12 (January = 1, February = 2 and so on)",
+                        "displayPriority": 2
+                    }
+                ]
+            },
+            "wSecond": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "wSecond",
+                        "description": "Second: 0..59",
+                        "displayPriority": 7
+                    }
+                ]
+            },
+            "wYear": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "wYear",
+                        "description": "Year: 1970..2106",
+                        "displayPriority": 1
+                    }
+                ]
+            }
+        }
+    },
+    "TcHmi.Controls.EventVision.TimeZoneInfo": {
+        "type": "object",
+        "title": "Time Zone Info",
+        "description": "Tile zone info provided by SPT's vision framework",
+        "properties": {
+            "bias": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "bias",
+                        "description": "Specifies the current bias, in minutes, for local time translation on this computer.\r\n\t\t\t\t\t\tThe bias is the difference, in minutes, between Coordinated Universal Time (UTC) and local time.\r\n\t\t\t\t\t\tUTC = local time + bias",
+                        "displayPriority": 1
+                    }
+                ]
+            },
+            "daylightBias": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "daylightBias",
+                        "description": "Specifies a bias value to be used during local time translations that occur during daylight saving time.",
+                        "displayPriority": 7
+                    }
+                ]
+            },
+            "daylightDate": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:framework#/definitions/TcHmi.Controls.EventVision.TimeStruct"
+                    },
+                    {
+                        "title": "daylightDate",
+                        "description": "Specifies a SYSTEMTIME structure that contains a date and local time when the transition\r\n\t\t\t\t\t\t\t\tfrom standard time to daylight saving time occurs on this operating system.",
+                        "displayPriority": 6
+                    }
+                ]
+            },
+            "daylightName": {
+                "allOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "title": "daylightName",
+                        "description": "Specifies a null-terminated string associated with daylight saving time on this operating system.\r\n\t\t\t\t\t\t\t\tFor example, this member could contain \"PDT\" to indicate Pacific Daylight Time.",
+                        "displayPriority": 5
+                    }
+                ]
+            },
+            "standardBias": {
+                "allOf": [
+                    {
+                        "type": "number"
+                    },
+                    {
+                        "title": "standardBias",
+                        "description": "Specifies a bias value to be used during local time translations that occur during standard time.",
+                        "displayPriority": 4
+                    }
+                ]
+            },
+            "standardDate": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:framework#/definitions/TcHmi.Controls.EventVision.TimeStruct"
+                    },
+                    {
+                        "title": "standardDate",
+                        "description": "Specifies a SYSTEMTIME structure that contains a date and local time when the\r\n\t\t\t\t\t\t\t\ttransition from daylight saving time to standard time occurs on this operating system.",
+                        "displayPriority": 3
+                    }
+                ]
+            },
+            "standardName": {
+                "allOf": [
+                    {
+                        "$ref": "tchmi:framework#/definitions/TcHmi.Controls.EventVision.TimeStruct"
+                    },
+                    {
+                        "title": "standardName",
+                        "description": "Specifies a null-terminated string associated with standard time\r\n\t\t\t\t\t\t\t\ton this operating system.",
+                        "displayPriority": 2
+                    }
+                ]
+            }
+        }
+    }
+  }
+}

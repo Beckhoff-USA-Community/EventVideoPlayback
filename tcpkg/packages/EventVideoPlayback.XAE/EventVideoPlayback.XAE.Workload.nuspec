@@ -16,6 +16,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<license type="file">LICENSE.md</license>
     <icon>icon.png</icon>
+    <readme>docs/README.md</readme>
     <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
 
     <!-- Brief description of what this workload contains (e.g., "Contains custom PLC libraries for motion control") -->
@@ -40,8 +41,9 @@
   </metadata>
 
   <files>
-    <file src="EventVideoPlayback_64x64.png" target="icon.png" />
+    <file src="icon.png" target="icon.png" />
     <file src="tools\**" target="tools" />
 	<file src="LICENSE.md" target="LICENSE.md"/>
+	<file src="docs\README.md" target="docs\README.md"/>
   </files>
 </package>

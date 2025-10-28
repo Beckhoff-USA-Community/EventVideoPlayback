@@ -1,6 +1,6 @@
-# TwinCAT Package Checksums
+﻿# TwinCAT Package Checksums
 
-**Generated:** 2025-10-28 11:36:01
+**Generated:** 2025-10-28 12:54:36
 **Release Folder:** C:\GitHub\EventVideoPlayback\tcpkg\.\release
 
 This file contains SHA256 checksums for all built packages to ensure integrity and traceability.
@@ -9,12 +9,12 @@ This file contains SHA256 checksums for all built packages to ensure integrity a
 
 | Package Name | Version | SHA256 Checksum |
 |--------------|---------|-----------------|
-| Beckhoff-USA-Community.XAE.Documentation.EventVideoPlayback | 2.0.0 | `BE83185963E3AAF77F99D4C310235C594956E407427647C6E4FE495BCC520654` |
-| Beckhoff-USA-Community.XAE.EventVideoPlayback | 2.0.0 | `A3EB879860F6C23B74A7573ED034DE6200AFD68338BF651FD70A73EF891805C8` |
-| Beckhoff-USA-Community.XAE.HMI.EventVisionControl | 1.1.3 | `8A6ACF8D1854A8F8A6B3992C3A15799872D82707DC2E756044FB174F1A499E1D` |
-| Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback | 1.1.1 | `B2B6E4A95E2FE67F190B92C418174FA19DB2D626A4D24AB52E1C034F3B6CC3B3` |
-| Beckhoff-USA-Community.XAR.EventVideoPlayback | 2.0.0 | `6E83B796F621EB8F4E05B2C129D1A7155B7D454B6F6E1F4AD4CA2CA6F86676A7` |
-| Beckhoff-USA-Community.XAR.Service.EventVideoPlayback | 2.0.0 | `8B198DB77D2A80D8559CC28D1880183AB5EE5919AEDA4D9202BC41A6EBEBFFDA` |
+| Beckhoff-USA-Community.XAE.Documentation.EventVideoPlayback | 2.0.0 | `B3613FC56E6EBB407D520CA0B7A0E0E696CCEDA9031EDD1431C1A2B200C20974` |
+| Beckhoff-USA-Community.XAE.EventVideoPlayback | 2.0.0 | `1519ED7182A18467741835B31481847728D174802082AFF77CCBD712671A0937` |
+| Beckhoff-USA-Community.XAE.HMI.EventVisionControl | 1.1.3 | `CAA7EC75E838F87034E4C77E198140027B759751FE3AFF25111DA2717E6FC77B` |
+| Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback | 1.1.1 | `06B94CD1D5CA2D5459340EC299393DDE4CB9BB443D43675ADAC18FB0001870BE` |
+| Beckhoff-USA-Community.XAR.EventVideoPlayback | 2.0.0 | `875E4F37FE1D15F39DE1EBFCDB62249956E9D997000D7BC42A3CA9C6C057F355` |
+| Beckhoff-USA-Community.XAR.Service.EventVideoPlayback | 2.0.0 | `09315B42D8E298669A1542FE81C1C090B3B33FB731308C2B05F4401DE2C48B79` |
 
 ## Verification Instructions
 

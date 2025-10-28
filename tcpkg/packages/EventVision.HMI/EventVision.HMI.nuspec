@@ -10,6 +10,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<license type="file">LICENSE.md</license>
     <icon>icon.png</icon>
+    <readme>docs/README.md</readme>
     <tags>Beckhoff TwinCAT AllowMultipleVersions EventVideoPlayback NuGet HMI</tags>
     <description>EventVision HMI Package - TwinCAT HMI components for EventVideoPlayback system. This package installs the HMI NuGet package to the Beckhoff NuGet packages directory.</description>
     <dependencies>
@@ -17,9 +18,10 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="TF1000-Base.png" target="icon.png" />
+    <file src="icon.png" target="icon.png" />
     <file src="tools\**" target="tools" />
     <file src="bin\**" target="tools" />
 	<file src="LICENSE.md" target="LICENSE.md"/>
+	<file src="docs\README.md" target="docs\README.md"/>
   </files>
 </package>

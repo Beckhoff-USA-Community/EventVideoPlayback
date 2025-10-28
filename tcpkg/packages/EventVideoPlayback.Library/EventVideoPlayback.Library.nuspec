@@ -10,6 +10,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
 	<license type="file">LICENSE.md</license>
     <icon>icon.png</icon>
+    <readme>docs/README.md</readme>
     <tags>Beckhoff TwinCAT AllowMultipleVersions EventVideoPlayback</tags>
     <description>EventVideoPlayback PLC Library - TwinCAT 3 library for video playback event management.</description>
     <dependencies>
@@ -18,9 +19,10 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="TF1000-Base.png" target="icon.png" />
+    <file src="icon.png" target="icon.png" />
     <file src="tools\**" target="tools" />
     <file src="bin\**" target="tools" />
 	<file src="LICENSE.md" target="LICENSE.md"/>
+	<file src="docs\README.md" target="docs\README.md"/>
   </files>
 </package>

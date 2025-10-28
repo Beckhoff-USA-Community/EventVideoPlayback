@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>Beckhoff-USA-Community.XAR.Service.EventVideoPlayback</id>
+    <version>2.0.0</version>
+    <title>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</title>
+    <authors>Beckhoff Automation LLC</authors>
+    <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
+    <copyright>(c) Beckhoff Automation LLC</copyright>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>
+      https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/LICENSE.md</licenseUrl>
+    <icon>icon.png</icon>
+    <tags>Beckhoff TwinCAT AllowMultipleVersions EventVideoPlayback</tags>
+    <description>Beckhoff Setup SystemServiceRestart</description>
+    <dependencies>
+		<dependency id="TwinCAT.XAR.AdsApi" version="0.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="TF1000-Base.png" target="icon.png" />
+    <file src="tools\**" target="tools" />
+    <file src="bin\**" target="tools\bin" />
+  </files>
+</package>

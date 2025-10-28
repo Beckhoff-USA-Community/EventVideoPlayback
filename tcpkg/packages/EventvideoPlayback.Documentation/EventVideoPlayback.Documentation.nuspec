@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>Beckhoff-USA-Community.XAE.Documentation.EventVideoPlayback</id>
+    <version>2.0.0</version>
+    <title>Event Video Playback Documentation</title>
+    <authors>Beckhoff Automation LLC</authors>
+    <copyright>(c) Beckhoff Automation LLC</copyright>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>
+      https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/LICENSE.md</licenseUrl>
+    <icon>icon.png</icon>
+    <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
+    <icon>icon.png</icon>
+    <tags>Beckhoff TwinCAT AllowMultipleVersions EventVideoPlayback Documentation</tags>
+    <description>EventVideoPlayback Documentation Package - Comprehensive documentation for the EventVideoPlayback system including installation guides, usage instructions, system requirements, and service documentation.</description>
+  </metadata>
+  <files>
+    <file src="TF1000-Base.png" target="icon.png" />
+    <file src="tools\**" target="tools" />
+    <file src="bin\**" target="tools\docs" />
+  </files>
+</package>

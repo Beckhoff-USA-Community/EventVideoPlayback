@@ -23,6 +23,8 @@ Instructions.txt
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
+# Exception: Track tcpkg/release directory contents (override [Rr]elease/ exclusion)
+!tcpkg/release/
 [Rr]eleases/
 x64/
 x86/
@@ -46,6 +48,9 @@ artifacts/
 **/[Pp]ackages/*
 !**/[Pp]ackages/build/
 !**/[Pp]ackages/repositories.config
+# Exception: Track tcpkg/packages (TwinCAT packages, not NuGet)
+!tcpkg/packages/
+!tcpkg/packages/**
 *.nuget.props
 *.nuget.targets
 .nuget/
@@ -71,6 +76,8 @@ _Boot/
 *.dylib
 # Exception: Source codec library
 !src/App.Service/CodecLibs/openh264-1.8.0-win64.dll
+# Exception: TwinCAT package libraries (outside of bin folders)
+!tcpkg/packages/**/*.dll
 
 # ===== Executables =====
 *.exe
@@ -81,7 +88,18 @@ _Boot/
 # ===== TwinCAT Package Build System =====
 tcpkg/release/*.nupkg
 tcpkg/release/*.txt
-tcpkg/packages/*/bin/
+# Exception: Track checksums file in tcpkg/release
+!tcpkg/release/checksums.md
+
+# Exception: Track tcpkg/packages directory (override global [Bb]in/ exclusion)
+!tcpkg/packages/
+
+# Exclude bin folder contents in packages (but not the folder itself)
+tcpkg/packages/*/bin/*
+# Exception: Keep .md files in bin folders
+!tcpkg/packages/*/bin/*.md
+
+# Exclude tools folder contents in packages
 tcpkg/packages/*/tools/*
 !tcpkg/packages/*/tools/*.ps1
 !tcpkg/packages/*/tools/chocolateyinstall.ps1

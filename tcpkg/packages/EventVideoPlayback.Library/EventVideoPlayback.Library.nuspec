@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback</id>
+    <version>1.1.1</version>
+    <title>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</title>
+    <authors>Beckhoff Automation LLC</authors>
+    <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
+    <copyright>(c) Beckhoff Automation LLC</copyright>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>
+      https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/LICENSE.md</licenseUrl>
+    <icon>icon.png</icon>
+    <tags>Beckhoff TwinCAT AllowMultipleVersions EventVideoPlayback</tags>
+    <description>EventVideoPlayback PLC Library - TwinCAT 3 library for video playback event management.</description>
+    <dependencies>
+		<dependency id="TwinCAT.Standard.XAE" version="0.0.0" />
+		<dependency id="TF7xxx.Vision.XAE" version="0.0.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="TF1000-Base.png" target="icon.png" />
+    <file src="tools\**" target="tools" />
+    <file src="bin\**" target="tools" />
+  </files>
+</package>

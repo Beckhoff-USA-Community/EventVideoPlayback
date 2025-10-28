@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <!-- Unique workload identifier (e.g., "MyCustomLibraries.Workload") -->
+    <id>Beckhoff-USA-Community.XAE.EventVideoPlayback</id>
+
+    <!-- Package version number (e.g., "1.0.0") -->
+    <version>2.0.0</version>
+
+    <!-- Human-readable workload title (e.g., "My Custom PLC Libraries") -->
+    <title>Event Video Playback</title>
+
+    <!-- Package author/company name (e.g., "Your Company Name") -->
+    <authors>Beckhoff Automation LLC</authors>
+
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>
+      https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/LICENSE.md</licenseUrl>
+    <icon>icon.png</icon>
+    <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
+
+    <!-- Brief description of what this workload contains (e.g., "Contains custom PLC libraries for motion control") -->
+    <description>A workload package containing Event Video Playback System Service, PLC Library, HMI Control, and Documentation</description>
+
+    <!-- Copyright notice (e.g., "(c) 2024 Your Company Name") -->
+    <copyright>(c) Beckhoff Automation LLC</copyright>
+
+    <!-- Space-separated tags for package discovery (keep "Beckhoff TwinCAT Workload" + add custom tags) -->
+    <tags>Beckhoff TwinCAT Workload CategoryGeneral VariantXAE</tags>
+
+    <!-- Key element that makes this a workload - DO NOT MODIFY -->
+    <packageTypes>
+      <packageType name="Workload" />
+    </packageTypes>
+
+    <dependencies>
+      <dependency id="Beckhoff-USA-Community.XAE.HMI.EventVisionControl" version="1.1.3" />
+      <dependency id="Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback" version="1.1.1" />
+      <dependency id="Beckhoff-USA-Community.XAE.Documentation.EventVideoPlayback" version="2.0.0" />
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="EventVideoPlayback_64x64.png" target="icon.png" />
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

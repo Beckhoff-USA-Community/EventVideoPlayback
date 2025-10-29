@@ -8,8 +8,16 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>CodecLibs</Import_RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
+  <!-- Platform-specific H.264 codec libraries -->
+  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
     <None Include="$(MSBuildThisFileDirectory)openh264-1.8.0-win64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- Linux codec library (add libopenh264.so when deploying to Linux) -->
+  <ItemGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <None Include="$(MSBuildThisFileDirectory)libopenh264.so" Condition="Exists('$(MSBuildThisFileDirectory)libopenh264.so')">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

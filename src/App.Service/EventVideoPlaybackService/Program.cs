@@ -5,15 +5,16 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Logging;
 
 /// <summary>
-/// Entry point for the Event Video Playback Windows Service application.
+/// Entry point for the Event Video Playback Service application.
 /// This service processes images from TwinCAT PLC systems and converts them into video files
 /// via the ADS (Automation Device Specification) protocol.
+/// Supports running as a Windows Service, Linux systemd service, or console application.
 /// </summary>
 internal class Program
 {
     /// <summary>
-    /// Main entry point for the Windows Service application.
-    /// Configures the host builder with Windows Service support and event logging,
+    /// Main entry point for the service application.
+    /// Configures the host builder with cross-platform service support and logging,
     /// then starts the WindowsBackgroundService to handle ADS communication and video processing.
     /// </summary>
     /// <param name="args">Command-line arguments passed to the application.</param>
@@ -21,11 +22,14 @@ internal class Program
     {
         HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-        // Configure the application to run as a Windows Service
+        // Configure the application to run as a Windows Service when on Windows
         builder.Services.AddWindowsService(options =>
         {
             options.ServiceName = "EventVideoPlayback";
         });
+
+        // Configure the application to run as a systemd service when on Linux
+        builder.Services.AddSystemd();
 
         // Register Windows Event Log provider on Windows platforms for centralized logging
         if (OperatingSystem.IsWindows())

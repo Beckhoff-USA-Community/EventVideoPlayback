@@ -26,7 +26,7 @@ tcpkg install Beckhoff-USA-Community.XAE.EventVideoPlayback
 
 ## Requirements
 
-- TwinCAT 3 XAE (Build 4024 or higher)
+- TwinCAT 3 XAE (Build 4026 or higher)
 - TF7xxx Vision License
 - TE2000 HMI Engineering (optional, for HMI components)
 

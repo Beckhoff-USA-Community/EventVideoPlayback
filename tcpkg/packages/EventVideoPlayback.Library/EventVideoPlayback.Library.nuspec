@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback</id>
     <version>1.1.1</version>
-    <title>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</title>
+    <title>EventVideoPlayback PLC Library</title>
     <authors>Beckhoff Automation LLC</authors>
     <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
     <copyright>(c) Beckhoff Automation LLC</copyright>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-	<license type="file">LICENSE.md</license>
-    <icon>icon.png</icon>
+	<licenseUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.Library/LICENSE.txt</licenseUrl>
+	<iconUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.Library/icon.png</iconUrl>
     <readme>docs/README.md</readme>
-    <tags>Beckhoff TwinCAT AllowMultipleVersions EventVideoPlayback</tags>
+    <summary>PLC library for Event Video Playback system integration</summary>
+    <tags>Beckhoff TwinCAT AllowMultipleVersions</tags>
+    <releaseNotes>Version 1.1.1 - Compatible with EventVideoPlayback 2.0.0</releaseNotes>
     <description>EventVideoPlayback PLC Library - TwinCAT 3 library for video playback event management.</description>
     <dependencies>
 		<dependency id="TwinCAT.Standard.XAE" version="0.0.0" />
@@ -19,10 +21,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="icon.png" target="icon.png" />
     <file src="tools\**" target="tools" />
     <file src="bin\**" target="tools" />
-	<file src="LICENSE.md" target="LICENSE.md"/>
 	<file src="docs\README.md" target="docs\README.md"/>
   </files>
 </package>

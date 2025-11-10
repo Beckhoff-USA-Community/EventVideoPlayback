@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Beckhoff-USA-Community.XAE.Documentation.EventVideoPlayback</id>
     <version>2.0.0</version>
     <title>Event Video Playback Documentation</title>
     <authors>Beckhoff Automation LLC</authors>
+	<projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
     <copyright>(c) Beckhoff Automation LLC</copyright>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-	<license type="file">LICENSE.md</license>
-    <icon>icon.png</icon>
+	<licenseUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.Documentation/LICENSE.txt</licenseUrl>
+  	<iconUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.Documentation/icon.png</iconUrl>
     <readme>docs/README.md</readme>
-    <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
-    <icon>icon.png</icon>
-    <tags>Beckhoff TwinCAT AllowMultipleVersions EventVideoPlayback Documentation</tags>
+    <summary>Documentation and examples for EventVideoPlayback system</summary>
+    <tags>Beckhoff TwinCAT</tags>
+    <releaseNotes>Version 2.0.0 - Complete documentation for EventVideoPlayback 2.0 release</releaseNotes>
     <description>EventVideoPlayback Documentation Package - Comprehensive documentation for the EventVideoPlayback system including installation guides, usage instructions, system requirements, and service documentation.</description>
   </metadata>
   <files>
-    <file src="icon.png" target="icon.png" />
     <file src="tools\**" target="tools" />
     <file src="bin\**" target="tools\docs" />
-	<file src="LICENSE.md" target="LICENSE.md"/>
 	<file src="docs\README.md" target="docs\README.md"/>
   </files>
 </package>

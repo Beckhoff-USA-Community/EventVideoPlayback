@@ -91,7 +91,7 @@ All third-party licenses are included in this repository and must be retained in
 
 ## How to get support
 
-Should you have any questions regarding the provided sample code, please contact your local Beckhoff support team. Contact information can be found on the official Beckhoff website at https://www.beckhoff.com/en-us/support/.
+Should you have any questions regarding the provided sample code, please post to the issue tracker for this repository.
 
 ## Disclaimer
 

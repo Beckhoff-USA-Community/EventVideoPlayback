@@ -12,7 +12,7 @@ This repository includes both the source files and the release package for the T
 
 ## Documentation
 
-Find the latest up-to-date [documentation here](https://Beckhoff-USA-Community.github.io/TC_EventVideoPlayback/) on GitHub pages, or you can find them after install under the install path `/Documentation`.
+Find the latest up-to-date [documentation here](https://beckhoff-usa-community.github.io/EventVideoPlayback/) on GitHub pages, or you can find them after install under the install path `/Documentation`.
 
 ## Repository Structure
 

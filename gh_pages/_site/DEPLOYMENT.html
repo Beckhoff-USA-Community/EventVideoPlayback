@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>GitHub Pages Deployment Guide | Event Video Playback</title>
+  <meta name="description" content="Transform TwinCAT Vision images into event-driven video recordings">
+
+  <link rel="stylesheet" href="/EventVideoPlayback/assets/css/style.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>GitHub Pages Deployment Guide | Event Video Playback</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="GitHub Pages Deployment Guide" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Transform TwinCAT Vision images into event-driven video recordings" />
+<meta property="og:description" content="Transform TwinCAT Vision images into event-driven video recordings" />
+<link rel="canonical" href="http://localhost:4000/EventVideoPlayback/DEPLOYMENT.html" />
+<meta property="og:url" content="http://localhost:4000/EventVideoPlayback/DEPLOYMENT.html" />
+<meta property="og:site_name" content="Event Video Playback" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="GitHub Pages Deployment Guide" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Transform TwinCAT Vision images into event-driven video recordings","headline":"GitHub Pages Deployment Guide","url":"http://localhost:4000/EventVideoPlayback/DEPLOYMENT.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body>
+  <header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <a class="site-title" href="/EventVideoPlayback/">
+        Event Video Playback
+      </a>
+      <nav class="site-nav">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+        <a href="/EventVideoPlayback/">Home</a>
+        <a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a>
+        <a href="/EventVideoPlayback/docs/plc-usage/">PLC Library</a>
+        <a href="/EventVideoPlayback/docs/service-config/">Service Config</a>
+        <a href="/EventVideoPlayback/docs/hmi-usage/">HMI Usage</a>
+        <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank" class="btn btn-ghost" style="margin-left: 1rem;">GitHub</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+  <main class="main-content">
+    <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">GitHub Pages Deployment Guide</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="github-pages-deployment-guide">GitHub Pages Deployment Guide</h1>
+
+<p>This guide explains how to deploy the Event Video Playback website to GitHub Pages.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>Before deploying, ensure you have:</p>
+<ul>
+  <li>Push access to the repository</li>
+  <li>GitHub Pages enabled in repository settings</li>
+</ul>
+
+<h2 id="deployment-methods">Deployment Methods</h2>
+
+<h3 id="method-1-automatic-deployment-recommended">Method 1: Automatic Deployment (Recommended)</h3>
+
+<p>The site automatically deploys when you push changes to the <code class="language-plaintext highlighter-rouge">main</code> or <code class="language-plaintext highlighter-rouge">v2.0.0</code> branches.</p>
+
+<ol>
+  <li><strong>Make your changes</strong> in the <code class="language-plaintext highlighter-rouge">gh_pages/</code> directory</li>
+  <li><strong>Commit your changes</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add gh_pages/
+git commit <span class="nt">-m</span> <span class="s2">"Update website content"</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Push to GitHub</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin main
+<span class="c"># or</span>
+git push origin v2.0.0
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Monitor deployment</strong>:
+    <ul>
+      <li>Go to the repository <strong>Actions</strong> tab</li>
+      <li>Watch the “Deploy Jekyll site to GitHub Pages” workflow</li>
+      <li>Deployment typically takes 1-2 minutes</li>
+    </ul>
+  </li>
+  <li><strong>View the live site</strong>:
+    <ul>
+      <li>https://beckhoff-usa-community.github.io/EventVideoPlayback/</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="method-2-manual-workflow-trigger">Method 2: Manual Workflow Trigger</h3>
+
+<p>You can manually trigger a deployment from the GitHub Actions interface:</p>
+
+<ol>
+  <li>Go to the repository <strong>Actions</strong> tab</li>
+  <li>Select “Deploy Jekyll site to GitHub Pages”</li>
+  <li>Click “Run workflow”</li>
+  <li>Choose the branch (main or v2.0.0)</li>
+  <li>Click “Run workflow” button</li>
+</ol>
+
+<h2 id="first-time-setup">First-Time Setup</h2>
+
+<p>If this is the first deployment, you need to configure GitHub Pages settings:</p>
+
+<h3 id="step-1-enable-github-pages">Step 1: Enable GitHub Pages</h3>
+
+<ol>
+  <li>Go to repository <strong>Settings</strong> &gt; <strong>Pages</strong></li>
+  <li>Under “Build and deployment”:
+    <ul>
+      <li><strong>Source</strong>: Deploy from a branch (this will be changed automatically)</li>
+      <li>Or select: <strong>GitHub Actions</strong> (recommended)</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="step-2-set-permissions">Step 2: Set Permissions</h3>
+
+<ol>
+  <li>Go to repository <strong>Settings</strong> &gt; <strong>Actions</strong> &gt; <strong>General</strong></li>
+  <li>Scroll to “Workflow permissions”</li>
+  <li>Select: <strong>Read and write permissions</strong></li>
+  <li>Check: <strong>Allow GitHub Actions to create and approve pull requests</strong></li>
+  <li>Click <strong>Save</strong></li>
+</ol>
+
+<h3 id="step-3-configure-environment">Step 3: Configure Environment</h3>
+
+<ol>
+  <li>Go to repository <strong>Settings</strong> &gt; <strong>Environments</strong></li>
+  <li>You should see a “github-pages” environment</li>
+  <li>If not, it will be created automatically on first deployment</li>
+</ol>
+
+<h3 id="step-4-first-deployment">Step 4: First Deployment</h3>
+
+<ol>
+  <li>Push any change to trigger deployment:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add gh_pages/
+git commit <span class="nt">-m</span> <span class="s2">"Initial website deployment"</span>
+git push origin main
+</code></pre></div>    </div>
+  </li>
+  <li>Go to <strong>Actions</strong> tab and watch the workflow</li>
+  <li>Wait for deployment to complete</li>
+  <li>The site URL will appear in the workflow output</li>
+</ol>
+
+<h2 id="verifying-deployment">Verifying Deployment</h2>
+
+<h3 id="check-workflow-status">Check Workflow Status</h3>
+
+<ol>
+  <li><strong>Actions Tab</strong>: View real-time build logs</li>
+  <li><strong>Green checkmark</strong>: Deployment successful</li>
+  <li><strong>Red X</strong>: Deployment failed (check logs for errors)</li>
+</ol>
+
+<h3 id="test-the-live-site">Test the Live Site</h3>
+
+<p>Visit: https://beckhoff-usa-community.github.io/EventVideoPlayback/</p>
+
+<p><strong>Test checklist:</strong></p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Landing page loads correctly</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Hero image displays</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Navigation menu works</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />All documentation pages load</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Internal links work</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Styles and colors are correct</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Mobile responsive design works</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />JavaScript animations work</li>
+</ul>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="deployment-fails">Deployment Fails</h3>
+
+<p><strong>Error: “Process completed with exit code 16”</strong></p>
+<ul>
+  <li>Jekyll build failed</li>
+  <li>Check syntax in Markdown files</li>
+  <li>Verify YAML front matter is correct</li>
+  <li>Review GitHub Actions logs for specific errors</li>
+</ul>
+
+<p><strong>Fix:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Test build locally</span>
+<span class="nb">cd </span>gh_pages
+bundle <span class="nb">exec </span>jekyll build
+<span class="c"># Fix any errors shown</span>
+</code></pre></div></div>
+
+<p><strong>Error: “No uploaded artifact was found”</strong></p>
+<ul>
+  <li>Build completed but artifact upload failed</li>
+  <li>Usually temporary; retry deployment</li>
+</ul>
+
+<p><strong>Fix:</strong></p>
+<ul>
+  <li>Re-run the workflow from Actions tab</li>
+  <li>Check GitHub status page for outages</li>
+</ul>
+
+<h3 id="site-not-updating">Site Not Updating</h3>
+
+<p><strong>Changes not visible after deployment:</strong></p>
+
+<ol>
+  <li><strong>Wait</strong>: CDN propagation can take 1-2 minutes</li>
+  <li><strong>Clear cache</strong>:
+    <ul>
+      <li>Hard refresh: <code class="language-plaintext highlighter-rouge">Ctrl+Shift+R</code> (Windows) or <code class="language-plaintext highlighter-rouge">Cmd+Shift+R</code> (Mac)</li>
+      <li>Open in private/incognito window</li>
+    </ul>
+  </li>
+  <li><strong>Verify deployment</strong>:
+    <ul>
+      <li>Check Actions tab shows successful deployment</li>
+      <li>Verify commit SHA matches latest push</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="404-errors-on-navigation">404 Errors on Navigation</h3>
+
+<p><strong>Internal links showing 404:</strong></p>
+
+<ol>
+  <li>Check <code class="language-plaintext highlighter-rouge">_config.yml</code> baseurl is correct:
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">baseurl</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/EventVideoPlayback"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Verify links use <code class="language-plaintext highlighter-rouge">relative_url</code> filter:
+    <div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/EventVideoPlayback/docs/getting-started/
+</code></pre></div>    </div>
+  </li>
+  <li>Check permalinks in front matter match navigation links</li>
+</ol>
+
+<h3 id="styles-not-loading">Styles Not Loading</h3>
+
+<p><strong>CSS not applied:</strong></p>
+
+<ol>
+  <li>Check <code class="language-plaintext highlighter-rouge">assets/css/style.scss</code> has front matter:
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="nn">---</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Verify SCSS files are imported:
+    <div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@import</span> <span class="s2">"variables"</span><span class="p">;</span>
+<span class="k">@import</span> <span class="s2">"layout"</span><span class="p">;</span>
+<span class="k">@import</span> <span class="s2">"components"</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Clear browser cache and try again</li>
+</ol>
+
+<h3 id="images-not-loading">Images Not Loading</h3>
+
+<p><strong>Hero image or other images broken:</strong></p>
+
+<ol>
+  <li>Verify image path:
+    <div class="language-liquid highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/EventVideoPlayback/assets/images/Camera_Hero_NoBackground.png
+</code></pre></div>    </div>
+  </li>
+  <li>Check image exists in <code class="language-plaintext highlighter-rouge">assets/images/</code></li>
+  <li>Verify image filename matches (case-sensitive)</li>
+</ol>
+
+<h2 id="workflow-details">Workflow Details</h2>
+
+<p>The deployment workflow (<code class="language-plaintext highlighter-rouge">.github/workflows/pages.yml</code>) performs these steps:</p>
+
+<ol>
+  <li><strong>Checkout</strong>: Gets the repository code</li>
+  <li><strong>Setup Ruby</strong>: Installs Ruby 3.1 and dependencies</li>
+  <li><strong>Setup Pages</strong>: Configures GitHub Pages</li>
+  <li><strong>Build Jekyll</strong>: Compiles the site with production settings</li>
+  <li><strong>Upload Artifact</strong>: Packages the built site</li>
+  <li><strong>Deploy</strong>: Publishes to GitHub Pages</li>
+</ol>
+
+<h3 id="workflow-triggers">Workflow Triggers</h3>
+
+<p>The workflow runs when:</p>
+<ul>
+  <li>Pushing to <code class="language-plaintext highlighter-rouge">main</code> or <code class="language-plaintext highlighter-rouge">v2.0.0</code> branches</li>
+  <li>Only if files in <code class="language-plaintext highlighter-rouge">gh_pages/</code> or workflow file change</li>
+  <li>Manually triggered via Actions tab</li>
+</ul>
+
+<h3 id="build-time">Build Time</h3>
+
+<p>Typical build and deployment: <strong>1-2 minutes</strong></p>
+
+<p>Breakdown:</p>
+<ul>
+  <li>Checkout: 5-10 seconds</li>
+  <li>Ruby setup: 20-30 seconds</li>
+  <li>Jekyll build: 15-30 seconds</li>
+  <li>Deploy: 30-60 seconds</li>
+</ul>
+
+<h2 id="making-changes-safely">Making Changes Safely</h2>
+
+<h3 id="best-practices">Best Practices</h3>
+
+<ol>
+  <li><strong>Test Locally First</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>gh_pages
+bundle <span class="nb">exec </span>jekyll serve
+<span class="c"># Test at http://localhost:4000/EventVideoPlayback/</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Use Feature Branches</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="nt">-b</span> update-documentation
+<span class="c"># Make changes</span>
+git commit <span class="nt">-m</span> <span class="s2">"Update documentation"</span>
+git push origin update-documentation
+<span class="c"># Create pull request for review</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Review Before Merge</strong>:
+    <ul>
+      <li>Check pull request preview</li>
+      <li>Verify changes in GitHub’s file view</li>
+      <li>Review with team if needed</li>
+    </ul>
+  </li>
+  <li><strong>Monitor Deployment</strong>:
+    <ul>
+      <li>Watch Actions tab after merge</li>
+      <li>Test live site immediately after deployment</li>
+      <li>Be ready to rollback if issues occur</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="emergency-rollback">Emergency Rollback</h3>
+
+<p>If a deployment breaks the site:</p>
+
+<ol>
+  <li><strong>Revert the commit</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git revert HEAD
+git push origin main
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Or reset to previous version</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset <span class="nt">--hard</span> &lt;previous-commit-sha&gt;
+git push origin main <span class="nt">--force</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Or checkout previous version</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;previous-commit-sha&gt; gh_pages/
+git commit <span class="nt">-m</span> <span class="s2">"Rollback to previous version"</span>
+git push origin main
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="performance-optimization">Performance Optimization</h2>
+
+<h3 id="image-optimization">Image Optimization</h3>
+
+<p>Before adding images:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Optimize PNG</span>
+optipng <span class="nt">-o7</span> assets/images/image.png
+
+<span class="c"># Or use ImageMagick</span>
+convert input.png <span class="nt">-strip</span> <span class="nt">-quality</span> 85 output.png
+</code></pre></div></div>
+
+<h3 id="build-optimization">Build Optimization</h3>
+
+<p>The workflow uses:</p>
+<ul>
+  <li>Bundler cache for faster Ruby setup</li>
+  <li>Incremental builds (when possible)</li>
+  <li>Production environment for optimized output</li>
+</ul>
+
+<h2 id="monitoring">Monitoring</h2>
+
+<h3 id="github-pages-status">GitHub Pages Status</h3>
+
+<p>Check: https://www.githubstatus.com/</p>
+
+<p>Look for issues with:</p>
+<ul>
+  <li>GitHub Pages</li>
+  <li>GitHub Actions</li>
+  <li>Git Operations</li>
+</ul>
+
+<h3 id="site-analytics">Site Analytics</h3>
+
+<p>Consider adding:</p>
+<ul>
+  <li>Google Analytics</li>
+  <li>GitHub Traffic Stats (Settings &gt; Insights &gt; Traffic)</li>
+</ul>
+
+<h2 id="support">Support</h2>
+
+<p><strong>Issues with deployment?</strong></p>
+
+<ol>
+  <li>Check <a href="../../actions">GitHub Actions logs</a></li>
+  <li>Review <a href="https://docs.github.com/en/pages">GitHub Pages documentation</a></li>
+  <li>Check <a href="https://jekyllrb.com/docs/">Jekyll documentation</a></li>
+  <li>Open an issue in the repository</li>
+</ol>
+
+<h2 id="additional-resources">Additional Resources</h2>
+
+<ul>
+  <li><a href="https://docs.github.com/en/pages">GitHub Pages Documentation</a></li>
+  <li><a href="https://jekyllrb.com/docs/">Jekyll Documentation</a></li>
+  <li><a href="https://docs.github.com/en/actions">GitHub Actions Documentation</a></li>
+  <li><a href="../../settings">Repository Settings</a></li>
+  <li><a href="../../deployments/github-pages">View Deployments</a></li>
+</ul>
+
+  </div>
+
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Event Video Playback</h3>
+        <p>Transform TwinCAT Vision images into event-driven video recordings for industrial automation.</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a></li>
+          <li><a href="/EventVideoPlayback/docs/plc-usage/">PLC Library Usage</a></li>
+          <li><a href="/EventVideoPlayback/docs/service-config/">Service Configuration</a></li>
+          <li><a href="/EventVideoPlayback/docs/hmi-usage/">HMI User Control</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank">GitHub Repository</a></li>
+          <li><a href="https://packages.beckhoff-usa-community.com/" target="_blank">Package Feed</a></li>
+          <li><a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback/issues" target="_blank">Report Issues</a></li>
+          <li><a href="https://github.com/Beckhoff-USA-Community" target="_blank">Beckhoff USA Community</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Beckhoff-USA-Community" target="_blank">Beckhoff USA Community</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Beckhoff USA Community | Licensed under MIT License</p>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/EventVideoPlayback/assets/js/main.js"></script>
+</body>
+</html>

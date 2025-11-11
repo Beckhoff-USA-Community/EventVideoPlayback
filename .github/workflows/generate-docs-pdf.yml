@@ -1,0 +1,133 @@
+name: Generate Documentation PDFs
+
+on:
+  push:
+    branches: ["main", "v2.0.0"]
+    paths:
+      - 'gh_pages/_docs/**'
+      - 'gh_pages/assets/pdf-template/**'
+      - '.github/workflows/generate-docs-pdf.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-pdfs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Pandoc and LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra
+
+      - name: Create PDF output directory
+        run: |
+          mkdir -p gh_pages/assets/pdf
+
+      - name: Generate Getting Started PDF
+        run: |
+          pandoc gh_pages/_docs/getting-started.md \
+            -o gh_pages/assets/pdf/getting-started.pdf \
+            --from markdown \
+            --template gh_pages/assets/pdf-template/template.tex \
+            --variable documentclass=article \
+            --variable geometry:margin=1in \
+            --variable fontsize=11pt \
+            --variable colorlinks=true \
+            --variable linkcolor=red \
+            --variable urlcolor=red \
+            --toc \
+            --toc-depth=2 \
+            --pdf-engine=pdflatex \
+            --metadata title="Event Video Playback - Getting Started" \
+            --metadata author="Beckhoff USA Community"
+
+      - name: Generate PLC Library Usage PDF
+        run: |
+          pandoc gh_pages/_docs/plc-usage.md \
+            -o gh_pages/assets/pdf/plc-usage.pdf \
+            --from markdown \
+            --template gh_pages/assets/pdf-template/template.tex \
+            --variable documentclass=article \
+            --variable geometry:margin=1in \
+            --variable fontsize=11pt \
+            --variable colorlinks=true \
+            --variable linkcolor=red \
+            --variable urlcolor=red \
+            --toc \
+            --toc-depth=2 \
+            --pdf-engine=pdflatex \
+            --metadata title="Event Video Playback - PLC Library Usage" \
+            --metadata author="Beckhoff USA Community"
+
+      - name: Generate Service Configuration PDF
+        run: |
+          pandoc gh_pages/_docs/service-config.md \
+            -o gh_pages/assets/pdf/service-config.pdf \
+            --from markdown \
+            --template gh_pages/assets/pdf-template/template.tex \
+            --variable documentclass=article \
+            --variable geometry:margin=1in \
+            --variable fontsize=11pt \
+            --variable colorlinks=true \
+            --variable linkcolor=red \
+            --variable urlcolor=red \
+            --toc \
+            --toc-depth=2 \
+            --pdf-engine=pdflatex \
+            --metadata title="Event Video Playback - Service Configuration" \
+            --metadata author="Beckhoff USA Community"
+
+      - name: Generate HMI Usage PDF
+        run: |
+          pandoc gh_pages/_docs/hmi-usage.md \
+            -o gh_pages/assets/pdf/hmi-usage.pdf \
+            --from markdown \
+            --template gh_pages/assets/pdf-template/template.tex \
+            --variable documentclass=article \
+            --variable geometry:margin=1in \
+            --variable fontsize=11pt \
+            --variable colorlinks=true \
+            --variable linkcolor=red \
+            --variable urlcolor=red \
+            --toc \
+            --toc-depth=2 \
+            --pdf-engine=pdflatex \
+            --metadata title="Event Video Playback - HMI NuGet Package Usage" \
+            --metadata author="Beckhoff USA Community"
+
+      - name: Generate Complete Documentation PDF
+        run: |
+          pandoc gh_pages/_docs/getting-started.md \
+                 gh_pages/_docs/plc-usage.md \
+                 gh_pages/_docs/service-config.md \
+                 gh_pages/_docs/hmi-usage.md \
+            -o gh_pages/assets/pdf/complete-documentation.pdf \
+            --from markdown \
+            --template gh_pages/assets/pdf-template/template.tex \
+            --variable documentclass=report \
+            --variable geometry:margin=1in \
+            --variable fontsize=11pt \
+            --variable colorlinks=true \
+            --variable linkcolor=red \
+            --variable urlcolor=red \
+            --toc \
+            --toc-depth=2 \
+            --pdf-engine=pdflatex \
+            --metadata title="Event Video Playback - Complete Documentation" \
+            --metadata author="Beckhoff USA Community" \
+            --metadata date="$(date +'%B %Y')"
+
+      - name: Commit PDFs to repository
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add gh_pages/assets/pdf/*.pdf
+          git diff --staged --quiet || git commit -m "Generate documentation PDFs [skip ci]"
+          git push

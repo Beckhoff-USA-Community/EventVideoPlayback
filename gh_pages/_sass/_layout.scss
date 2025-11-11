@@ -1,0 +1,260 @@
+// Base Layout Styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: $font-size-base;
+}
+
+body {
+  font-family: $font-family-base;
+  line-height: $line-height-base;
+  color: $dark-gray;
+  background-color: $white;
+  overflow-x: hidden;
+}
+
+// Container
+.container {
+  max-width: $container-width;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  &.narrow {
+    max-width: $container-width-narrow;
+  }
+}
+
+// Header
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: rgba($black, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: $shadow-md;
+  transition: all $transition-speed $transition-ease;
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm 0;
+  }
+
+  .site-title {
+    font-size: 1.5rem;
+    font-weight: $font-weight-bold;
+    color: $white;
+    text-decoration: none;
+    transition: color $transition-speed $transition-ease;
+
+    &:hover {
+      color: $primary-red;
+    }
+  }
+}
+
+// Navigation
+.site-nav {
+  display: flex;
+  gap: $spacing-md;
+  align-items: center;
+
+  a {
+    color: $light-gray;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    transition: color $transition-speed $transition-ease;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius;
+
+    &:hover {
+      color: $primary-red;
+      background-color: rgba($primary-red, 0.1);
+    }
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: $white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: $spacing-xs;
+  }
+
+  @media (max-width: $breakpoint-tablet) {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background-color: rgba($black, 0.98);
+    flex-direction: column;
+    padding: $spacing-md;
+    gap: $spacing-sm;
+    transform: translateY(-120%);
+    transition: transform $transition-speed $transition-ease;
+    box-shadow: $shadow-lg;
+
+    &.active {
+      transform: translateY(0);
+    }
+
+    .mobile-menu-toggle {
+      display: block;
+    }
+
+    a {
+      width: 100%;
+      text-align: center;
+      padding: $spacing-sm;
+    }
+  }
+}
+
+// Footer
+.site-footer {
+  background-color: $black;
+  color: $light-gray;
+  padding: $spacing-xxl 0 $spacing-md;
+  margin-top: $spacing-xxl;
+
+  .footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
+  }
+
+  .footer-section {
+    h3 {
+      color: $white;
+      margin-bottom: $spacing-sm;
+      font-size: $font-size-h4;
+    }
+
+    ul {
+      list-style: none;
+
+      li {
+        margin-bottom: $spacing-xs;
+      }
+    }
+
+    a {
+      color: $light-gray;
+      text-decoration: none;
+      transition: color $transition-speed $transition-ease;
+
+      &:hover {
+        color: $primary-red;
+      }
+    }
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: $spacing-md;
+    border-top: 1px solid $medium-gray;
+    color: $medium-gray;
+    font-size: $font-size-small;
+  }
+}
+
+// Main Content
+.main-content {
+  margin-top: 70px; // Height of fixed header
+  min-height: calc(100vh - 70px);
+}
+
+// Section Spacing
+.section {
+  padding: $spacing-xxl 0;
+
+  &.section-dark {
+    background-color: $black;
+    color: $white;
+  }
+
+  &.section-gray {
+    background-color: $light-gray;
+  }
+}
+
+// Responsive Typography
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+  line-height: $line-height-heading;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-sm;
+}
+
+h1 {
+  font-size: $font-size-h1;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: 2.5rem;
+  }
+}
+
+h2 {
+  font-size: $font-size-h2;
+
+  @media (max-width: $breakpoint-tablet) {
+    font-size: 2rem;
+  }
+}
+
+h3 {
+  font-size: $font-size-h3;
+}
+
+h4 {
+  font-size: $font-size-h4;
+}
+
+p {
+  margin-bottom: $spacing-sm;
+}
+
+// Links
+a {
+  color: $primary-red;
+  transition: color $transition-speed $transition-ease;
+
+  &:hover {
+    color: $dark-red;
+  }
+}
+
+// Code
+code {
+  font-family: $font-family-mono;
+  background-color: $light-gray;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: $dark-gray;
+  color: $light-gray;
+  padding: $spacing-sm;
+  border-radius: $border-radius;
+  overflow-x: auto;
+  margin-bottom: $spacing-sm;
+
+  code {
+    background-color: transparent;
+    padding: 0;
+    color: inherit;
+  }
+}

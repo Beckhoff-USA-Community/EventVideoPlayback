@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Documentation PDF Generation | Event Video Playback</title>
+  <meta name="description" content="Transform TwinCAT Vision images into event-driven video recordings">
+
+  <link rel="stylesheet" href="/EventVideoPlayback/assets/css/style.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Documentation PDF Generation | Event Video Playback</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Documentation PDF Generation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Transform TwinCAT Vision images into event-driven video recordings" />
+<meta property="og:description" content="Transform TwinCAT Vision images into event-driven video recordings" />
+<link rel="canonical" href="http://localhost:4000/EventVideoPlayback/assets/pdf/" />
+<meta property="og:url" content="http://localhost:4000/EventVideoPlayback/assets/pdf/" />
+<meta property="og:site_name" content="Event Video Playback" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Documentation PDF Generation" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Transform TwinCAT Vision images into event-driven video recordings","headline":"Documentation PDF Generation","url":"http://localhost:4000/EventVideoPlayback/assets/pdf/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body>
+  <header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <a class="site-title" href="/EventVideoPlayback/">
+        Event Video Playback
+      </a>
+      <nav class="site-nav">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+        <a href="/EventVideoPlayback/">Home</a>
+        <a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a>
+        <a href="/EventVideoPlayback/docs/plc-usage/">PLC Library</a>
+        <a href="/EventVideoPlayback/docs/service-config/">Service Config</a>
+        <a href="/EventVideoPlayback/docs/hmi-usage/">HMI Usage</a>
+        <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank" class="btn btn-ghost" style="margin-left: 1rem;">GitHub</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+  <main class="main-content">
+    <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Documentation PDF Generation</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="documentation-pdf-generation">Documentation PDF Generation</h1>
+
+<p>This directory contains auto-generated PDF versions of the Event Video Playback documentation.</p>
+
+<h2 id="-available-pdfs">📄 Available PDFs</h2>
+
+<p>The following PDFs are automatically generated from the markdown documentation:</p>
+
+<ul>
+  <li><strong>getting-started.pdf</strong> - Installation and setup guide</li>
+  <li><strong>plc-usage.pdf</strong> - PLC library documentation</li>
+  <li><strong>service-config.pdf</strong> - Service configuration guide</li>
+  <li><strong>hmi-usage.pdf</strong> - HMI NuGet package guide</li>
+  <li><strong>complete-documentation.pdf</strong> - All documentation in one PDF</li>
+</ul>
+
+<h2 id="-how-pdf-generation-works">🔄 How PDF Generation Works</h2>
+
+<p>PDFs are automatically generated using <strong>GitHub Actions</strong> whenever documentation changes are pushed.</p>
+
+<h3 id="workflow-trigger">Workflow Trigger</h3>
+
+<p>The PDF generation workflow (<code class="language-plaintext highlighter-rouge">.github/workflows/generate-docs-pdf.yml</code>) runs when:</p>
+<ul>
+  <li>Changes are pushed to <code class="language-plaintext highlighter-rouge">gh_pages/_docs/</code> directory</li>
+  <li>Changes are pushed to the PDF template</li>
+  <li>Workflow is manually triggered via GitHub Actions UI</li>
+</ul>
+
+<h3 id="generation-process">Generation Process</h3>
+
+<ol>
+  <li><strong>Pandoc</strong> converts markdown files to PDF</li>
+  <li>Custom <strong>LaTeX template</strong> applies Event Video Playback branding (red/black theme)</li>
+  <li>PDFs include:
+    <ul>
+      <li>Professional formatting</li>
+      <li>Table of contents</li>
+      <li>Headers and footers</li>
+      <li>Color-coded links</li>
+      <li>Code syntax highlighting</li>
+      <li>Page numbers</li>
+    </ul>
+  </li>
+  <li>Generated PDFs are committed back to this directory</li>
+  <li>PDFs become available for download on the website</li>
+</ol>
+
+<h2 id="-pdf-styling">🎨 PDF Styling</h2>
+
+<p>PDFs use a custom LaTeX template (<code class="language-plaintext highlighter-rouge">assets/pdf-template/template.tex</code>) that:</p>
+<ul>
+  <li>Matches the website’s red/black color scheme</li>
+  <li>Uses primary red (#D32F2F) for headings and links</li>
+  <li>Includes Beckhoff USA Community branding</li>
+  <li>Provides professional headers and footers</li>
+  <li>Formats code blocks with syntax highlighting</li>
+</ul>
+
+<h2 id="-manual-workflow-trigger">🚀 Manual Workflow Trigger</h2>
+
+<p>To manually regenerate PDFs:</p>
+
+<ol>
+  <li>Go to <strong>GitHub Actions</strong> tab</li>
+  <li>Select <strong>“Generate Documentation PDFs”</strong> workflow</li>
+  <li>Click <strong>“Run workflow”</strong></li>
+  <li>Choose branch (main or v2.0.0)</li>
+  <li>Click <strong>“Run workflow”</strong> button</li>
+</ol>
+
+<p>PDFs will be generated and committed within 2-3 minutes.</p>
+
+<h2 id="-download-buttons">📥 Download Buttons</h2>
+
+<p>Each documentation page includes two download buttons:</p>
+
+<ol>
+  <li><strong>“Download as PDF”</strong> - Downloads the current page as PDF</li>
+  <li><strong>“Download Complete Docs”</strong> - Downloads all documentation combined</li>
+</ol>
+
+<p>Buttons are styled with:</p>
+<ul>
+  <li>White background with red border (current page)</li>
+  <li>Red background with white text (complete docs)</li>
+  <li>Hover animations</li>
+  <li>Download icons from Feather Icons</li>
+</ul>
+
+<h2 id="-customizing-pdf-output">🔧 Customizing PDF Output</h2>
+
+<h3 id="modify-template">Modify Template</h3>
+
+<p>Edit <code class="language-plaintext highlighter-rouge">assets/pdf-template/template.tex</code> to customize:</p>
+<ul>
+  <li>Colors and branding</li>
+  <li>Page layout and margins</li>
+  <li>Header/footer content</li>
+  <li>Font sizes and styles</li>
+  <li>Code block styling</li>
+</ul>
+
+<h3 id="modify-workflow">Modify Workflow</h3>
+
+<p>Edit <code class="language-plaintext highlighter-rouge">.github/workflows/generate-docs-pdf.yml</code> to:</p>
+<ul>
+  <li>Change Pandoc options</li>
+  <li>Add/remove PDFs</li>
+  <li>Adjust metadata (title, author, date)</li>
+  <li>Configure PDF settings</li>
+</ul>
+
+<h3 id="example-change-margins">Example: Change Margins</h3>
+
+<p>In the workflow, modify the <code class="language-plaintext highlighter-rouge">--variable geometry:margin=</code> option:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">--variable geometry:margin=1.5in</span>  <span class="c1"># Larger margins</span>
+<span class="s">--variable geometry:margin=0.75in</span> <span class="c1"># Smaller margins</span>
+</code></pre></div></div>
+
+<h3 id="example-change-font-size">Example: Change Font Size</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">--variable fontsize=12pt</span>  <span class="c1"># Larger text</span>
+<span class="s">--variable fontsize=10pt</span>  <span class="c1"># Smaller text</span>
+</code></pre></div></div>
+
+<h2 id="-troubleshooting">🐛 Troubleshooting</h2>
+
+<h3 id="pdfs-not-generating">PDFs Not Generating</h3>
+
+<ol>
+  <li>Check GitHub Actions workflow status</li>
+  <li>Review workflow logs for errors</li>
+  <li>Ensure markdown syntax is valid</li>
+  <li>Verify LaTeX template syntax</li>
+</ol>
+
+<h3 id="pdf-formatting-issues">PDF Formatting Issues</h3>
+
+<ul>
+  <li><strong>Tables not displaying correctly</strong>: Simplify table structure or use smaller font</li>
+  <li><strong>Code blocks overflowing</strong>: Use <code class="language-plaintext highlighter-rouge">breaklines=true</code> in listings settings</li>
+  <li><strong>Links not working</strong>: Ensure URLs are properly formatted in markdown</li>
+</ul>
+
+<h3 id="force-regeneration">Force Regeneration</h3>
+
+<p>If PDFs appear outdated:</p>
+
+<ol>
+  <li>Make a small change to any doc file (add a space)</li>
+  <li>Commit and push</li>
+  <li>Workflow will run automatically</li>
+</ol>
+
+<p>Or trigger manually via GitHub Actions UI.</p>
+
+<h2 id="-dependencies">📦 Dependencies</h2>
+
+<p>The workflow requires:</p>
+<ul>
+  <li><strong>Pandoc</strong> - Document converter</li>
+  <li><strong>LaTeX</strong> (texlive) - PDF rendering engine</li>
+  <li>Includes: texlive-latex-base, texlive-fonts-recommended, texlive-fonts-extra, texlive-latex-extra</li>
+</ul>
+
+<p>These are automatically installed by the GitHub Actions runner.</p>
+
+<h2 id="-notes">📝 Notes</h2>
+
+<ul>
+  <li>PDFs are committed with <code class="language-plaintext highlighter-rouge">[skip ci]</code> message to avoid infinite workflow loops</li>
+  <li>Generated PDFs are tracked in git for easy access</li>
+  <li>File sizes: ~100-500KB per PDF (depending on content)</li>
+  <li>Generation time: ~30-60 seconds per PDF</li>
+</ul>
+
+<h2 id="-links">🔗 Links</h2>
+
+<ul>
+  <li><a href="../../.github/workflows/">GitHub Actions Workflows</a></li>
+  <li><a href="/EventVideoPlayback/assets/pdf-template/template.tex">PDF Template</a></li>
+  <li><a href="_docs/">Documentation Source</a></li>
+  <li><a href="https://beckhoff-usa-community.github.io/EventVideoPlayback/">Live Website</a></li>
+</ul>
+
+  </div>
+
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Event Video Playback</h3>
+        <p>Transform TwinCAT Vision images into event-driven video recordings for industrial automation.</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a></li>
+          <li><a href="/EventVideoPlayback/docs/plc-usage/">PLC Library Usage</a></li>
+          <li><a href="/EventVideoPlayback/docs/service-config/">Service Configuration</a></li>
+          <li><a href="/EventVideoPlayback/docs/hmi-usage/">HMI User Control</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank">GitHub Repository</a></li>
+          <li><a href="https://packages.beckhoff-usa-community.com/" target="_blank">Package Feed</a></li>
+          <li><a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback/issues" target="_blank">Report Issues</a></li>
+          <li><a href="https://github.com/Beckhoff-USA-Community" target="_blank">Beckhoff USA Community</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Beckhoff-USA-Community" target="_blank">Beckhoff USA Community</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Beckhoff USA Community | Licensed under MIT License</p>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/EventVideoPlayback/assets/js/main.js"></script>
+</body>
+</html>

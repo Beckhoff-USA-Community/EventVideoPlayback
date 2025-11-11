@@ -2,12 +2,24 @@
 \documentclass[$if(fontsize)$$fontsize$,$endif$$if(lang)$$babel-lang$,$endif$$if(papersize)$$papersize$paper,$endif$$for(classoption)$$classoption$$sep$,$endfor$]{$documentclass$}
 
 % Packages
-\usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
+
+% Font setup for XeLaTeX/LuaLaTeX vs pdfLaTeX
+\ifxetex
+  \usepackage{fontspec}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\else
+  \ifluatex
+    \usepackage{fontspec}
+    \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \else
+    \usepackage{lmodern}
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+  \fi
+\fi
+
 \usepackage{microtype}
 \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
 \usepackage{hyperref}

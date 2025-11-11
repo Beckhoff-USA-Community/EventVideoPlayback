@@ -20,24 +20,42 @@ tcpkg/
 │   ├── BUILD_INSTRUCTIONS.md
 │   └── QUICK_REFERENCE.txt
 ├── Build.ps1              # Convenience wrapper (run from here)
-└── Build.bat              # Convenience wrapper (double-click)
+├── Build.bat              # Convenience wrapper (double-click)
+└── convert_to_pdf.py      # Generate documentation PDFs (Python)
 ```
 
 ## Quick Start
 
-### Option 1: PowerShell (Recommended)
+### Build TwinCAT Packages
+
+#### Option 1: PowerShell (Recommended)
 ```powershell
 .\Build.ps1 -CleanBuild
 ```
 
-### Option 2: Batch File
+#### Option 2: Batch File
 Double-click `Build.bat`
 
-### Option 3: From Scripts Directory
+#### Option 3: From Scripts Directory
 ```powershell
 cd scripts
 .\Build-TcPackages.ps1 -CleanBuild
 ```
+
+### Generate Documentation PDFs
+
+To generate PDF documentation from the markdown files:
+
+```bash
+python convert_to_pdf.py
+```
+
+This script:
+- Automatically installs required Python packages (markdown, weasyprint)
+- Converts all markdown files from `gh_pages\_docs\` to PDFs
+- Outputs individual PDFs to `packages\EventvideoPlayback.Documentation\bin\`
+- Creates a combined `complete-documentation.pdf` with all documentation
+- No external dependencies needed (no LaTeX or pandoc required!)
 
 ## Adding New Packages
 
@@ -75,9 +93,16 @@ For complete documentation, see:
 
 ## Requirements
 
+### For Building TwinCAT Packages
 - TwinCAT tcpkg tool (installed with TwinCAT XAE)
 - PowerShell 5.1 or higher
 - Windows 10/11
+
+### For PDF Generation (Optional)
+- Python 3.6+
+- Python packages (automatically installed by script):
+  - `markdown` - Markdown parser
+  - `xhtml2pdf` - HTML to PDF converter (pure Python, no external dependencies)
 
 ## Support
 

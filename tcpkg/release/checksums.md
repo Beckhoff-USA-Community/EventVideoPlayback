@@ -1,6 +1,6 @@
 ﻿# TwinCAT Package Checksums
 
-**Generated:** 2025-10-28 12:54:36
+**Generated:** 2025-11-10 08:39:04
 **Release Folder:** C:\GitHub\EventVideoPlayback\tcpkg\.\release
 
 This file contains SHA256 checksums for all built packages to ensure integrity and traceability.
@@ -9,12 +9,13 @@ This file contains SHA256 checksums for all built packages to ensure integrity a
 
 | Package Name | Version | SHA256 Checksum |
 |--------------|---------|-----------------|
-| Beckhoff-USA-Community.XAE.Documentation.EventVideoPlayback | 2.0.0 | `B3613FC56E6EBB407D520CA0B7A0E0E696CCEDA9031EDD1431C1A2B200C20974` |
-| Beckhoff-USA-Community.XAE.EventVideoPlayback | 2.0.0 | `1519ED7182A18467741835B31481847728D174802082AFF77CCBD712671A0937` |
-| Beckhoff-USA-Community.XAE.HMI.EventVisionControl | 1.1.3 | `CAA7EC75E838F87034E4C77E198140027B759751FE3AFF25111DA2717E6FC77B` |
-| Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback | 1.1.1 | `06B94CD1D5CA2D5459340EC299393DDE4CB9BB443D43675ADAC18FB0001870BE` |
-| Beckhoff-USA-Community.XAR.EventVideoPlayback | 2.0.0 | `875E4F37FE1D15F39DE1EBFCDB62249956E9D997000D7BC42A3CA9C6C057F355` |
-| Beckhoff-USA-Community.XAR.Service.EventVideoPlayback | 2.0.0 | `09315B42D8E298669A1542FE81C1C090B3B33FB731308C2B05F4401DE2C48B79` |
+| Beckhoff-USA-Community.EventVideoPlayback.XAE | 2.0.0 | `E3D29512A7F60977E2038F2F97777E913339E81AEB72FFC17769C208C317B2DB` |
+| Beckhoff-USA-Community.EventVideoPlayback.XAR | 2.0.0 | `301C5BD8BCB1805E71776B5C332ADF707F2EE58053A0C5492FD961BA2625C286` |
+| Beckhoff-USA-Community.XAE.Documentation.EventVideoPlayback | 2.0.0 | `64131561E0EC94E69DF52FCBBF564E003E906561D75A69E640151EF5098A4EF9` |
+| Beckhoff-USA-Community.XAE.HMI.EventVisionControl | 1.1.3 | `358440528A73FB627340766FE11300F00E598FFA52EE459851EAB5A32836368B` |
+| Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback | 1.1.1 | `24BFE0AED289F0CF80294C0EE43064ACB040C4B44D10C4D1E80C1BC01DBBE470` |
+| Beckhoff-USA-Community.XAR.Service.EventVideoPlayback | 2.0.0 | `97296EF0B207DEFFA13625DDF8C147AC42A19FF9CC0C8F6014F9368F896876D5` |
+| Beckhoff.Disclaimer.BetaFeed | 1.0.0 | `45991EBCC3FD10760C73A406C33EC63B2D3ECF9E50B2C8108465D6D9DC09793D` |
 
 ## Verification Instructions
 

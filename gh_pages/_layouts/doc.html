@@ -1,0 +1,102 @@
+---
+layout: default
+---
+
+<div class="section doc-section" style="background-color: #f8f8f8; min-height: calc(100vh - 70px);">
+  <div class="container">
+    <!-- Mobile TOC Toggle -->
+    <button class="doc-toc-mobile-toggle" id="mobile-toc-toggle">
+      <span>📑 Table of Contents</span>
+    </button>
+
+    <div class="doc-layout">
+      <!-- Table of Contents Sidebar -->
+      <aside class="doc-sidebar" id="doc-sidebar">
+        {% include doc-toc.html %}
+      </aside>
+
+      <!-- Main Content -->
+      <div class="doc-main">
+        <div class="doc-card">
+          {% if page.title %}
+          <h1>{{ page.title }}</h1>
+          {% endif %}
+
+          {% if page.description %}
+          <p class="doc-meta">{{ page.description }}</p>
+          {% endif %}
+
+          <!-- PDF Download Button -->
+          {% assign pdf_name = "" %}
+          {% if page.permalink contains "getting-started" %}
+            {% assign pdf_name = "getting-started.pdf" %}
+          {% elsif page.permalink contains "plc-usage" %}
+            {% assign pdf_name = "plc-usage.pdf" %}
+          {% elsif page.permalink contains "service-config" %}
+            {% assign pdf_name = "service-config.pdf" %}
+          {% elsif page.permalink contains "hmi-usage" %}
+            {% assign pdf_name = "hmi-usage.pdf" %}
+          {% endif %}
+
+          {% if pdf_name != "" %}
+          <div class="doc-download-section">
+            <a href="{{ '/assets/pdf/' | append: pdf_name | relative_url }}" class="btn-download-pdf" download>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download as PDF
+            </a>
+            <a href="{{ '/assets/pdf/complete-documentation.pdf' | relative_url }}" class="btn-download-pdf btn-download-complete" download>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="12" y1="18" x2="12" y2="12"></line>
+                <line x1="9" y1="15" x2="15" y2="15"></line>
+              </svg>
+              Download Complete Docs
+            </a>
+          </div>
+          {% endif %}
+
+          <div class="doc-content">
+            {{ content }}
+          </div>
+
+          <hr style="margin-top: 4rem; margin-bottom: 2rem;">
+
+          <div style="text-align: center;">
+            <a href="{{ '/' | relative_url }}" class="btn btn-primary">← Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Mobile TOC toggle
+document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.getElementById('mobile-toc-toggle');
+  const sidebar = document.getElementById('doc-sidebar');
+
+  if (toggle && sidebar) {
+    toggle.addEventListener('click', function() {
+      sidebar.classList.toggle('mobile-open');
+      toggle.classList.toggle('open');
+    });
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', function(e) {
+      if (window.innerWidth < 1024) {
+        if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+          sidebar.classList.remove('mobile-open');
+          toggle.classList.remove('open');
+        }
+      }
+    });
+  }
+});
+</script>
+

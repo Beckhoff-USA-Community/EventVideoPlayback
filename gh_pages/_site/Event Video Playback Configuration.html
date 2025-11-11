@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Event Video Playback Configuration | Event Video Playback</title>
+  <meta name="description" content="Transform TwinCAT Vision images into event-driven video recordings">
+
+  <link rel="stylesheet" href="/EventVideoPlayback/assets/css/style.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Event Video Playback Configuration | Event Video Playback</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Event Video Playback Configuration" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Transform TwinCAT Vision images into event-driven video recordings" />
+<meta property="og:description" content="Transform TwinCAT Vision images into event-driven video recordings" />
+<link rel="canonical" href="http://localhost:4000/EventVideoPlayback/Event%20Video%20Playback%20Configuration.html" />
+<meta property="og:url" content="http://localhost:4000/EventVideoPlayback/Event%20Video%20Playback%20Configuration.html" />
+<meta property="og:site_name" content="Event Video Playback" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Event Video Playback Configuration" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Transform TwinCAT Vision images into event-driven video recordings","headline":"Event Video Playback Configuration","url":"http://localhost:4000/EventVideoPlayback/Event%20Video%20Playback%20Configuration.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body>
+  <header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <a class="site-title" href="/EventVideoPlayback/">
+        Event Video Playback
+      </a>
+      <nav class="site-nav">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+        <a href="/EventVideoPlayback/">Home</a>
+        <a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a>
+        <a href="/EventVideoPlayback/docs/plc-usage/">PLC Library</a>
+        <a href="/EventVideoPlayback/docs/service-config/">Service Config</a>
+        <a href="/EventVideoPlayback/docs/hmi-usage/">HMI Usage</a>
+        <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank" class="btn btn-ghost" style="margin-left: 1rem;">GitHub</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+  <main class="main-content">
+    <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Event Video Playback Configuration</h1>
+  </header>
+
+  <div class="post-content">
+    
+<h1 id="event-video-playback-configuration">Event Video Playback Configuration</h1>
+
+<h2 id="eventvideoplayback-service-configuration">EventVideoPlayback Service Configuration</h2>
+
+<p>The EventVideoPlayback Service controls the creation of the video and automatic deletion of video files based on video age and folder max size</p>
+
+<p>The EventVideoPlayback Service reads the configuration file on startup. You must restart the service for changes to take effect. A reboot will also work. To stop and start the service, open the Windows Services window -&gt; Right-click the EventVideoPlayback service and choose Stop or Start.</p>
+
+<p>The config file is located at<code class="language-plaintext highlighter-rouge">C:\Program Files\Beckhoff USA Community\EventVideoPlayback\Service\EventVideoPlaybackService.config.json</code></p>
+
+<p>Open the file with notepad or Visual Studio and you will see the following parameters</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"CodecFourCC"</span><span class="p">:</span><span class="w"> </span><span class="s2">"avc1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"VideoDeleteTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"AdsPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">26129</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"MaxFolderSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h4 id="codecfourcc">CodecFourCC</h4>
+
+<p>This is the codec used to create the video from the service. avc1 is the most common codec that is also compatible with web browsers. For a full list of codecs see below, but not all are web compatible and will display as a black box on Tc HMI. <a href="https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Video_codecs">Check here for appropriate codecs</a>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OpenCV: FFMPEG: format mp4 / MP4 (MPEG-4 Part 14)
+fourcc tag 0x7634706d/'mp4v' codec_id 000C
+fourcc tag 0x31637661/'avc1' codec_id 001B
+fourcc tag 0x33637661/'avc3' codec_id 001B
+fourcc tag 0x31766568/'hev1' codec_id 00AD
+fourcc tag 0x31637668/'hvc1' codec_id 00AD
+fourcc tag 0x7634706d/'mp4v' codec_id 0002
+fourcc tag 0x7634706d/'mp4v' codec_id 0001
+fourcc tag 0x7634706d/'mp4v' codec_id 0007
+fourcc tag 0x7634706d/'mp4v' codec_id 003D
+fourcc tag 0x7634706d/'mp4v' codec_id 0058
+fourcc tag 0x312d6376/'vc-1' codec_id 0046
+fourcc tag 0x63617264/'drac' codec_id 0074
+fourcc tag 0x7634706d/'mp4v' codec_id 00A3
+fourcc tag 0x39307076/'vp09' codec_id 00A7
+fourcc tag 0x31307661/'av01' codec_id 801D
+fourcc tag 0x6134706d/'mp4a' codec_id 15002
+fourcc tag 0x63616c61/'alac' codec_id 15010
+fourcc tag 0x6134706d/'mp4a' codec_id 1502D
+fourcc tag 0x6134706d/'mp4a' codec_id 15001
+fourcc tag 0x6134706d/'mp4a' codec_id 15000
+fourcc tag 0x332d6361/'ac-3' codec_id 15003
+fourcc tag 0x332d6365/'ec-3' codec_id 15028
+fourcc tag 0x6134706d/'mp4a' codec_id 15004
+fourcc tag 0x61706c6d/'mlpa' codec_id 1502C
+fourcc tag 0x43614c66/'fLaC' codec_id 1500C
+fourcc tag 0x7375704f/'Opus' codec_id 1503C
+fourcc tag 0x6134706d/'mp4a' codec_id 15005
+fourcc tag 0x6134706d/'mp4a' codec_id 15018
+fourcc tag 0x6134706d/'mp4a' codec_id 15803
+fourcc tag 0x7334706d/'mp4s' codec_id 17000
+fourcc tag 0x67337874/'tx3g' codec_id 17005
+fourcc tag 0x646d7067/'gpmd' codec_id 18807
+fourcc tag 0x316d686d/'mhm1' codec_id 15817
+</code></pre></div></div>
+
+<h4 id="videodeletetime">VideoDeleteTime</h4>
+
+<p>This is the amount of time that the file will stay stored on the system. If the time expired, the service will automatically cleanup old video files.</p>
+
+<p>The value is a floating point value, and is in units of Days. So for half a day you will need to put 0.5 as the value.</p>
+
+<h4 id="adsport">AdsPort</h4>
+
+<p>Do not change. This is the ADS Port that the service is hosting on. This should remain at port 26129 at all times in order for the PLC function blocks to work properly.</p>
+
+<h4 id="maxfoldersize">MaxFolderSize</h4>
+
+<p>This is the Max size of the folder holding videos. When a new video is created, the folder size is checked and the oldest video will be deleted if required.</p>
+
+<p>The value is a integer point value, and is in units of MB.</p>
+
+<p>####</p>
+
+  </div>
+
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Event Video Playback</h3>
+        <p>Transform TwinCAT Vision images into event-driven video recordings for industrial automation.</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a></li>
+          <li><a href="/EventVideoPlayback/docs/plc-usage/">PLC Library Usage</a></li>
+          <li><a href="/EventVideoPlayback/docs/service-config/">Service Configuration</a></li>
+          <li><a href="/EventVideoPlayback/docs/hmi-usage/">HMI User Control</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank">GitHub Repository</a></li>
+          <li><a href="https://packages.beckhoff-usa-community.com/" target="_blank">Package Feed</a></li>
+          <li><a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback/issues" target="_blank">Report Issues</a></li>
+          <li><a href="https://github.com/Beckhoff-USA-Community" target="_blank">Beckhoff USA Community</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Beckhoff-USA-Community" target="_blank">Beckhoff USA Community</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Beckhoff USA Community | Licensed under MIT License</p>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/EventVideoPlayback/assets/js/main.js"></script>
+</body>
+</html>

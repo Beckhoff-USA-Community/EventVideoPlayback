@@ -2,13 +2,11 @@
 
 This repository includes both the source files and the release package for the TwinCAT Event Video Playback package. The package provides an easy to use PLC interface for assembling images captured with TwinCAT Vision into a single video file. When the video file is created, a corresponding alarm event is logged into the TwinCAT Event Logger for later viewing. In addition, an HMI Control component is supplied for easy viewing and playback of logged video events on TwinCAT HMI.
 
+**WARNING: Remove any installs from the legacy TC_EventVideoPlayback before using the new 4026 version**
+
 ## Quick Start
 
-**For end users**: Instead of building from source, download the installer from the [Releases section](https://github.com/Beckhoff-USA-Community/EventVideoPlayback/releases). The release package includes:
-- Sample PLC project
-- Sample HMI project
-- PLC library
-- Windows service installer
+**For end users**: Instead of building from source, connect to the [Beckhoff USA Communtiy package](https://packages.beckhoff-usa-community.com/) feed like you would normally with Beckhoff Official Packages.
 
 **For developers**: See [Building from Source](#building-from-source) below.
 

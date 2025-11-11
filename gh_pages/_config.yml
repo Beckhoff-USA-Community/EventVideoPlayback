@@ -1,0 +1,34 @@
+title: Event Video Playback
+description: Transform TwinCAT Vision images into event-driven video recordings
+baseurl: "/EventVideoPlayback"
+url: "https://beckhoff-usa-community.github.io"
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Collections for documentation
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+# Navigation
+header_pages:
+  - _docs/getting-started.md
+  - _docs/plc-usage.md
+  - _docs/service-config.md
+  - _docs/hmi-usage.md
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - instruction.md

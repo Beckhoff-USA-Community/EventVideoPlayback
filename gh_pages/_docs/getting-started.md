@@ -4,7 +4,6 @@ title: Getting Started
 description: Learn how to install and configure Event Video Playback for your TwinCAT project
 permalink: /docs/getting-started/
 ---
-
 ## Overview
 
 Event Video Playback is a comprehensive solution for transforming TwinCAT Vision images into event-driven video recordings. This guide will walk you through the installation and initial setup process.
@@ -13,101 +12,120 @@ Event Video Playback is a comprehensive solution for transforming TwinCAT Vision
 
 Before you begin, ensure you have the following installed on your system:
 
-- **TwinCAT 3.1** Build 4024 or higher
-- **TwinCAT Vision** 4.0 or higher
-- **Windows 10/11** or Windows Server 2016+
-- **.NET 8 Runtime** (required for the Windows service)
-- **TwinCAT Event Logger** (optional, for automatic video logging)
+For Engineering Development:
+- **Windows 10/11**
+- **TwinCAT Package Manager**
+- **TwinCAT 3.1 XAE** Build 4026 or higher
+- **TwinCAT Vision XAE** 5.8.4 or higher
+- **TwinCAT HMI XAE** 14.9 or higher
 
-## Installation Steps
+For Runtime Targets:
+- **Windows 10/11**
+- **TwinCAT Package Manager**
+- **TwinCAT 3.1 XAR** Build 4026 or higher
+- **TwinCAT Vision XAR** 5.8.4 or higher
 
-### 1. Download the Package
+<div class="alert alert-danger">
+<strong>Warning:</strong> Previous versions of the 4024 Tc_EventVideoPlayback legacy project must be uninstalled before using the new 4026 build.
+</div>
 
-You can obtain Event Video Playback from the [Beckhoff USA Community Package Feed](https://packages.beckhoff-usa-community.com/):
+### TcPkg Package Signing Requirement
+
+TwinCAT Package Manager only accepts officially signed packages from Beckhoff Automation GmbH & Co. KG by default. To use community packages, you need to temporarily disable signature verification. This applies to both locally hosted packages and remote packages; any 3rd party developed packages.
+
+<div class="alert alert-warning">
+  <strong>Security Notice:</strong> Disabling signature verification allows installation of third-party packages. Only use packages from trusted community sources. Review package contents and source code before installation. All community packages are provided "as is" without warranties.
+</div>
+
+Run this command in PowerShell as Administrator to disable signature checks:
+```PowerShell
+tcpkg config unset -n VerifySignatures
+```
+
+## Installation Methods
+
+Choose the installation method that best fits your environment:
+
+- **[Online Installation](#online-installation)** - For systems with internet access (recommended)
+- **[Offline Installation](#offline-installation)** - For air-gapped systems or manual installation
+
+---
+
+## Online Package Feed Connection
+
+**Best for:** Systems with internet connectivity and access to the Beckhoff USA Community package feed.
+
+### Add Package Feed via GUI
+
+If you haven't already, add the Beckhoff USA Community package feed to TwinCAT Package Manager:
+
+1. Open the TwinCAT Package Manager GUI
+2. Click the Settings (Gear Icon) in the bottom left corner
+3. Select Feeds
+
+For the feed settings use:
+```bash
+https://packages.beckhoff-usa-community.com/stable/v3/index.json
+```
+For the feed name use:
+```bash
+Beckhoff USA Community Stable
+```
+Deselect the **Set credentials** option, as we do not need login for the feed. Select **Save** and agree to the disclaimer to be connected.
+
+### Add Package Feed via Powershell
 
 ```bash
-# Using TwinCAT Package Manager
-tcpkg install EventVideoPlayback
+tcpkg source add -n "Beckhoff USA Community Stable" -s "https://packages.beckhoff-usa-community.com/stable/v3/index.json"
+```
+Agree to the disclaimer to be connected.
+
+---
+
+## Offline Package Configuration
+
+**Best for:** Air-gapped systems, manual installations, or when you need a specific version.
+
+<div class="alert alert-success">
+  <strong>Tip:</strong> Instead of downloading the packages from the releases section as noted below, you can also use the PowerShell command <strong>tcpkg download [package name] -o [output location]</strong>
+</div>
+
+### Download from GitHub Releases
+
+1. Navigate to the [GitHub Releases page](https://github.com/Beckhoff-USA-Community/EventVideoPlayback/releases)
+2. Find the latest release (or the version you need)
+3. Download the package file (`.zip`)
+4. Transfer the files to your target system in an easy to remember location (Example: C:\Program Files\Beckhoff USA Community\Feeds\Local)
+
+### Add Local Package Feed via GUI
+
+If you haven't already, add the Beckhoff USA Community package feed to TwinCAT Package Manager:
+
+1. Open the TwinCAT Package Manager GUI
+2. Click the Settings (Gear Icon) in the bottom left corner
+3. Select Feeds
+
+For the feed settings use:
+```bash
+C:\Program Files\Beckhoff USA Community\Feeds\Local
+```
+For the feed name use:
+```bash
+Beckhoff USA Community Local
+```
+Deselect the **Set credentials** option, as we do not need login for the feed. Select **Save**.
+
+### Add Package Feed via Powershell
+
+```bash
+tcpkg source add -n "Beckhoff USA Community Local" -s "C:\Program Files\Beckhoff USA Community\Feeds\Local"
 ```
 
-Or download directly from the [GitHub Releases](https://github.com/Beckhoff-USA-Community/EventVideoPlayback/releases) page.
+## Install Workloads
 
-### 2. Install the Windows Service
+After the feed is added (locally or remote), and the VerifySignatures is disabled, you can now install the Workloads and Packages on the feed like you would normal Beckhoff Automation packages.
 
-The EventVideoPlayback Windows service handles video creation and management:
 
-1. Run the installer with administrator privileges
-2. The service will be automatically installed and configured
-3. The service starts automatically and runs in the background
-4. Default installation path: `C:\Program Files\Beckhoff USA Community\EventVideoPlayback\Service\`
-
-### 3. Install the PLC Library
-
-Add the Event Video Playback library to your TwinCAT project:
-
-1. Open your TwinCAT project in Visual Studio
-2. In the Solution Explorer, right-click on **References** in your PLC project
-3. Select **Add Library**
-4. Search for "EventVideoPlayback"
-5. Select the library and click **OK**
-
-### 4. Configure the Service
-
-The service configuration file is located at:
-
-```
-C:\Program Files\Beckhoff USA Community\EventVideoPlayback\Service\EventVideoPlaybackService.config.json
-```
-
-See the [Service Configuration]({{ '/docs/service-config/' | relative_url }}) guide for detailed configuration options.
-
-### 5. Set Up TwinCAT Vision
-
-Ensure your TwinCAT Vision system is configured to save images to a known location. The Event Video Playback service will monitor this location for image sequences to compile into videos.
-
-## Quick Start Example
-
-Here's a minimal example to get you started:
-
-### PLC Code Example
-
-```iecst
-PROGRAM MAIN
-VAR
-    fbVideoRecorder : FB_EventVideoRecorder;
-    bTriggerEvent   : BOOL := FALSE;
-    sVideoName      : STRING := 'MachineEvent_001';
-END_VAR
-
-// Trigger video recording on event
-IF bTriggerEvent THEN
-    fbVideoRecorder.Record(
-        sVideoName := sVideoName,
-        bExecute := TRUE
-    );
-    bTriggerEvent := FALSE;
-END_IF
-
-// Call function block cyclically
-fbVideoRecorder();
-```
-
-### Expected Behavior
-
-1. When `bTriggerEvent` is set to TRUE, the system captures recent images
-2. Images are compiled into an MP4 video file
-3. The video is saved with the specified name
-4. (Optional) Event is logged to TwinCAT Event Logger
-5. Video can be played back via HMI
-
-## Verification
-
-To verify your installation:
-
-1. **Check Service Status**: Open Windows Services and confirm "EventVideoPlayback Service" is running
-2. **Test PLC Connection**: Run the PLC code example above
-3. **Verify Video Creation**: Check the configured output folder for generated MP4 files
-4. **Review Logs**: Check the service logs for any errors or warnings
 
 ## Next Steps
 

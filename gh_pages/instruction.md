@@ -53,6 +53,9 @@ The site needs the following documentation pages with placeholder content (conte
 1. **Getting Started / Installation**
    - Installation overview
    - System requirements
+   - **Two installation methods:**
+     - **Online Feed**: Instructions for installing via online package feed/repository
+     - **Offline Package Distribution**: Instructions for downloading and installing from GitHub Releases
    - Quick start guide
    - *Content can be populated from existing markdown files later*
 

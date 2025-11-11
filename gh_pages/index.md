@@ -30,13 +30,8 @@ description: Transform TwinCAT Vision images into event-driven video recordings
       </div>
       <div class="feature-card">
         <span class="feature-icon">📊</span>
-        <h3 class="feature-title">Event Logger Integration</h3>
-        <p class="feature-description">Seamlessly integrate with TwinCAT Event Logger for automatic video logging and correlation with system events.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🎮</span>
-        <h3 class="feature-title">HMI Playback Control</h3>
-        <p class="feature-description">Review and analyze recorded events directly from your HMI with intuitive playback controls and timeline navigation.</p>
+        <h3 class="feature-title">Event Logging & HMI Playback</h3>
+        <p class="feature-description">Seamlessly integrate with TwinCAT Event Logger for automatic video logging, then review and analyze recorded events directly from your HMI with intuitive playback controls.</p>
       </div>
       <div class="feature-card">
         <span class="feature-icon">🔧</span>
@@ -54,7 +49,6 @@ description: Transform TwinCAT Vision images into event-driven video recordings
         <h2>Why Event Video Playback?</h2>
         <p>In industrial automation, understanding what happened during critical events is crucial. Event Video Playback bridges the gap between TwinCAT Vision image capture and meaningful video documentation.</p>
         <p><strong>Real-World Example:</strong> When a machine down occurrence is triggered, the system automatically compiles recent images into a video, logs it with Event Logger, and makes it available for review on the HMI. Operators and engineers can quickly diagnose issues without manually searching through thousands of individual images.</p>
-        <a href="{{ '/docs/getting-started/' | relative_url }}" class="btn btn-primary" style="margin-top: 1rem;">Learn More</a>
       </div>
       <div class="overview-image">
         <img src="{{ '/assets/images/Camera_Hero_NoBackground.png' | relative_url }}" alt="Event Video Playback Overview">
@@ -72,27 +66,15 @@ description: Transform TwinCAT Vision images into event-driven video recordings
     <div class="requirements-list">
       <div class="requirement-item">
         <span class="requirement-icon">✓</span>
-        <span class="requirement-text">TwinCAT 3.1 Build 4024 or higher</span>
+        <span class="requirement-text">TwinCAT 3.1 Build 4026 or higher</span>
       </div>
       <div class="requirement-item">
         <span class="requirement-icon">✓</span>
-        <span class="requirement-text">TwinCAT Vision 4.0 or higher</span>
+        <span class="requirement-text">TwinCAT Vision Package<br>TwinCAT HMI Package</span>
       </div>
       <div class="requirement-item">
         <span class="requirement-icon">✓</span>
-        <span class="requirement-text">Windows 10/11 or Windows Server 2016+</span>
-      </div>
-      <div class="requirement-item">
-        <span class="requirement-icon">✓</span>
-        <span class="requirement-text">.NET 8 Runtime</span>
-      </div>
-      <div class="requirement-item">
-        <span class="requirement-icon">✓</span>
-        <span class="requirement-text">FFmpeg (included with service)</span>
-      </div>
-      <div class="requirement-item">
-        <span class="requirement-icon">✓</span>
-        <span class="requirement-text">TwinCAT Event Logger (optional)</span>
+        <span class="requirement-text">Windows 10 or 11</span>
       </div>
     </div>
     <div style="text-align: center; margin-top: 3rem;">
@@ -105,9 +87,14 @@ description: Transform TwinCAT Vision images into event-driven video recordings
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Ready to Get Started?</h2>
-      <p class="section-subtitle">Choose your path based on your role</p>
     </div>
     <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">📦</span>
+        <h3 class="feature-title">Install With TwinCAT Package Manager</h3>
+        <p class="feature-description">Quick installation using TwinCAT Package Manager for seamless integration with your TwinCAT environment.</p>
+        <a href="{{ '/docs/getting-started/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">Getting Started →</a>
+      </div>
       <div class="feature-card">
         <span class="feature-icon">📖</span>
         <h3 class="feature-title">PLC Developers</h3>
@@ -115,16 +102,16 @@ description: Transform TwinCAT Vision images into event-driven video recordings
         <a href="{{ '/docs/plc-usage/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">PLC Library Guide →</a>
       </div>
       <div class="feature-card">
-        <span class="feature-icon">⚙️</span>
-        <h3 class="feature-title">System Integrators</h3>
-        <p class="feature-description">Configure the Windows service, set up video parameters, and troubleshoot installations.</p>
-        <a href="{{ '/docs/service-config/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">Service Config →</a>
-      </div>
-      <div class="feature-card">
         <span class="feature-icon">🖥️</span>
         <h3 class="feature-title">HMI Developers</h3>
         <p class="feature-description">Add video playback controls to your HMI using the NuGet package for WPF applications.</p>
         <a href="{{ '/docs/hmi-usage/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">HMI Package Guide →</a>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⚙️</span>
+        <h3 class="feature-title">System Service Configuration</h3>
+        <p class="feature-description">Configure the Windows service, set up video parameters, and troubleshoot installations.</p>
+        <a href="{{ '/docs/service-config/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">Service Config →</a>
       </div>
     </div>
   </div>

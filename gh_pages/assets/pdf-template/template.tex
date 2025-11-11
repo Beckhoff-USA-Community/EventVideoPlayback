@@ -109,6 +109,10 @@ $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
 
+% Define tightlist command for pandoc lists
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
 % Document metadata
 $if(title)$
 \title{$title$}

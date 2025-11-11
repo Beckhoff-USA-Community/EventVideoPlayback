@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+<div class="section">
+  <div class="container narrow">
+    <div class="doc-card">
+      {% if page.title %}
+      <h1>{{ page.title }}</h1>
+      {% endif %}
+
+      {% if page.description %}
+      <p class="doc-meta">{{ page.description }}</p>
+      {% endif %}
+
+      <div class="doc-content">
+        {{ content }}
+      </div>
+
+      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e0e0e0;">
+        <a href="{{ '/' | relative_url }}" class="btn btn-ghost">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+</div>

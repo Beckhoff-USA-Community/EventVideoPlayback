@@ -14,6 +14,10 @@ This repository includes both the source files and the release package for the T
 
 Find the latest up-to-date [documentation here](https://beckhoff-usa-community.github.io/EventVideoPlayback/) on GitHub pages, or you can find them after install under the install path `/Documentation`.
 
+## Example Projects
+
+The latest examples for using EventVideoPlayback are held in a seperate [GitHub repository here](https://github.com/Beckhoff-USA-Community/EventVideoPlayback_Samples).
+
 ## Repository Structure
 
 ```

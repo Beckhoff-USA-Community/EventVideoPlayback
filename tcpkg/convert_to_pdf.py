@@ -138,6 +138,17 @@ def markdown_to_html(md_content, title="Documentation"):
 """
     return html
 
+def strip_yaml_frontmatter(content):
+    """Remove YAML front matter from markdown content"""
+    # Check if content starts with YAML front matter
+    if content.startswith('---'):
+        # Find the closing '---'
+        parts = content.split('---', 2)
+        if len(parts) >= 3:
+            # Return content after the second '---'
+            return parts[2].strip()
+    return content
+
 def convert_md_to_pdf(md_file, output_file):
     """Convert a single markdown file to PDF"""
     from xhtml2pdf import pisa
@@ -145,6 +156,9 @@ def convert_md_to_pdf(md_file, output_file):
     # Read markdown file
     with open(md_file, 'r', encoding='utf-8') as f:
         md_content = f.read()
+
+    # Strip YAML front matter if present
+    md_content = strip_yaml_frontmatter(md_content)
 
     # Get title from filename
     title = md_file.stem.replace('-', ' ').replace('_', ' ').title()
@@ -221,6 +235,8 @@ def main():
         for md_file in md_files:
             with open(md_file, 'r', encoding='utf-8') as f:
                 content = f.read()
+                # Strip YAML front matter if present
+                content = strip_yaml_frontmatter(content)
                 # Add a page break between documents
                 combined_content.append(content)
                 combined_content.append("\n\n---\n\n")

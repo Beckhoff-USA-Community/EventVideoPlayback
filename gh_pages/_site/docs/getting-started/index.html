@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
   <title>Getting Started | Event Video Playback</title>
-  <meta name="description" content="Learn how to install and configure Event Video Playback for your TwinCAT project">
+  <meta name="description" content="Learn how to configure and use Event Video Playback in your TwinCAT projects">
 
   <link rel="stylesheet" href="/EventVideoPlayback/assets/css/style.css">
 
@@ -15,17 +15,17 @@
 <meta name="generator" content="Jekyll v3.10.0" />
 <meta property="og:title" content="Getting Started" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Learn how to install and configure Event Video Playback for your TwinCAT project" />
-<meta property="og:description" content="Learn how to install and configure Event Video Playback for your TwinCAT project" />
+<meta name="description" content="Learn how to configure and use Event Video Playback in your TwinCAT projects" />
+<meta property="og:description" content="Learn how to configure and use Event Video Playback in your TwinCAT projects" />
 <link rel="canonical" href="http://localhost:4000/EventVideoPlayback/docs/getting-started/" />
 <meta property="og:url" content="http://localhost:4000/EventVideoPlayback/docs/getting-started/" />
 <meta property="og:site_name" content="Event Video Playback" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2025-11-11T07:46:24-08:00" />
+<meta property="article:published_time" content="2025-11-17T15:17:26-05:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Getting Started" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-11-11T07:46:24-08:00","datePublished":"2025-11-11T07:46:24-08:00","description":"Learn how to install and configure Event Video Playback for your TwinCAT project","headline":"Getting Started","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/EventVideoPlayback/docs/getting-started/"},"url":"http://localhost:4000/EventVideoPlayback/docs/getting-started/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-11-17T15:17:26-05:00","datePublished":"2025-11-17T15:17:26-05:00","description":"Learn how to configure and use Event Video Playback in your TwinCAT projects","headline":"Getting Started","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/EventVideoPlayback/docs/getting-started/"},"url":"http://localhost:4000/EventVideoPlayback/docs/getting-started/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -39,10 +39,8 @@
       <nav class="site-nav">
         <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
         <a href="/EventVideoPlayback/">Home</a>
+        <a href="/EventVideoPlayback/docs/installation/">Installation</a>
         <a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a>
-        <a href="/EventVideoPlayback/docs/plc-usage/">PLC Library</a>
-        <a href="/EventVideoPlayback/docs/service-config/">Service Config</a>
-        <a href="/EventVideoPlayback/docs/hmi-usage/">HMI Usage</a>
         <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank" class="btn btn-ghost" style="margin-left: 1rem;">GitHub</a>
       </nav>
     </div>
@@ -170,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
 
           
-          <p class="doc-meta">Learn how to install and configure Event Video Playback for your TwinCAT project</p>
+          <p class="doc-meta">Learn how to configure and use Event Video Playback in your TwinCAT projects</p>
           
 
           <!-- PDF Download Button -->
@@ -202,162 +200,387 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="doc-content">
             <h2 id="overview">Overview</h2>
 
-<p>Event Video Playback is a comprehensive solution for transforming TwinCAT Vision images into event-driven video recordings. This guide will walk you through the installation and initial setup process.</p>
+<p>Event Video Playback is a comprehensive system that consists of three integrated components:</p>
 
-<h2 id="prerequisites">Prerequisites</h2>
-
-<p>Before you begin, ensure you have the following installed on your system:</p>
-
-<p>For Engineering Development:</p>
-<ul>
-  <li><strong>Windows 10/11</strong></li>
-  <li><strong>TwinCAT Package Manager</strong></li>
-  <li><strong>TwinCAT 3.1 XAE</strong> Build 4026 or higher</li>
-  <li><strong>TwinCAT Vision XAE</strong> 5.8.4 or higher</li>
-  <li><strong>TwinCAT HMI XAE</strong> 14.9 or higher</li>
-</ul>
-
-<p>For Runtime Targets:</p>
-<ul>
-  <li><strong>Windows 10/11</strong></li>
-  <li><strong>TwinCAT Package Manager</strong></li>
-  <li><strong>TwinCAT 3.1 XAR</strong> Build 4026 or higher</li>
-  <li><strong>TwinCAT Vision XAR</strong> 5.8.4 or higher</li>
-</ul>
-
-<div class="alert alert-danger">
-<strong>Warning:</strong> Previous versions of the 4024 Tc_EventVideoPlayback legacy project must be uninstalled before using the new 4026 build.
-</div>
-
-<h3 id="tcpkg-package-signing-requirement">TcPkg Package Signing Requirement</h3>
-
-<p>TwinCAT Package Manager only accepts officially signed packages from Beckhoff Automation GmbH &amp; Co. KG by default. To use community packages, you need to temporarily disable signature verification. This applies to both locally hosted packages and remote packages; any 3rd party developed packages.</p>
+<ol>
+  <li><strong>The EventVideoPlayback Service</strong> - A Windows service that handles creation of the videos</li>
+  <li><strong>The Event Video Playback Library</strong> - A PLC library that maintains an Image Ring Buffer containing enough images to create videos of configurable length and actively interacts with the EventVideoPlayback Service</li>
+  <li><strong>The Event Video Playback HMI Control</strong> - A modified Logger control that allows associated videos to be played from log entries</li>
+</ol>
 
 <div class="alert alert-warning">
-  <strong>Security Notice:</strong> Disabling signature verification allows installation of third-party packages. Only use packages from trusted community sources. Review package contents and source code before installation. All community packages are provided "as is" without warranties.
+  <strong>Important:</strong> Video viewing is only functional in a published, fully deployed project when viewed from a web browser. Videos cannot be viewed via the HMI Live display.
 </div>
 
-<p>Run this command in PowerShell as Administrator to disable signature checks:</p>
-<pre><code class="language-PowerShell">tcpkg config unset -n VerifySignatures
-</code></pre>
+<p>This guide will walk you through configuring each component to work together in your TwinCAT project.</p>
 
-<h2 id="installation-methods">Installation Methods</h2>
+<hr />
 
-<p>Choose the installation method that best fits your environment:</p>
+<h2 id="eventvideoplayback-service-configuration">EventVideoPlayback Service Configuration</h2>
+
+<p>The EventVideoPlayback Service controls video creation and automatic deletion of video files based on age and folder size limits.</p>
+
+<div class="alert alert-info">
+  <strong>Note:</strong> The service reads the configuration file on startup. You must restart the service for any configuration changes to take effect.
+</div>
+
+<p><strong>To restart the service:</strong></p>
+<ol>
+  <li>Open the <strong>Windows Services</strong> window</li>
+  <li>Right-click the <strong>EventVideoPlayback</strong> service</li>
+  <li>Choose <strong>Stop</strong> or <strong>Start</strong></li>
+</ol>
+
+<h3 id="configuration-file-location">Configuration File Location</h3>
+
+<p>The configuration file is located at:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:\Program Files\Beckhoff USA Community\EventVideoPlayback\Service\EventVideoPlaybackService.config.json
+</code></pre></div></div>
+
+<p>Open the file with <strong>Notepad</strong> or <strong>Visual Studio</strong> to edit the following parameters:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"CodecFourCC"</span><span class="p">:</span><span class="w"> </span><span class="s2">"avc1"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"VideoDeleteTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"AdsPort"</span><span class="p">:</span><span class="w"> </span><span class="mi">26129</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"MaxFolderSize"</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="codecfourcc">CodecFourCC</h3>
+
+<p>This is the codec used to create the video from the service. <code class="language-plaintext highlighter-rouge">avc1</code> is the most common codec that is also compatible with web browsers. For a full list of codecs see below, but not all are web compatible and will display as a black box on Tc HMI. <a href="https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Video_codecs">Check here for appropriate codecs</a>.</p>
+
+<div class="alert alert-info">
+  <strong>Note:</strong> The most common web-compatible codec is <code>avc1</code>. Other codecs may not display correctly in web browsers.
+</div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OpenCV: FFMPEG: format mp4 / MP4 (MPEG-4 Part 14)
+fourcc tag 0x7634706d/'mp4v' codec_id 000C
+fourcc tag 0x31637661/'avc1' codec_id 001B
+fourcc tag 0x33637661/'avc3' codec_id 001B
+fourcc tag 0x31766568/'hev1' codec_id 00AD
+fourcc tag 0x31637668/'hvc1' codec_id 00AD
+fourcc tag 0x7634706d/'mp4v' codec_id 0002
+fourcc tag 0x7634706d/'mp4v' codec_id 0001
+fourcc tag 0x7634706d/'mp4v' codec_id 0007
+fourcc tag 0x7634706d/'mp4v' codec_id 003D
+fourcc tag 0x7634706d/'mp4v' codec_id 0058
+fourcc tag 0x312d6376/'vc-1' codec_id 0046
+fourcc tag 0x63617264/'drac' codec_id 0074
+fourcc tag 0x7634706d/'mp4v' codec_id 00A3
+fourcc tag 0x39307076/'vp09' codec_id 00A7
+fourcc tag 0x31307661/'av01' codec_id 801D
+fourcc tag 0x6134706d/'mp4a' codec_id 15002
+fourcc tag 0x63616c61/'alac' codec_id 15010
+fourcc tag 0x6134706d/'mp4a' codec_id 1502D
+fourcc tag 0x6134706d/'mp4a' codec_id 15001
+fourcc tag 0x6134706d/'mp4a' codec_id 15000
+fourcc tag 0x332d6361/'ac-3' codec_id 15003
+fourcc tag 0x332d6365/'ec-3' codec_id 15028
+fourcc tag 0x6134706d/'mp4a' codec_id 15004
+fourcc tag 0x61706c6d/'mlpa' codec_id 1502C
+fourcc tag 0x43614c66/'fLaC' codec_id 1500C
+fourcc tag 0x7375704f/'Opus' codec_id 1503C
+fourcc tag 0x6134706d/'mp4a' codec_id 15005
+fourcc tag 0x6134706d/'mp4a' codec_id 15018
+fourcc tag 0x6134706d/'mp4a' codec_id 15803
+fourcc tag 0x7334706d/'mp4s' codec_id 17000
+fourcc tag 0x67337874/'tx3g' codec_id 17005
+fourcc tag 0x646d7067/'gpmd' codec_id 18807
+fourcc tag 0x316d686d/'mhm1' codec_id 15817
+</code></pre></div></div>
+
+<h3 id="videodeletetime">VideoDeleteTime</h3>
+
+<p>This setting determines how long video files remain on the system before automatic cleanup.</p>
 
 <ul>
-  <li><strong><a href="#online-installation">Online Installation</a></strong> - For systems with internet access (recommended)</li>
-  <li><strong><a href="#offline-installation">Offline Installation</a></strong> - For air-gapped systems or manual installation</li>
+  <li><strong>Value type:</strong> Floating point</li>
+  <li><strong>Units:</strong> Days</li>
+  <li><strong>Example:</strong> Use <code class="language-plaintext highlighter-rouge">0.5</code> for half a day (12 hours)</li>
+</ul>
+
+<p>The service automatically deletes video files older than the specified time.</p>
+
+<h3 id="adsport">AdsPort</h3>
+
+<div class="alert alert-danger">
+  <strong>Warning:</strong> Do not change this value. This is the ADS Port that the service is hosting on. This should remain at port 26129 at all times in order for the PLC function blocks to work properly.
+</div>
+
+<h3 id="maxfoldersize">MaxFolderSize</h3>
+
+<p>This setting limits the total size of the video storage folder.</p>
+
+<ul>
+  <li><strong>Value type:</strong> Integer</li>
+  <li><strong>Units:</strong> MB (megabytes)</li>
+</ul>
+
+<p>When a new video is created, the service checks the folder size. If the limit is exceeded, the oldest video will be automatically deleted to free up space.</p>
+
+<hr />
+
+<h2 id="plc-function-block-parameters">PLC Function Block Parameters</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">FB_ImageToVideo</code> function block maintains an image buffer in Router memory. The memory requirements are directly related to:</p>
+
+<ul>
+  <li><strong>FramesPerSecond</strong> - Higher frame rates require more memory</li>
+  <li><strong>Record time</strong> - Longer videos require more memory</li>
+  <li><strong>Image size</strong> - Larger images require more memory</li>
+  <li><strong>ReductionFactor</strong> - Smaller reduction factors (closer to 1.0) require more memory</li>
+</ul>
+
+<div class="alert alert-warning">
+  <strong>Important:</strong> Larger values of these parameters require more Router memory. Plan your Router memory allocation accordingly.
+</div>
+
+<pre><code class="language-iecst">VAR
+    // ImageToVideo Instance
+    Playback : FB_ImageToVideo := (CameraName := 'Camera1',
+                                   FramesPerSecond := 10,
+                                   TimeBeforeEvent := T#3S,
+                                   TimeAfterEvent := T#3S,
+                                   VideoOutputDirectory := 'C:\EventVideos',
+                                   ReductionFactor := 0.25);
+
+    // Event Trigger Boolean
+    TriggerEvent1 : BOOL;
+    TriggerEvent2 : BOOL;
+END_VAR
+</code></pre>
+
+<h3 id="parameter-descriptions">Parameter Descriptions</h3>
+
+<h4 id="cameraname">CameraName</h4>
+<p>A unique identifier for each <code class="language-plaintext highlighter-rouge">FB_ImageToVideo</code> instance.</p>
+<ul>
+  <li><strong>Examples:</strong> <code class="language-plaintext highlighter-rouge">Camera1</code>, <code class="language-plaintext highlighter-rouge">Infeed_Camera</code>, <code class="language-plaintext highlighter-rouge">Arm_Camera</code></li>
+  <li><strong>Requirement:</strong> Must be unique across all instances</li>
+</ul>
+
+<h4 id="framespersecond">FramesPerSecond</h4>
+<p>The rate at which images are added to the Image Ring Buffer.</p>
+<ul>
+  <li><strong>Value type:</strong> Integer</li>
+  <li><strong>Example:</strong> <code class="language-plaintext highlighter-rouge">10</code> frames per second</li>
+</ul>
+
+<h4 id="timebeforeevent-and-timeafterevent">TimeBeforeEvent and TimeAfterEvent</h4>
+<p>These times combined determine the total video duration.</p>
+<ul>
+  <li><strong>Value type:</strong> TIME (e.g., <code class="language-plaintext highlighter-rouge">T#3S</code>)</li>
+  <li><strong>Units:</strong> Seconds</li>
+  <li><strong>Total video length:</strong> TimeBeforeEvent + TimeAfterEvent</li>
+</ul>
+
+<h4 id="videooutputdirectory">VideoOutputDirectory</h4>
+<p>The storage location for created videos. Videos are saved in a subfolder named after the CameraName.</p>
+<ul>
+  <li><strong>Example:</strong> If set to <code class="language-plaintext highlighter-rouge">C:\EventVideos</code> and CameraName is <code class="language-plaintext highlighter-rouge">Camera1</code>, videos will be saved to <code class="language-plaintext highlighter-rouge">C:\EventVideos\Camera1\</code></li>
+</ul>
+
+<h4 id="reductionfactor">ReductionFactor</h4>
+<p>Scales down the original image before storing it in the buffer to reduce memory usage.</p>
+<ul>
+  <li><strong>Value type:</strong> Decimal</li>
+  <li><strong>Range:</strong> 0.1 to 1.0</li>
+  <li><strong>Example:</strong> <code class="language-plaintext highlighter-rouge">0.25</code> = 25% of original size (reduces memory by 75%)</li>
 </ul>
 
 <hr />
 
-<h2 id="online-package-feed-connection">Online Package Feed Connection</h2>
+<h2 id="plc-event-video-playback-library-parameters">PLC Event Video Playback Library Parameters</h2>
 
-<p><strong>Best for:</strong> Systems with internet connectivity and access to the Beckhoff USA Community package feed.</p>
+<p>These library-level parameters ensure adequate Router Memory is available for your configuration. On startup, the system evaluates available Router Memory. If insufficient memory is detected, a log entry will be generated and Event Video Playback will not function.</p>
 
-<h3 id="add-package-feed-via-gui">Add Package Feed via GUI</h3>
+<p><img src="/EventVideoPlayback/assets/images/EvpLibraryParameters.png" alt="Event Video Playback Library Parameters" /></p>
 
-<p>If you haven’t already, add the Beckhoff USA Community package feed to TwinCAT Package Manager:</p>
+<h3 id="max_number_images_2_video">MAX_NUMBER_IMAGES_2_VIDEO</h3>
 
-<ol>
-  <li>Open the TwinCAT Package Manager GUI</li>
-  <li>Click the Settings (Gear Icon) in the bottom left corner</li>
-  <li>Select Feeds</li>
-</ol>
+<p>Defines the maximum number of images in the ring buffer.</p>
 
-<p>For the feed settings use:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://packages.beckhoff-usa-community.com/stable/v3/index.json
-</code></pre></div></div>
-<p>For the feed name use:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Beckhoff USA Community Stable
-</code></pre></div></div>
-<p>Deselect the <strong>Set credentials</strong> option, as we do not need login for the feed. Select <strong>Save</strong> and agree to the disclaimer to be connected.</p>
+<p><strong>Formula:</strong> Must be at least 2 greater than: <code class="language-plaintext highlighter-rouge">FramesPerSecond × (TimeBeforeEvent + TimeAfterEvent)</code></p>
 
-<h3 id="add-package-feed-via-powershell">Add Package Feed via Powershell</h3>
+<p><strong>Example:</strong> For 10 FPS and 6 seconds total time:</p>
+<ul>
+  <li>Minimum required: (10 × 6) + 2 = <strong>62 images</strong></li>
+</ul>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tcpkg <span class="nb">source </span>add <span class="nt">-n</span> <span class="s2">"Beckhoff USA Community Stable"</span> <span class="nt">-s</span> <span class="s2">"https://packages.beckhoff-usa-community.com/stable/v3/index.json"</span>
-</code></pre></div></div>
-<p>Agree to the disclaimer to be connected.</p>
+<h3 id="max_percent_router_mem_for_buffer">MAX_PERCENT_ROUTER_MEM_FOR_BUFFER</h3>
+
+<p>Sets the maximum percentage of Router Memory allowed per <code class="language-plaintext highlighter-rouge">FB_ImageToVideo</code> instance.</p>
+
+<p><strong>Single Instance Example:</strong></p>
+<ul>
+  <li>If using <strong>one</strong> <code class="language-plaintext highlighter-rouge">FB_ImageToVideo</code> instance, set this to <code class="language-plaintext highlighter-rouge">60</code> to allocate up to 60% of Router Memory</li>
+</ul>
+
+<p><strong>Multiple Instance Example:</strong></p>
+<ul>
+  <li>If using <strong>three</strong> instances and want to allocate 60% total:
+    <ul>
+      <li>Set this to <code class="language-plaintext highlighter-rouge">60 / 3 = 20%</code> per instance</li>
+      <li>This ensures all three instances combined use no more than 60% of Router Memory</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="ads_port_for_image_to_video">ADS_PORT_FOR_IMAGE_TO_VIDEO</h3>
+
+<div class="alert alert-danger">
+  <strong>Warning:</strong> Do not change this value. This is the ADS Port that the EventVideoPlayback service is hosting on. This should remain at port 26129 at all times in order for the PLC function blocks to work properly.
+</div>
+
+<h3 id="large_router_memory">LARGE_ROUTER_MEMORY</h3>
+
+<p>This parameter specifies the Router Memory size to use for memory checks when the actual value cannot be read programmatically.</p>
+
+<div class="alert alert-info">
+  <strong>Note:</strong> In TwinCAT 4026.18, Router Memory larger than 4026 MB cannot be read programmatically. If you have more than 4026 MB of Router Memory, manually set this parameter to your actual Router Memory size.
+</div>
 
 <hr />
 
-<h2 id="offline-package-configuration">Offline Package Configuration</h2>
+<h2 id="add-to-existing-twincat-vision-plc-project">Add to Existing TwinCAT Vision PLC Project</h2>
 
-<p><strong>Best for:</strong> Air-gapped systems, manual installations, or when you need a specific version.</p>
-
-<div class="alert alert-success">
-  <strong>Tip:</strong> Instead of downloading the packages from the releases section as noted below, you can also use the PowerShell command <strong>tcpkg download [package name] -o [output location]</strong>
+<div class="alert alert-info">
+  <strong>Prerequisites:</strong> Install Event Video Playback XAE and XAR packages using the TwinCAT Package Manager. See the <a href="/EventVideoPlayback/docs/installation/">Installation</a> guide for details.
 </div>
 
-<h3 id="download-from-github-releases">Download from GitHub Releases</h3>
+<p>You can easily integrate Event Video Playback with existing TcVision projects by following these steps:</p>
+
+<h3 id="1-add-the-event-video-playback-library-to-the-references">1. Add the Event Video Playback Library to the References</h3>
+
+<p>Add the Event Video Playback Library to the References section of the PLC Project.</p>
+
+<p><img src="/EventVideoPlayback/assets/images/References.png" alt="PLC References" /></p>
+
+<h3 id="2-instantiate-fb_imagetovideo-and-triggerevents">2. Instantiate FB_ImageToVideo and TriggerEvent(s)</h3>
+
+<pre><code class="language-iecst">VAR
+    // ImageToVideo Instance
+    EVP1 : FB_ImageToVideo := (CameraName := 'Camera1',
+                               FramesPerSecond := 10,
+                               TimeBeforeEvent := T#3S,
+                               TimeAfterEvent := T#3S,
+                               VideoOutputDirectory := 'C:\TcEventVideos',
+                               ReductionFactor := 0.25);
+
+    // Event Trigger Boolean
+    TriggerEvent1 : BOOL;
+    TriggerEvent2 : BOOL;
+END_VAR
+</code></pre>
+
+<h3 id="3-add-a-reset-call-to-the-first-scan">3. Add a Reset Call to the First Scan</h3>
+
+<p>Add a Reset call to the first scan of POU:</p>
+
+<pre><code class="language-iecst">EVP1.Reset();
+</code></pre>
+
+<h3 id="4-add-the-cycliclogic-call">4. Add the CyclicLogic Call</h3>
+
+<p>Add the CyclicLogic call to the main body of the POU. This <strong>MUST</strong> be called cyclically to work.</p>
+
+<pre><code class="language-iecst">EVP1.CyclicLogic();
+</code></pre>
+
+<h3 id="5-add-the-addimage-method">5. Add the AddImage Method</h3>
+
+<p>Add the AddImage method to the “new image” section of your program. This will add an image to the buffer of the Playback block.</p>
+
+<pre><code class="language-iecst">EVP1.AddImage(ipImageIn := ImageIn);
+</code></pre>
+
+<h3 id="6-add-the-trigger-logic">6. Add the Trigger Logic</h3>
+
+<p>Add the trigger logic somewhere in your program. The <code class="language-plaintext highlighter-rouge">TriggerAlarmForVideoCapture</code> method only needs to be called once to start Event processing. Multiple event names can be used for events generating a log entry for the same ImageToVideo Instance.</p>
+
+<pre><code class="language-iecst">IF TriggerEvent1 THEN
+    TriggerEvent1 := FALSE;
+    EVP1.TriggerAlarmForVideoCapture(LogEntryName := 'Log Entry Name1');
+END_IF
+
+IF TriggerEvent2 THEN
+    TriggerEvent2 := FALSE;
+    EVP1.TriggerAlarmForVideoCapture(LogEntryName := 'Log Entry Name2');
+END_IF
+</code></pre>
+
+<hr />
+
+<h2 id="hmi-configuration">HMI Configuration</h2>
+
+<h3 id="add-the-eventvision-nuget-package">Add the EventVision NuGet Package</h3>
 
 <ol>
-  <li>Navigate to the <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback/releases">GitHub Releases page</a></li>
-  <li>Find the latest release (or the version you need)</li>
-  <li>Download the package file (<code class="language-plaintext highlighter-rouge">.zip</code>)</li>
-  <li>Transfer the files to your target system in an easy to remember location (Example: C:\Program Files\Beckhoff USA Community\Feeds\Local)</li>
+  <li>Open the <strong>NuGet Package Manager</strong> in your HMI project</li>
+  <li>Go to the <strong>Browse</strong> window</li>
+  <li>Search for and add the <strong>EventVision</strong> package</li>
 </ol>
 
-<h3 id="add-local-package-feed-via-gui">Add Local Package Feed via GUI</h3>
+<p><img src="/EventVideoPlayback/assets/images/HmiNugetPackage.PNG" alt="HMI NuGet Package" /></p>
 
-<p>If you haven’t already, add the Beckhoff USA Community package feed to TwinCAT Package Manager:</p>
+<div class="alert alert-info">
+  <strong>Tip:</strong> If the package does not appear, verify that the Package source is set to <strong>Beckhoff Offline Packages</strong>.
+</div>
+
+<h3 id="add-the-eventvisioncontrol">Add the EventVisionControl</h3>
+
+<p>Once the package is installed, add the <strong>EventVisionControl</strong> to your HMI from the Toolbox.</p>
+
+<p><img src="/EventVideoPlayback/assets/images/HmiToolboxEventVisionControl.png" alt="HMI Toolbox EventVisionControl" /></p>
+
+<hr />
+
+<h2 id="hmi-eventvisioncontrol-properties">HMI EventVisionControl Properties</h2>
+
+<p>After adding the EventVisionControl, set the properties:</p>
+
+<p><img src="/EventVideoPlayback/assets/images/HmiControlProperties.png" alt="HMI Control Properties" /></p>
+
+<div class="alert alert-warning">
+  <strong>Important:</strong> The Virtual drive setting must match that specified in the HMI Publish configuration. The Time Zone Info is required if the viewing browser system time is in a different time zone than the TwinCAT HMI Server.
+</div>
+
+<hr />
+
+<h2 id="hmi-publish-configuration">HMI Publish Configuration</h2>
+
+<p>Configure a virtual directory to allow the HMI to access video files stored on the system.</p>
+
+<h3 id="configure-virtual-directory">Configure Virtual Directory</h3>
 
 <ol>
-  <li>Open the TwinCAT Package Manager GUI</li>
-  <li>Click the Settings (Gear Icon) in the bottom left corner</li>
-  <li>Select Feeds</li>
+  <li>In the <strong>Solution Explorer</strong>, navigate to <strong>Server → TcHmiSrv</strong></li>
+  <li>Add a virtual directory pointing to your video storage location</li>
 </ol>
 
-<p>For the feed settings use:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>C:<span class="se">\P</span>rogram Files<span class="se">\B</span>eckhoff USA Community<span class="se">\F</span>eeds<span class="se">\L</span>ocal
-</code></pre></div></div>
-<p>For the feed name use:</p>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Beckhoff USA Community Local
-</code></pre></div></div>
-<p>Deselect the <strong>Set credentials</strong> option, as we do not need login for the feed. Select <strong>Save</strong>.</p>
+<div class="alert alert-warning">
+  <strong>Important:</strong> Be aware of your Publish Configuration. If using a "Remote" Publish Configuration, ensure you add the virtual directory to the corresponding "Remote" configuration via the dropdown menu on the TcHmiSrv page.
+</div>
 
-<h3 id="add-package-feed-via-powershell-1">Add Package Feed via Powershell</h3>
+<p><img src="/EventVideoPlayback/assets/images/HmiVirtualDirectory.png" alt="HMI Virtual Directory" /></p>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tcpkg <span class="nb">source </span>add <span class="nt">-n</span> <span class="s2">"Beckhoff USA Community Local"</span> <span class="nt">-s</span> <span class="s2">"C:</span><span class="se">\P</span><span class="s2">rogram Files</span><span class="se">\B</span><span class="s2">eckhoff USA Community</span><span class="se">\F</span><span class="s2">eeds</span><span class="se">\L</span><span class="s2">ocal"</span>
-</code></pre></div></div>
+<p><img src="/EventVideoPlayback/assets/images/HmiPublishConnection.png" alt="HMI Publish Connection" /></p>
 
-<h2 id="install-workloads">Install Workloads</h2>
+<p><img src="/EventVideoPlayback/assets/images/HmiPublishSettings.png" alt="HMI Publish Settings" /></p>
 
-<p>After the feed is added (locally or remote), and the VerifySignatures is disabled, you can now install the Workloads and Packages on the feed like you would normal Beckhoff Automation packages.</p>
+<hr />
 
 <h2 id="next-steps">Next Steps</h2>
 
-<ul>
-  <li>Learn about <a href="/EventVideoPlayback/docs/plc-usage/">PLC Library Usage</a> for advanced features</li>
-  <li>Configure <a href="/EventVideoPlayback/docs/service-config/">Service Settings</a> for your environment</li>
-  <li>Add <a href="/EventVideoPlayback/docs/hmi-usage/">HMI Controls</a> for video playback</li>
-</ul>
-
-<h2 id="troubleshooting">Troubleshooting</h2>
-
-<h3 id="service-wont-start">Service Won’t Start</h3>
+<p>Now that you have configured Event Video Playback, you can:</p>
 
 <ul>
-  <li>Verify .NET 8 Runtime is installed</li>
-  <li>Check Windows Event Viewer for error messages</li>
-  <li>Ensure no other service is using ADS port 26129</li>
-</ul>
-
-<h3 id="videos-not-being-created">Videos Not Being Created</h3>
-
-<ul>
-  <li>Confirm TwinCAT Vision is saving images to the configured path</li>
-  <li>Check service configuration file for correct paths</li>
-  <li>Verify sufficient disk space is available</li>
-</ul>
-
-<h3 id="plc-function-block-errors">PLC Function Block Errors</h3>
-
-<ul>
-  <li>Ensure the library reference is added correctly</li>
-  <li>Verify the service is running</li>
-  <li>Check ADS communication settings</li>
+  <li>Test video capture by triggering events in your PLC code</li>
+  <li>Review captured videos in your HMI</li>
+  <li>Adjust service configuration parameters as needed</li>
+  <li>Configure additional cameras by creating more <code class="language-plaintext highlighter-rouge">FB_ImageToVideo</code> instances</li>
 </ul>
 
 <h2 id="support">Support</h2>

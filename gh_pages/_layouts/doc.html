@@ -28,14 +28,10 @@ layout: default
 
           <!-- PDF Download Button -->
           {% assign pdf_name = "" %}
-          {% if page.permalink contains "getting-started" %}
+          {% if page.permalink contains "installation" %}
+            {% assign pdf_name = "installation.pdf" %}
+          {% elsif page.permalink contains "getting-started" %}
             {% assign pdf_name = "getting-started.pdf" %}
-          {% elsif page.permalink contains "plc-usage" %}
-            {% assign pdf_name = "plc-usage.pdf" %}
-          {% elsif page.permalink contains "service-config" %}
-            {% assign pdf_name = "service-config.pdf" %}
-          {% elsif page.permalink contains "hmi-usage" %}
-            {% assign pdf_name = "hmi-usage.pdf" %}
           {% endif %}
 
           {% if pdf_name != "" %}

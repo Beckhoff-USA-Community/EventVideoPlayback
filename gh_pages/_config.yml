@@ -17,10 +17,8 @@ collections:
 
 # Navigation
 header_pages:
+  - _docs/installation.md
   - _docs/getting-started.md
-  - _docs/plc-usage.md
-  - _docs/service-config.md
-  - _docs/hmi-usage.md
 
 # Exclude from processing
 exclude:

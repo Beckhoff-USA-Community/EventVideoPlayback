@@ -258,3 +258,19 @@ pre {
     color: inherit;
   }
 }
+
+// Responsive Images
+.doc-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: $spacing-md auto;
+  border-radius: $border-radius;
+  box-shadow: $shadow-md;
+}
+
+// Ensure all images are responsive
+img {
+  max-width: 100%;
+  height: auto;
+}

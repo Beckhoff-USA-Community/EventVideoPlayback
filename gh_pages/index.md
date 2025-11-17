@@ -78,7 +78,7 @@ description: Transform TwinCAT Vision images into event-driven video recordings
       </div>
     </div>
     <div style="text-align: center; margin-top: 3rem;">
-      <a href="{{ '/docs/getting-started/' | relative_url }}" class="btn btn-primary">View Installation Guide</a>
+      <a href="{{ '/docs/installation/' | relative_url }}" class="btn btn-primary">View Installation Guide</a>
     </div>
   </div>
 </section>
@@ -93,25 +93,13 @@ description: Transform TwinCAT Vision images into event-driven video recordings
         <span class="feature-icon">📦</span>
         <h3 class="feature-title">Install With TwinCAT Package Manager</h3>
         <p class="feature-description">Quick installation using TwinCAT Package Manager for seamless integration with your TwinCAT environment.</p>
+        <a href="{{ '/docs/installation/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">Installation Guide →</a>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🚀</span>
+        <h3 class="feature-title">Configuration and Usage</h3>
+        <p class="feature-description">Learn how to configure the service, integrate PLC function blocks, and set up HMI controls for video playback.</p>
         <a href="{{ '/docs/getting-started/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">Getting Started →</a>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">📖</span>
-        <h3 class="feature-title">PLC Developers</h3>
-        <p class="feature-description">Learn how to integrate Event Video Playback function blocks into your TwinCAT PLC projects.</p>
-        <a href="{{ '/docs/plc-usage/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">PLC Library Guide →</a>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🖥️</span>
-        <h3 class="feature-title">HMI Developers</h3>
-        <p class="feature-description">Add video playback controls to your HMI using the NuGet package for WPF applications.</p>
-        <a href="{{ '/docs/hmi-usage/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">HMI Package Guide →</a>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">⚙️</span>
-        <h3 class="feature-title">System Service Configuration</h3>
-        <p class="feature-description">Configure the Windows service, set up video parameters, and troubleshoot installations.</p>
-        <a href="{{ '/docs/service-config/' | relative_url }}" class="btn btn-ghost" style="margin-top: 1rem;">Service Config →</a>
       </div>
     </div>
   </div>

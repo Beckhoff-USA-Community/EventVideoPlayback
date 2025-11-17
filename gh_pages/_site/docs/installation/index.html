@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Installation | Event Video Playback</title>
+  <meta name="description" content="Installation guide for Event Video Playback packages using TwinCAT Package Manager">
+
+  <link rel="stylesheet" href="/EventVideoPlayback/assets/css/style.css">
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Installation | Event Video Playback</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Installation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Installation guide for Event Video Playback packages using TwinCAT Package Manager" />
+<meta property="og:description" content="Installation guide for Event Video Playback packages using TwinCAT Package Manager" />
+<link rel="canonical" href="http://localhost:4000/EventVideoPlayback/docs/installation/" />
+<meta property="og:url" content="http://localhost:4000/EventVideoPlayback/docs/installation/" />
+<meta property="og:site_name" content="Event Video Playback" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-11-17T15:17:26-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Installation" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-11-17T15:17:26-05:00","datePublished":"2025-11-17T15:17:26-05:00","description":"Installation guide for Event Video Playback packages using TwinCAT Package Manager","headline":"Installation","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/EventVideoPlayback/docs/installation/"},"url":"http://localhost:4000/EventVideoPlayback/docs/installation/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body>
+  <header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <a class="site-title" href="/EventVideoPlayback/">
+        Event Video Playback
+      </a>
+      <nav class="site-nav">
+        <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
+        <a href="/EventVideoPlayback/">Home</a>
+        <a href="/EventVideoPlayback/docs/installation/">Installation</a>
+        <a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a>
+        <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank" class="btn btn-ghost" style="margin-left: 1rem;">GitHub</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+  <main class="main-content">
+    <div class="section doc-section" style="background-color: #f8f8f8; min-height: calc(100vh - 70px);">
+  <div class="container">
+    <!-- Mobile TOC Toggle -->
+    <button class="doc-toc-mobile-toggle" id="mobile-toc-toggle">
+      <span>📑 Table of Contents</span>
+    </button>
+
+    <div class="doc-layout">
+      <!-- Table of Contents Sidebar -->
+      <aside class="doc-sidebar" id="doc-sidebar">
+        <nav class="doc-toc">
+  <div class="doc-toc-header">
+    <h3>On This Page</h3>
+  </div>
+  <ul class="doc-toc-list" id="doc-toc-list">
+    <!-- JavaScript will populate this -->
+  </ul>
+</nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const content = document.querySelector('.doc-content');
+  const tocList = document.getElementById('doc-toc-list');
+
+  if (!content || !tocList) return;
+
+  // Get only H2 headings
+  const headings = content.querySelectorAll('h2');
+
+  if (headings.length === 0) {
+    // Hide TOC if no H2 headings found
+    const tocNav = document.querySelector('.doc-toc');
+    if (tocNav) {
+      tocNav.style.display = 'none';
+    }
+    return;
+  }
+
+  headings.forEach((heading, index) => {
+    // Create an ID if it doesn't exist
+    if (!heading.id) {
+      heading.id = 'heading-' + index;
+    }
+
+    // Create list item
+    const li = document.createElement('li');
+
+    // Create link
+    const a = document.createElement('a');
+    a.href = '#' + heading.id;
+    a.textContent = heading.textContent;
+    a.className = 'toc-link';
+
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  // Highlight current section on scroll
+  const observerOptions = {
+    rootMargin: '-100px 0px -66%',
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+
+      if (tocLink) {
+        if (entry.isIntersecting) {
+          // Remove active class from all links
+          document.querySelectorAll('.toc-link').forEach(link => {
+            link.classList.remove('active');
+          });
+          // Add active class to current link
+          tocLink.classList.add('active');
+        }
+      }
+    });
+  }, observerOptions);
+
+  // Observe all headings
+  headings.forEach(heading => {
+    observer.observe(heading);
+  });
+
+  // Smooth scroll for TOC links
+  document.querySelectorAll('.toc-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const offsetTop = target.offsetTop - 100;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: 'smooth'
+        });
+
+        // Close mobile TOC after clicking
+        const sidebar = document.querySelector('.doc-sidebar');
+        if (sidebar && window.innerWidth < 1024) {
+          sidebar.classList.remove('mobile-open');
+        }
+      }
+    });
+  });
+});
+</script>
+
+      </aside>
+
+      <!-- Main Content -->
+      <div class="doc-main">
+        <div class="doc-card">
+          
+          <h1>Installation</h1>
+          
+
+          
+          <p class="doc-meta">Installation guide for Event Video Playback packages using TwinCAT Package Manager</p>
+          
+
+          <!-- PDF Download Button -->
+          
+          
+
+          
+          <div class="doc-download-section">
+            <a href="/EventVideoPlayback/assets/pdf/installation.pdf" class="btn-download-pdf" download>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download as PDF
+            </a>
+            <a href="/EventVideoPlayback/assets/pdf/complete-documentation.pdf" class="btn-download-pdf btn-download-complete" download>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="12" y1="18" x2="12" y2="12"></line>
+                <line x1="9" y1="15" x2="15" y2="15"></line>
+              </svg>
+              Download Complete Docs
+            </a>
+          </div>
+          
+
+          <div class="doc-content">
+            <h2 id="overview">Overview</h2>
+
+<p>Event Video Playback is a comprehensive solution for transforming TwinCAT Vision images into event-driven video recordings. This guide will walk you through the installation process using TwinCAT Package Manager.</p>
+
+<div class="alert alert-info">
+  <strong>Prerequisites:</strong> Before starting, ensure you have TwinCAT Package Manager installed and have the necessary permissions to install packages.
+</div>
+
+<h2 id="system-requirements">System Requirements</h2>
+
+<p>Before you begin, ensure you have the following installed on your system:</p>
+
+<h3 id="for-engineering-development">For Engineering Development</h3>
+
+<ul>
+  <li><strong>Windows 10/11</strong></li>
+  <li><strong>TwinCAT Package Manager</strong></li>
+  <li><strong>TwinCAT 3.1 XAE</strong> - Build 4026 or higher</li>
+  <li><strong>TwinCAT Vision XAE</strong> - Version 5.8.4 or higher</li>
+  <li><strong>TwinCAT HMI XAE</strong> - Version 14.9 or higher</li>
+</ul>
+
+<h3 id="for-runtime-targets">For Runtime Targets</h3>
+
+<ul>
+  <li><strong>Windows 10/11</strong></li>
+  <li><strong>TwinCAT Package Manager</strong></li>
+  <li><strong>TwinCAT 3.1 XAR</strong> - Build 4026 or higher</li>
+  <li><strong>TwinCAT Vision XAR</strong> - Version 5.8.4 or higher</li>
+</ul>
+
+<div class="alert alert-danger">
+<strong>Warning:</strong> Previous versions of the 4024 Tc_EventVideoPlayback legacy project must be uninstalled before using the new 4026 build.
+</div>
+
+<hr />
+
+<h2 id="package-signing-configuration">Package Signing Configuration</h2>
+
+<p>TwinCAT Package Manager only accepts officially signed packages from Beckhoff Automation GmbH &amp; Co. KG by default. To use community packages, you need to temporarily disable signature verification.</p>
+
+<div class="alert alert-warning">
+  <strong>Security Notice:</strong> Disabling signature verification allows installation of third-party packages. Only use packages from trusted community sources. Review package contents and source code before installation. All community packages are provided "as is" without warranties.
+</div>
+
+<p><strong>To disable signature checks, run this command in PowerShell as Administrator:</strong></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tcpkg</span><span class="w"> </span><span class="nx">config</span><span class="w"> </span><span class="nx">unset</span><span class="w"> </span><span class="nt">-n</span><span class="w"> </span><span class="nx">VerifySignatures</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="installation-methods">Installation Methods</h2>
+
+<p>Choose the installation method that best fits your environment:</p>
+
+<ul>
+  <li><strong><a href="#online-package-feed-connection">Online Installation</a></strong> - For systems with internet access (recommended)</li>
+  <li><strong><a href="#offline-package-configuration">Offline Installation</a></strong> - For air-gapped systems or manual installation</li>
+</ul>
+
+<hr />
+
+<h2 id="online-package-feed-connection">Online Package Feed Connection</h2>
+
+<p><strong>Best for:</strong> Systems with internet connectivity and access to the Beckhoff USA Community package feed.</p>
+
+<h3 id="option-1-add-package-feed-via-gui">Option 1: Add Package Feed via GUI</h3>
+
+<p>Add the Beckhoff USA Community package feed to TwinCAT Package Manager:</p>
+
+<ol>
+  <li>Open the <strong>TwinCAT Package Manager GUI</strong></li>
+  <li>Click the <strong>Settings</strong> (Gear Icon) in the bottom left corner</li>
+  <li>Select <strong>Feeds</strong></li>
+  <li>
+    <p>Add a new feed with the following settings:</p>
+
+    <ul>
+      <li><strong>Feed URL:</strong> <code class="language-plaintext highlighter-rouge">https://packages.beckhoff-usa-community.com/stable/v3/index.json</code></li>
+      <li><strong>Feed Name:</strong> <code class="language-plaintext highlighter-rouge">Beckhoff USA Community Stable</code></li>
+      <li><strong>Set credentials:</strong> Deselect (not required)</li>
+    </ul>
+  </li>
+  <li>Click <strong>Save</strong> and agree to the disclaimer</li>
+</ol>
+
+<h3 id="option-2-add-package-feed-via-powershell">Option 2: Add Package Feed via PowerShell</h3>
+
+<p>Run the following command in PowerShell:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tcpkg</span><span class="w"> </span><span class="nx">source</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nt">-n</span><span class="w"> </span><span class="s2">"Beckhoff USA Community Stable"</span><span class="w"> </span><span class="nt">-s</span><span class="w"> </span><span class="s2">"https://packages.beckhoff-usa-community.com/stable/v3/index.json"</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Agree to the disclaimer when prompted.</p>
+
+<hr />
+
+<h2 id="offline-package-configuration">Offline Package Configuration</h2>
+
+<p><strong>Best for:</strong> Air-gapped systems, manual installations, or when you need a specific version.</p>
+
+<h3 id="step-1-download-from-github-releases">Step 1: Download from GitHub Releases</h3>
+
+<ol>
+  <li>Navigate to the <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback/releases">GitHub Releases page</a></li>
+  <li>Find the latest release (or the version you need)</li>
+  <li>Download the package file (<code class="language-plaintext highlighter-rouge">.zip</code>)</li>
+  <li>Transfer the files to your target system in a convenient location
+    <ul>
+      <li><strong>Example:</strong> <code class="language-plaintext highlighter-rouge">C:\Program Files\Beckhoff USA Community\Feeds\Local</code></li>
+    </ul>
+  </li>
+</ol>
+
+<div class="alert alert-success">
+  <strong>Tip:</strong> Instead of downloading manually, you can use the PowerShell command: <code>tcpkg download [package name] -o [output location]</code>
+</div>
+
+<h3 id="step-2-add-local-package-feed">Step 2: Add Local Package Feed</h3>
+
+<h4 id="option-1-add-via-gui">Option 1: Add via GUI</h4>
+
+<ol>
+  <li>Open the <strong>TwinCAT Package Manager GUI</strong></li>
+  <li>Click the <strong>Settings</strong> (Gear Icon) in the bottom left corner</li>
+  <li>Select <strong>Feeds</strong></li>
+  <li>
+    <p>Add a new feed with the following settings:</p>
+
+    <ul>
+      <li><strong>Feed Path:</strong> <code class="language-plaintext highlighter-rouge">C:\Program Files\Beckhoff USA Community\Feeds\Local</code></li>
+      <li><strong>Feed Name:</strong> <code class="language-plaintext highlighter-rouge">Beckhoff USA Community Local</code></li>
+      <li><strong>Set credentials:</strong> Deselect (not required)</li>
+    </ul>
+  </li>
+  <li>Click <strong>Save</strong></li>
+</ol>
+
+<h4 id="option-2-add-via-powershell">Option 2: Add via PowerShell</h4>
+
+<p>Run the following command in PowerShell:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tcpkg</span><span class="w"> </span><span class="nx">source</span><span class="w"> </span><span class="nx">add</span><span class="w"> </span><span class="nt">-n</span><span class="w"> </span><span class="s2">"Beckhoff USA Community Local"</span><span class="w"> </span><span class="nt">-s</span><span class="w"> </span><span class="s2">"C:\Program Files\Beckhoff USA Community\Feeds\Local"</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="install-workloads">Install Workloads</h2>
+
+<p>After completing the steps above (adding the package feed and disabling signature verification), you can now install the Event Video Playback workloads and packages through TwinCAT Package Manager, just like any other Beckhoff Automation package.</p>
+
+<ol>
+  <li>Open <strong>TwinCAT Package Manager</strong></li>
+  <li>Browse the available packages from the Beckhoff USA Community feed</li>
+  <li>Select <strong>Event Video Playback</strong> workloads/packages</li>
+  <li>Click <strong>Install</strong></li>
+</ol>
+
+<div class="alert alert-info">
+  <strong>Note:</strong> The installation will include the necessary XAE/XAR components, PLC libraries, HMI packages, and the Windows service.
+</div>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>After installation is complete, proceed to the <a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a> guide to learn how to configure and use Event Video Playback in your projects.</p>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="service-wont-start">Service Won’t Start</h3>
+
+<ul>
+  <li>Verify .NET 8 Runtime is installed</li>
+  <li>Check Windows Event Viewer for error messages</li>
+  <li>Ensure no other service is using ADS port 26129</li>
+</ul>
+
+<h3 id="videos-not-being-created">Videos Not Being Created</h3>
+
+<ul>
+  <li>Confirm TwinCAT Vision is saving images to the configured path</li>
+  <li>Check service configuration file for correct paths</li>
+  <li>Verify sufficient disk space is available</li>
+</ul>
+
+<h3 id="plc-function-block-errors">PLC Function Block Errors</h3>
+
+<ul>
+  <li>Ensure the library reference is added correctly</li>
+  <li>Verify the service is running</li>
+  <li>Check ADS communication settings</li>
+</ul>
+
+<h2 id="support">Support</h2>
+
+<p>Need help? Here are some resources:</p>
+
+<ul>
+  <li><a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback/issues">GitHub Issues</a> - Report bugs or request features</li>
+  <li><a href="https://github.com/Beckhoff-USA-Community">Beckhoff USA Community</a> - Community support and discussions</li>
+  <li><a href="/EventVideoPlayback/">Documentation</a> - Additional guides and references</li>
+</ul>
+
+          </div>
+
+          <hr style="margin-top: 4rem; margin-bottom: 2rem;">
+
+          <div style="text-align: center;">
+            <a href="/EventVideoPlayback/" class="btn btn-primary">← Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Mobile TOC toggle
+document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.getElementById('mobile-toc-toggle');
+  const sidebar = document.getElementById('doc-sidebar');
+
+  if (toggle && sidebar) {
+    toggle.addEventListener('click', function() {
+      sidebar.classList.toggle('mobile-open');
+      toggle.classList.toggle('open');
+    });
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', function(e) {
+      if (window.innerWidth < 1024) {
+        if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+          sidebar.classList.remove('mobile-open');
+          toggle.classList.remove('open');
+        }
+      }
+    });
+  }
+});
+</script>
+
+
+  </main>
+
+  <footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Event Video Playback</h3>
+        <p>Transform TwinCAT Vision images into event-driven video recordings for industrial automation.</p>
+      </div>
+
+      <div class="footer-section">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a></li>
+          <li><a href="/EventVideoPlayback/docs/plc-usage/">PLC Library Usage</a></li>
+          <li><a href="/EventVideoPlayback/docs/service-config/">Service Configuration</a></li>
+          <li><a href="/EventVideoPlayback/docs/hmi-usage/">HMI User Control</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Resources</h3>
+        <ul>
+          <li><a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank">GitHub Repository</a></li>
+          <li><a href="https://packages.beckhoff-usa-community.com/" target="_blank">Package Feed</a></li>
+          <li><a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback/issues" target="_blank">Report Issues</a></li>
+          <li><a href="https://github.com/Beckhoff-USA-Community" target="_blank">Beckhoff USA Community</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="https://github.com/Beckhoff-USA-Community" target="_blank">Beckhoff USA Community</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Beckhoff USA Community | Licensed under MIT License</p>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/EventVideoPlayback/assets/js/main.js"></script>
+</body>
+</html>

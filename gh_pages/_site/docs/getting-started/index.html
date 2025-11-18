@@ -8,6 +8,12 @@
   <title>Getting Started | Event Video Playback</title>
   <meta name="description" content="Learn how to configure and use Event Video Playback in your TwinCAT projects">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/EventVideoPlayback/assets/images/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/EventVideoPlayback/assets/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="96x96" href="/EventVideoPlayback/assets/images/favicon-96x96.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/EventVideoPlayback/assets/images/apple-touch-icon.png">
+
   <link rel="stylesheet" href="/EventVideoPlayback/assets/css/style.css">
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -21,11 +27,11 @@
 <meta property="og:url" content="http://localhost:4000/EventVideoPlayback/docs/getting-started/" />
 <meta property="og:site_name" content="Event Video Playback" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2025-11-17T15:17:26-05:00" />
+<meta property="article:published_time" content="2025-11-18T14:22:06-05:00" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Getting Started" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-11-17T15:17:26-05:00","datePublished":"2025-11-17T15:17:26-05:00","description":"Learn how to configure and use Event Video Playback in your TwinCAT projects","headline":"Getting Started","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/EventVideoPlayback/docs/getting-started/"},"url":"http://localhost:4000/EventVideoPlayback/docs/getting-started/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-11-18T14:22:06-05:00","datePublished":"2025-11-18T14:22:06-05:00","description":"Learn how to configure and use Event Video Playback in your TwinCAT projects","headline":"Getting Started","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/EventVideoPlayback/docs/getting-started/"},"url":"http://localhost:4000/EventVideoPlayback/docs/getting-started/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -41,7 +47,20 @@
         <a href="/EventVideoPlayback/">Home</a>
         <a href="/EventVideoPlayback/docs/installation/">Installation</a>
         <a href="/EventVideoPlayback/docs/getting-started/">Getting Started</a>
-        <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank" class="btn btn-ghost" style="margin-left: 1rem;">GitHub</a>
+        <div class="nav-buttons">
+          <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank" class="btn btn-nav btn-github">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 0.25rem;">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback_Samples/tree/main/src" target="_blank" class="btn btn-nav btn-samples">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="vertical-align: text-bottom; margin-right: 0.25rem;">
+              <path d="M1.75 1A1.75 1.75 0 000 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0016 13.25v-8.5A1.75 1.75 0 0014.25 3H7.5a.25.25 0 01-.2-.1l-.9-1.2C6.07 1.26 5.55 1 5 1H1.75z"/>
+            </svg>
+            Sample Projects
+          </a>
+        </div>
       </nav>
     </div>
   </div>
@@ -249,47 +268,74 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <h3 id="codecfourcc">CodecFourCC</h3>
 
-<p>This is the codec used to create the video from the service. <code class="language-plaintext highlighter-rouge">avc1</code> is the most common codec that is also compatible with web browsers. For a full list of codecs see below, but not all are web compatible and will display as a black box on Tc HMI. <a href="https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Video_codecs">Check here for appropriate codecs</a>.</p>
+<p>This is the codec used to create the video from the service. The service supports multiple codecs, but not all are web-compatible. For TwinCAT HMI compatibility, stick with these recommended options:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Codec</th>
+      <th>FourCC</th>
+      <th>Description</th>
+      <th>Web Compatible</th>
+      <th>Recommended</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>H.264</td>
+      <td><code class="language-plaintext highlighter-rouge">avc1</code></td>
+      <td>Most common, best compatibility</td>
+      <td>✓</td>
+      <td><strong>Yes</strong></td>
+    </tr>
+    <tr>
+      <td>H.264</td>
+      <td><code class="language-plaintext highlighter-rouge">avc3</code></td>
+      <td>Alternative H.264 variant</td>
+      <td>✓</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>H.265/HEVC</td>
+      <td><code class="language-plaintext highlighter-rouge">hev1</code></td>
+      <td>Better compression, newer</td>
+      <td>✓</td>
+      <td>Maybe</td>
+    </tr>
+    <tr>
+      <td>H.265/HEVC</td>
+      <td><code class="language-plaintext highlighter-rouge">hvc1</code></td>
+      <td>Alternative HEVC variant</td>
+      <td>✓</td>
+      <td>Maybe</td>
+    </tr>
+    <tr>
+      <td>MPEG-4</td>
+      <td><code class="language-plaintext highlighter-rouge">mp4v</code></td>
+      <td>Older standard</td>
+      <td>✓</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>VP9</td>
+      <td><code class="language-plaintext highlighter-rouge">vp09</code></td>
+      <td>Google’s codec</td>
+      <td>✓</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>AV1</td>
+      <td><code class="language-plaintext highlighter-rouge">av01</code></td>
+      <td>Newest, best compression</td>
+      <td>⚠</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
 
 <div class="alert alert-info">
-  <strong>Note:</strong> The most common web-compatible codec is <code>avc1</code>. Other codecs may not display correctly in web browsers.
+  <strong>Tip:</strong> For best results, use <code>avc1</code> (H.264). It offers the widest compatibility across all web browsers and HMI platforms.
 </div>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OpenCV: FFMPEG: format mp4 / MP4 (MPEG-4 Part 14)
-fourcc tag 0x7634706d/'mp4v' codec_id 000C
-fourcc tag 0x31637661/'avc1' codec_id 001B
-fourcc tag 0x33637661/'avc3' codec_id 001B
-fourcc tag 0x31766568/'hev1' codec_id 00AD
-fourcc tag 0x31637668/'hvc1' codec_id 00AD
-fourcc tag 0x7634706d/'mp4v' codec_id 0002
-fourcc tag 0x7634706d/'mp4v' codec_id 0001
-fourcc tag 0x7634706d/'mp4v' codec_id 0007
-fourcc tag 0x7634706d/'mp4v' codec_id 003D
-fourcc tag 0x7634706d/'mp4v' codec_id 0058
-fourcc tag 0x312d6376/'vc-1' codec_id 0046
-fourcc tag 0x63617264/'drac' codec_id 0074
-fourcc tag 0x7634706d/'mp4v' codec_id 00A3
-fourcc tag 0x39307076/'vp09' codec_id 00A7
-fourcc tag 0x31307661/'av01' codec_id 801D
-fourcc tag 0x6134706d/'mp4a' codec_id 15002
-fourcc tag 0x63616c61/'alac' codec_id 15010
-fourcc tag 0x6134706d/'mp4a' codec_id 1502D
-fourcc tag 0x6134706d/'mp4a' codec_id 15001
-fourcc tag 0x6134706d/'mp4a' codec_id 15000
-fourcc tag 0x332d6361/'ac-3' codec_id 15003
-fourcc tag 0x332d6365/'ec-3' codec_id 15028
-fourcc tag 0x6134706d/'mp4a' codec_id 15004
-fourcc tag 0x61706c6d/'mlpa' codec_id 1502C
-fourcc tag 0x43614c66/'fLaC' codec_id 1500C
-fourcc tag 0x7375704f/'Opus' codec_id 1503C
-fourcc tag 0x6134706d/'mp4a' codec_id 15005
-fourcc tag 0x6134706d/'mp4a' codec_id 15018
-fourcc tag 0x6134706d/'mp4a' codec_id 15803
-fourcc tag 0x7334706d/'mp4s' codec_id 17000
-fourcc tag 0x67337874/'tx3g' codec_id 17005
-fourcc tag 0x646d7067/'gpmd' codec_id 18807
-fourcc tag 0x316d686d/'mhm1' codec_id 15817
-</code></pre></div></div>
 
 <h3 id="videodeletetime">VideoDeleteTime</h3>
 
@@ -330,7 +376,7 @@ fourcc tag 0x316d686d/'mhm1' codec_id 15817
   <li><strong>FramesPerSecond</strong> - Higher frame rates require more memory</li>
   <li><strong>Record time</strong> - Longer videos require more memory</li>
   <li><strong>Image size</strong> - Larger images require more memory</li>
-  <li><strong>ReductionFactor</strong> - Smaller reduction factors (closer to 1.0) require more memory</li>
+  <li><strong>ReductionFactor</strong> - Larger reduction factors (0.1 to 1.0) require more memory</li>
 </ul>
 
 <div class="alert alert-warning">

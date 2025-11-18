@@ -67,7 +67,7 @@ body {
   gap: $spacing-md;
   align-items: center;
 
-  a {
+  a:not(.btn) {
     color: $light-gray;
     text-decoration: none;
     font-weight: $font-weight-medium;
@@ -78,6 +78,54 @@ body {
     &:hover {
       color: $primary-red;
       background-color: rgba($primary-red, 0.1);
+    }
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: $spacing-sm;
+    margin-left: $spacing-md;
+  }
+
+  .btn-nav {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: $font-weight-medium;
+    text-decoration: none;
+    border-radius: $border-radius;
+    transition: all $transition-speed $transition-ease;
+    border: 2px solid transparent;
+
+    &.btn-github {
+      background-color: rgba($white, 0.1);
+      color: $white;
+      border-color: rgba($white, 0.3);
+
+      &:hover {
+        background-color: $white;
+        color: $black;
+        border-color: $white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba($white, 0.2);
+      }
+    }
+
+    &.btn-samples {
+      background: linear-gradient(135deg, $primary-red 0%, $dark-red 100%);
+      color: $white;
+      border-color: transparent;
+
+      &:hover {
+        background: linear-gradient(135deg, $dark-red 0%, $primary-red 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba($primary-red, 0.4);
+      }
+    }
+
+    svg {
+      flex-shrink: 0;
     }
   }
 
@@ -112,10 +160,21 @@ body {
       display: block;
     }
 
-    a {
+    a:not(.btn) {
       width: 100%;
       text-align: center;
       padding: $spacing-sm;
+    }
+
+    .nav-buttons {
+      flex-direction: column;
+      width: 100%;
+      margin-left: 0;
+
+      .btn-nav {
+        width: 100%;
+        justify-content: center;
+      }
     }
   }
 }

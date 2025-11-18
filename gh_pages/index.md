@@ -9,10 +9,6 @@ description: Transform TwinCAT Vision images into event-driven video recordings
     <img src="{{ '/assets/images/Camera_Hero_NoBackground.png' | relative_url }}" alt="Event Video Playback" class="hero-image">
     <h1 class="hero-title">Event Video Playback</h1>
     <p class="hero-tagline">Transform TwinCAT Vision images into event-driven video recordings</p>
-    <div class="hero-buttons">
-      <a href="{{ '/docs/getting-started/' | relative_url }}" class="btn btn-primary">Get Started</a>
-      <a href="https://github.com/Beckhoff-USA-Community/EventVideoPlayback" target="_blank" class="btn btn-secondary">View on GitHub</a>
-    </div>
   </div>
 </section>
 

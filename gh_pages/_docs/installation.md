@@ -57,12 +57,51 @@ tcpkg config unset -n VerifySignatures
 
 Choose the installation method that best fits your environment:
 
-- **[Online Installation](#online-package-feed-connection)** - For systems with internet access (recommended)
-- **[Offline Installation](#offline-package-configuration)** - For air-gapped systems or manual installation
+- **[Offline Installation](#offline-package-configuration)** - For air-gapped systems or manual installation (recommended)
+- **[Online Installation](#online-package-feed-connection)** - For systems with internet access
+
 
 ---
 
-## Online Package Feed Connection
+## Offline Package Configuration
+
+**Best for:** Air-gapped systems, manual installations, or when you need a specific version.
+
+### Step 1: Download from GitHub Releases
+
+1. Navigate to the [GitHub Releases page](https://github.com/Beckhoff-USA-Community/EventVideoPlayback/releases)
+2. Find the latest release (or the version you need)
+3. Download the package file (`.zip`)
+4. Transfer the files to your target system in a convenient location
+   - **Example:** `C:\Program Files\Beckhoff USA Community\Feeds\Local`
+
+
+### Step 2: Add Local Package Feed
+
+#### Option 1: Add via GUI
+
+1. Open the **TwinCAT Package Manager GUI**
+2. Click the **Settings** (Gear Icon) in the bottom left corner
+3. Select **Feeds**
+4. Add a new feed with the following settings:
+
+   - **Feed Path:** `C:\Program Files\Beckhoff USA Community\Feeds\Local`
+   - **Feed Name:** `Beckhoff USA Community Local`
+   - **Set credentials:** Deselect (not required)
+
+5. Click **Save**
+
+#### Option 2: Add via PowerShell
+
+Run the following command in PowerShell:
+
+```powershell
+tcpkg source add -n "Beckhoff USA Community Local" -s "C:\Program Files\Beckhoff USA Community\Feeds\Local"
+```
+
+---
+
+## Online Package Feed Connection (Optional - Beta)
 
 **Best for:** Systems with internet connectivity and access to the Beckhoff USA Community package feed.
 
@@ -93,47 +132,6 @@ Agree to the disclaimer when prompted.
 
 ---
 
-## Offline Package Configuration
-
-**Best for:** Air-gapped systems, manual installations, or when you need a specific version.
-
-### Step 1: Download from GitHub Releases
-
-1. Navigate to the [GitHub Releases page](https://github.com/Beckhoff-USA-Community/EventVideoPlayback/releases)
-2. Find the latest release (or the version you need)
-3. Download the package file (`.zip`)
-4. Transfer the files to your target system in a convenient location
-   - **Example:** `C:\Program Files\Beckhoff USA Community\Feeds\Local`
-
-<div class="alert alert-success">
-  <strong>Tip:</strong> Instead of downloading manually, you can use the PowerShell command: <code>tcpkg download [package name] -o [output location]</code>
-</div>
-
-### Step 2: Add Local Package Feed
-
-#### Option 1: Add via GUI
-
-1. Open the **TwinCAT Package Manager GUI**
-2. Click the **Settings** (Gear Icon) in the bottom left corner
-3. Select **Feeds**
-4. Add a new feed with the following settings:
-
-   - **Feed Path:** `C:\Program Files\Beckhoff USA Community\Feeds\Local`
-   - **Feed Name:** `Beckhoff USA Community Local`
-   - **Set credentials:** Deselect (not required)
-
-5. Click **Save**
-
-#### Option 2: Add via PowerShell
-
-Run the following command in PowerShell:
-
-```powershell
-tcpkg source add -n "Beckhoff USA Community Local" -s "C:\Program Files\Beckhoff USA Community\Feeds\Local"
-```
-
----
-
 ## Install Workloads
 
 After completing the steps above (adding the package feed and disabling signature verification), you can now install the Event Video Playback workloads and packages through TwinCAT Package Manager, just like any other Beckhoff Automation package.
@@ -146,7 +144,6 @@ After completing the steps above (adding the package feed and disabling signatur
 <div class="alert alert-info">
   <strong>Note:</strong> The installation will include the necessary XAE/XAR components, PLC libraries, HMI packages, and the Windows service.
 </div>
-
 
 
 ---

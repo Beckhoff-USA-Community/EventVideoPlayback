@@ -22,7 +22,7 @@ Before you begin, ensure you have the following installed on your system:
 - **TwinCAT Package Manager**
 - **TwinCAT 3.1 XAE** - Build 4026 or higher
 - **TwinCAT Vision XAE** - Version 5.8.4 or higher
-- **TwinCAT HMI Engineering** - Version v14.8.1 or higher
+- **TwinCAT HMI Engineering** - Version v14.8.1
 
 ### For Runtime Targets
 
@@ -30,7 +30,7 @@ Before you begin, ensure you have the following installed on your system:
 - **TwinCAT Package Manager**
 - **TwinCAT 3.1 XAR** - Build 4026 or higher
 - **TwinCAT Vision XAR** - Version 5.8.4 or higher
-- **TwinCAT HMI Server** - Version v14.8.0 or higher
+- **TwinCAT HMI Server** - Version v14.8.0
 
 ### NuGet packages:
 

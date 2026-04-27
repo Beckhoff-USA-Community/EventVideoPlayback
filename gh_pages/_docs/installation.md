@@ -22,7 +22,7 @@ Before you begin, ensure you have the following installed on your system:
 - **TwinCAT Package Manager**
 - **TwinCAT 3.1 XAE** - Build 4026 or higher
 - **TwinCAT Vision XAE** - Version 5.8.4 or higher
-- **TwinCAT HMI XAE** - Version 14.9 or higher
+- **TwinCAT HMI Engineering** - Version v14.8.1 or higher
 
 ### For Runtime Targets
 
@@ -30,6 +30,17 @@ Before you begin, ensure you have the following installed on your system:
 - **TwinCAT Package Manager**
 - **TwinCAT 3.1 XAR** - Build 4026 or higher
 - **TwinCAT Vision XAR** - Version 5.8.4 or higher
+- **TwinCAT HMI Server** - Version v14.8.0 or higher
+
+### NuGet packages:
+
+- **Beckhoff.TwinCAT.HMI.Controls** - Version 14.3.258
+- **Beckhoff.TwinCAT.HMI.EventLogger** - Version 22.0.7066
+- **Beckhoff.TwinCAT.HMI.Framework** - Version 14.3.258
+- **Beckhoff.TwinCAT.HMI.Functions** - Version 14.3.258
+- **Beckhoff.TwinCAT.HMI.Server.Engineering** - Version 22.0.7303
+- **Beckhoff.TwinCAT.HMI.Vision** - Version 13.7.6856
+- **EventVision** - Version 1.1.3
 
 <div class="alert alert-danger">
 <strong>Warning:</strong> Previous versions of the 4024 Tc_EventVideoPlayback legacy project must be uninstalled before using the new 4026 build.

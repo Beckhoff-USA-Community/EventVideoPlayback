@@ -16,10 +16,6 @@
     },
     {
       "type": "Resource",
-      "path": "EventVisionControl/DetailsVideoPopup.js"
-    },
-    {
-      "type": "Resource",
       "path": "Scripts/jquery-ui.min.js"
     },
     {
@@ -33,6 +29,16 @@
     {
       "type": "Resource",
       "path": "Scripts/moment.min.js"
+    },
+    {
+      "type": "Language",
+      "locale": "de",
+      "files": "./Localization/de.localization"
+    },
+    {
+      "type": "Language",
+      "locale": "en",
+      "files": "./Localization/en.localization"
     }
   ],
   "provideMetadata": {
@@ -43,5 +49,48 @@
     }
   },
   "$schema": ".hmiframework/Schema/Manifest.Schema.json",
-  "apiVersion": 1
+  "apiVersion": 1,
+  "symbols": {
+    "internal": {},
+    "themedResources": {},
+    "timer": {},
+    "package": {}
+  },
+  "intervals": {},
+  "actionTemplates": [],
+  "themes": {
+    "Base-Dark": {
+      "resources": [
+        {
+          "name": "Themes/Base-Dark/Base-Dark.theme",
+          "description": "",
+          "type": "ThemedValues"
+        },
+        {
+          "name": "Themes/Base-Dark/Base-DarkStyle.css",
+          "description": "",
+          "type": "Stylesheet"
+        }
+      ],
+      "replacesThemeForControls": [],
+      "replacesThemeForPackageComponents": []
+    },
+    "Base": {
+      "resources": [
+        {
+          "name": "Themes/Base/Base.theme",
+          "description": "",
+          "type": "ThemedValues"
+        },
+        {
+          "name": "Themes/Base/BaseStyle.css",
+          "description": "",
+          "type": "Stylesheet"
+        }
+      ],
+      "replacesThemeForControls": [],
+      "replacesThemeForPackageComponents": []
+    }
+  },
+  "dataTypes": []
 }

@@ -24,8 +24,8 @@
     "alwaysStrict": false
   },
   "include": [
-    "../Packages/Beckhoff.TwinCAT.HMI.Framework.14.3.154/runtimes/native1.12-tchmi/TcHmi.d.ts",
-    "../Packages/Beckhoff.TwinCAT.HMI.Controls.14.3.154/runtimes/native1.12-tchmi/TcHmiEventGrid/TcHmiEventGrid.d.ts"
+    "../Packages/Beckhoff.TwinCAT.HMI.Framework.14.5.1/runtimes/native1.12-tchmi/TcHmi.d.ts",
+    "../Packages/Beckhoff.TwinCAT.HMI.Controls.14.7.1/runtimes/native1.12-tchmi/TcHmiEventGrid/TcHmiEventGrid.d.ts"
   ],
   "files": [
     "EventVisionControl/EventVisionControl.ts"

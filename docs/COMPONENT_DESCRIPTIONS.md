@@ -48,10 +48,7 @@ Data structure that tracks ADS device notification subscriptions, storing the re
 ## HMI Control Component
 
 ### EventVisionControl (TypeScript)
-TwinCAT HMI custom control that extends TcHmiEventGrid to display alarm events with integrated video playback capability, providing a details popup (DetailsVideoPopup) that checks for video file availability using configurable retry logic and displays videos with timeline scrubbing and playback controls. This control manages virtual directory mappings for video access, timezone conversion for event timestamps, and configurable video player dimensions.
-
-### DetailsVideoPopup (JavaScript)
-Popup dialog component that handles video file verification (with retry logic for files still being encoded), creates HTML5 video player instances with custom controls, and correlates alarm timestamps with video playback by applying timezone conversions to ensure operators see videos captured around the event time.
+TwinCAT HMI custom control that extends TcHmiEventGrid to display alarm events with integrated video playback capability. A video popup class defined inside EventVisionControl.ts extends the stock event grid details popup at runtime, checks for video file availability using configurable retry logic, and plays the video in a modal dialog. The control manages virtual directory mappings for video access, timezone conversion for event timestamps, and configurable video player dimensions. If the stock popup base class cannot be loaded, the control falls back to the standard details popup without the video button.
 
 ---
 

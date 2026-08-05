@@ -66,6 +66,8 @@ _Boot/
 .engineering_servers/
 **/Packages/
 !**/packages.config
+# Live HMI server state, rewritten by Engineering every session, can capture local TLS keys
+src/HMI/TcHmiEventVideo/TcEventVideoPlayback-TcHMIControl/Server/
 
 # ===== Windows Service =====
 **/publish/

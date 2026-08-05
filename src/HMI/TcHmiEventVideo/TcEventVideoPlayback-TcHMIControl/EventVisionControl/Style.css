@@ -1,47 +1,24 @@
-/* General theme independed control css. */
+/* Theme independent control css. Template and theme css inherit from the stock TcHmiEventGrid. */
 
 .TcHmi_Controls_EventVision_EventVisionControl {
     overflow: hidden;
 }
 
-.TcHmi_Controls_EventVision_EventVisionControl-Template {
-    width: 100%;
-    height: 100%;
-}
-.tchmi-event-grid-template-popup-footer {
-    grid-template-columns: auto 1fr auto;
-}
-
+/*
+ * The stock popup footer is a flex row aligned to the end. The video button
+ * is inserted as the first footer item, so the auto right margin parks it at
+ * the left edge while the stock confirm and close buttons stay right aligned.
+ */
 .TcHmi_Controls_EventVision_EventVisionControl_video-button {
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: center;
+    margin-right: auto;
 }
 
+/* display none, not visibility collapse, so the flex footer leaves no empty slot. */
 .TcHmi_Controls_EventVision_EventVisionControl_no-video {
-    visibility: collapse;
+    display: none;
 }
 
+/* The jquery ui dialog must stack above the framework top most layer. */
 .ui-dialog {
     z-index: 9001;
 }
-
-
-/* If the main use for this control is interaction
-    uncomment the following lines to give user feedback:
-    This overlays the whole control with a white color
-    and changes the mouse cursor */
-
-/*
-.TcHmi_Controls_$default_namespace$_EventVision.TcHmi_Controls_System_TcHmiControl-operate-disallowed::after {
-    content: '';
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
-    z-index: 100;
-    cursor: not-allowed;
-}
-*/

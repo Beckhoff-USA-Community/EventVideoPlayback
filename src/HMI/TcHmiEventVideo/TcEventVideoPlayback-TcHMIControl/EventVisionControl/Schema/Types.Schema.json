@@ -112,7 +112,7 @@
     "TcHmi.Controls.EventVision.TimeZoneInfo": {
         "type": "object",
         "title": "Time Zone Info",
-        "description": "Tile zone info provided by SPT's vision framework",
+        "description": "Time zone info used to convert event timestamps to server local time",
         "properties": {
             "bias": {
                 "allOf": [
@@ -189,7 +189,7 @@
             "standardName": {
                 "allOf": [
                     {
-                        "$ref": "tchmi:framework#/definitions/TcHmi.Controls.EventVision.TimeStruct"
+                        "type": "string"
                     },
                     {
                         "title": "standardName",

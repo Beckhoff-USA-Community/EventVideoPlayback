@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.props" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.props')" />
+<Project ToolsVersion="4.0" DefaultTargets="Clean;Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.props" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <TcHmiDirectory>$(registry:HKEY_CURRENT_USER\Software\Beckhoff\TwinCAT3\3.1@InstallDir)\..\Functions\TE2000-HMI-Engineering</TcHmiDirectory>
@@ -19,12 +19,14 @@
     <ProjectName>EventVision</ProjectName>
     <Name>EventVision</Name>
     <HmiInitial>1.12.760.59</HmiInitial>
-    <HmiRecent>14.3.436.1</HmiRecent>
+    <HmiRecent>14.3.995.1</HmiRecent>
     <TcHmi_Beckhoff_TwinCAT_HMI_Controls_IncludedInSolution>True</TcHmi_Beckhoff_TwinCAT_HMI_Controls_IncludedInSolution>
     <TcHmi_Beckhoff_TwinCAT_HMI_Framework_IncludedInSolution>True</TcHmi_Beckhoff_TwinCAT_HMI_Framework_IncludedInSolution>
-    <TcHmi_jquery_TypeScript_DefinitelyTyped_IncludedInSolution>True</TcHmi_jquery_TypeScript_DefinitelyTyped_IncludedInSolution>
-    <TcHmi_jqueryui_TypeScript_DefinitelyTyped_IncludedInSolution>True</TcHmi_jqueryui_TypeScript_DefinitelyTyped_IncludedInSolution>
     <TcHmi_Microsoft_TypeScript_MSBuild_IncludedInSolution>True</TcHmi_Microsoft_TypeScript_MSBuild_IncludedInSolution>
+    <HmiCommunicationServerPort>3000</HmiCommunicationServerPort>
+    <HmiCommunicationServerAuthPort>13000</HmiCommunicationServerAuthPort>
+    <HmiCommunicationServerPublicPort>3443</HmiCommunicationServerPublicPort>
+    <HmiServerNodeAdvancedView>False</HmiServerNodeAdvancedView>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|TwinCAT HMI' ">
     <PlatformTarget>TwinCAT HMI</PlatformTarget>
@@ -57,226 +59,7 @@
   <Import Project="$(TwinCATHmi_Tasks)" />
   <Import Project="$(TwinCATHmi_Targets)" />
   <ItemGroup>
-    <Content Include="EventVisionControl\DetailsVideoPopup.js">
-      <SubType>Content</SubType>
-    </Content>
     <Content Include="EventVisionControl\Icons\alarmIcon.png">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\add-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\add.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\alarm.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\columns-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\columns.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\confirm-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\confirm.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\confirmall-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\confirmall.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\critical.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\date-time-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\date-time.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\deselect-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\deselect-selected.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\deselect.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\error.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\filter-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\filter.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\group-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\group.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\info.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\message.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\move-down-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\move-down.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\move-up-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\move-up.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\remove-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\remove.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\select-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\select.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\sort-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\sort.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\ungroup-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\ungroup.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\verbose.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base-Dark\Images\warning.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\add-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\add.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\alarm.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\columns-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\columns.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\confirm-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\confirm.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\confirmall-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\confirmall.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\critical.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\date-time-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\date-time.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\deselect-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\deselect-selected.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\deselect.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\error.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\filter-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\filter.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\group-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\group.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\info.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\message.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\move-down-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\move-down.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\move-up-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\move-up.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\remove-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\remove.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\select-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\select.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\sort-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\sort.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\ungroup-active.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\ungroup.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\verbose.svg">
-      <SubType>Content</SubType>
-    </Content>
-    <Content Include="EventVisionControl\Themes\Base\Images\warning.svg">
       <SubType>Content</SubType>
     </Content>
     <Content Include="Images\EventVideoPlayback_512x512.png">
@@ -309,6 +92,51 @@
     <Content Include="Scripts\moment.min.js">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="Server\ADS\ADS.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\ADS\ADS.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\ADS\ADS.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiLua\TcHmiLua.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiLua\TcHmiLua.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiLua\TcHmiLua.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSqliteLogger\TcHmiSqliteLogger.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSqliteLogger\TcHmiSqliteLogger.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSqliteLogger\TcHmiSqliteLogger.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSrv\TcHmiSrv.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSrv\TcHmiSrv.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiSrv\TcHmiSrv.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiUserManagement\TcHmiUserManagement.Config.default.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiUserManagement\TcHmiUserManagement.Config.remote.json">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Server\TcHmiUserManagement\TcHmiUserManagement.Storage.json">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="tsconfig.tpl.json">
       <SubType>Content</SubType>
       <Visible>true</Visible>
@@ -326,13 +154,12 @@
       <Visible>false</Visible>
     </Content>
     <Content Include="EventVisionControl\Icons\16x16.png" />
-    <Content Include="EventVisionControl\Template.html" />
-    <Content Include="EventVisionControl\Themes\Base\Style.css" />
-    <Content Include="EventVisionControl\Themes\Base-Dark\Style.css" />
     <Content Include="EventVisionControl\EventVisionControl.ts" />
     <Content Include="EventVisionControl\Style.css" />
     <Content Include="EventVisionControl\Description.json" />
     <Content Include="EventVisionControl\Schema\Types.Schema.json" />
+    <Content Include="EventVisionControl\Lang\Language.en.json" />
+    <Content Include="EventVisionControl\Lang\Language.de.json" />
     <Content Include=".tfignore">
       <SubType>Content</SubType>
       <Visible>false</Visible>
@@ -353,18 +180,82 @@
   <ItemGroup>
     <Folder Include="EventVisionControl\" />
     <Folder Include="EventVisionControl\Icons\" />
+    <Folder Include="EventVisionControl\Lang\" />
     <Folder Include="EventVisionControl\Schema\" />
-    <Folder Include="EventVisionControl\Themes\" />
-    <Folder Include="EventVisionControl\Themes\Base-Dark\" />
-    <Folder Include="EventVisionControl\Themes\Base-Dark\Images" />
-    <Folder Include="EventVisionControl\Themes\Base\" />
-    <Folder Include="EventVisionControl\Themes\Base\Images" />
+    <Folder Include="Fonts\" />
     <Folder Include="Images\" />
+    <Folder Include="Localization\" />
     <Folder Include="Scripts\" />
     <Folder Include="Scripts\images" />
-    <Folder Include="Scripts\typings\" />
-    <Folder Include="Scripts\typings\jqueryui\" />
-    <Folder Include="Scripts\typings\jquery\" />
+    <Folder Include="Server">
+      <WorkingDirectory>EventVision</WorkingDirectory>
+    </Folder>
+    <Folder Include="Server\ADS\" />
+    <Folder Include="Server\TcHmiLua\" />
+    <Folder Include="Server\TcHmiSqliteLogger\" />
+    <Folder Include="Server\TcHmiSrv\" />
+    <Folder Include="Server\TcHmiUserManagement\" />
+    <Folder Include="Themes\" />
+    <Folder Include="Themes\Base-Dark\" />
+    <Folder Include="Themes\Base-Dark\Images\" />
+    <Folder Include="Themes\Base\" />
+    <Folder Include="Themes\Base\Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fonts/Fonts.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts/Roboto-Condensed-webfont.woff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Localization/de.localization">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Localization/en.localization">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Properties/Default.tpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Properties/tchmi.framework.Schema.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Properties/tchmiconfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base-Dark/Base-Dark.theme">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base-Dark/Base-DarkStyle.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base-Dark/Images/Splash-320x534.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base-Dark/Images/Splash-420x200.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base-Dark/Images/Splash-800x600.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base/Base.theme">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base/BaseStyle.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base/Images/Splash-320x534.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base/Images/Splash-420x200.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Themes/Base/Images/Splash-800x600.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <PreBuildEventDependsOn>
@@ -395,6 +286,11 @@
     <_TcHmiNodePath Condition="'$(_TcHmiNodeJsMode)' == 'Global' AND '$(_TcHmiNodePath)' == '' AND Exists('C:\Program Files\nodejs\')">C:\Program Files\nodejs\</_TcHmiNodePath>
     <_TcHmiNodePath Condition="'$(_TcHmiNodeJsMode)' == 'Global' AND '$(_TcHmiNodePath)' == '' AND Exists('C:\Program Files (x86)\nodejs\')">C:\Program Files (x86)\nodejs\</_TcHmiNodePath>
   </PropertyGroup>
+  <PropertyGroup>
+    <TcHmi_ProjectDirectory Condition="'$(TcHmi_ProjectDirectory)' == ''">$(MSBuildProjectDirectory)</TcHmi_ProjectDirectory>
+    <TcHmi_ServerAddress Condition="'$(TcHmi_ServerAddress)' == ''">127.0.0.1</TcHmi_ServerAddress>
+    <TcHmi_ServerPort Condition="'$(TcHmi_ServerPort)' == ''">1010</TcHmi_ServerPort>
+  </PropertyGroup>
   <Target Name="ReTargetNodePath" Condition="'$(_TcHmiNodePath)' != ''" BeforeTargets="$(CompileDependsOn)">
     <PropertyGroup>
       <NodePath>$(_TcHmiNodePath)</NodePath>
@@ -409,8 +305,8 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.targets'))" />
   </Target>
-  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.targets" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.4.9.5\build\Microsoft.TypeScript.MSBuild.targets')" />
+  <Import Project="..\packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.targets" Condition="Exists('..\packages\Microsoft.TypeScript.MSBuild.5.9.2\build\Microsoft.TypeScript.MSBuild.targets')" />
 </Project>

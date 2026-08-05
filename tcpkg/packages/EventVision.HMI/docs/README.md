@@ -29,9 +29,21 @@ The control will be available in the TwinCAT HMI control toolbox.
 
 ## Requirements
 
-- TwinCAT 3 XAE (Build 4024 or higher)
-- TE2000 HMI Engineering
-- TwinCAT HMI Server 1.12 or higher
+* TwinCAT 3 XAE (Build 4026 or higher)
+* TE2000 HMI Engineering
+* Beckhoff.TwinCAT.HMI.Framework 14.5.1 or newer and Beckhoff.TwinCAT.HMI.Controls 14.7.1 or newer in the HMI project
+
+## Tested Versions
+
+| EventVision | HMI Framework | HMI Controls | HMI Server |
+|---|---|---|---|
+| 1.2.0 | 14.5.1 | 14.7.1 | 14.16.0 |
+| 1.1.3 | 14.3.154 | 14.3.154 | 14.3.x |
+
+Versions 1.1.3 and older subclass a popup class that newer Controls packages no
+longer expose, so they do not work on Controls 14.6 and newer. Version 1.2.0
+loads the popup base class from the Controls package at runtime and needs
+Controls 14.7.1 or newer.
 
 ## Documentation
 

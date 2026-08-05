@@ -1,0 +1,10 @@
+{
+    "locale": "de",
+    "localizedText": {
+        "Button_Text_PlayVideo": "VIDEO ABSPIELEN",
+        "Button_Text_WaitingForVideo": "WARTE AUF VIDEO",
+        "Button_Text_VideoUnavailable": "VIDEO NICHT VERFÜGBAR",
+        "Button_Tooltip_PlayVideo": "Das zu diesem Ereignis aufgezeichnete Video abspielen",
+        "Dialog_Title_VideoPlayback": "Videowiedergabe"
+    }
+}

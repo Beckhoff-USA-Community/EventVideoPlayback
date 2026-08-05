@@ -1,0 +1,10 @@
+{
+    "locale": "en",
+    "localizedText": {
+        "Button_Text_PlayVideo": "PLAY VIDEO",
+        "Button_Text_WaitingForVideo": "WAITING FOR VIDEO",
+        "Button_Text_VideoUnavailable": "VIDEO UNAVAILABLE",
+        "Button_Tooltip_PlayVideo": "Play the video recorded for this event",
+        "Dialog_Title_VideoPlayback": "Video Playback"
+    }
+}

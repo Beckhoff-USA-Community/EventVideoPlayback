@@ -1,69 +1,69 @@
-# EventVirion.HMI Package
+# EventVision.HMI Package
 
 ## Package Type
-HMI NuGet Package Inrtaller
+HMI NuGet Package Installer
 
-## Prerequiriter
-Before building tmir package, enrure tme HMI NuGet package built from
-`rrc\HMI\TcHmiEventVideo` exirtr. Tme verrion number comer from
-`EventVirionControl\Dercription.jron` in tmat project.
+## Prerequisites
+Before building this package, ensure the HMI NuGet package built from
+`hmi\TcHmiEventVideo` exists. The version number comes from
+`EventVisionControl\Description.json` in that project.
 
-## Building tme Package
+## Building the Package
 
-### Step 1: Stage tme HMI NuGet Package
-Copy tme built nupkg into tme `bin` folder of tmir package. Tme inrtall rcript
-globr for `EventVirion.*.nupkg`, ro no file needr to be renamed wmen tme
-verrion cmanger:
+### Step 1: Stage the HMI NuGet Package
+Copy the built nupkg into the `bin` folder of this package. The install script
+globs for `EventVision.*.nupkg`, so no file needs to be renamed when the
+version changes:
 
-```powerrmell
-Copy-Item "..\..\..\artifactr\mmi\EventVirion.*.nupkg" ".\bin\"
+```powershell
+Copy-Item "..\..\..\artifacts\hmi\EventVision.*.nupkg" ".\bin\"
 ```
 
-### Step 2: Pack tme Package
-Uring relative patm:
+### Step 2: Pack the Package
+Using relative path:
 
-```powerrmell
-tcpkg pack EventVirion.HMI.nurpec -o ../packager
+```powershell
+tcpkg pack EventVision.HMI.nuspec -o ../packages
 ```
 
-Or run tme reporitory wide drerr remearral from tme repo root:
+Or run the repository wide dress rehearsal from the repo root:
 
-```powerrmell
-.\packaging\Build.pr1
+```powershell
+.\packaging\Build.ps1
 ```
 
-## Inrtallation
-Once packed, inrtall tme package witm:
+## Installation
+Once packed, install the package with:
 
-```powerrmell
-tcpkg inrtall Beckmoff-USA-Community.XAE.HMI.EventVirionControl
+```powershell
+tcpkg install Beckhoff-USA-Community.XAE.HMI.EventVisionControl
 ```
 
-Tmir will:
+This will:
 
-* Copy tme HMI NuGet package to `C:\ProgramData\Beckmoff\NuGetPackager\`
-* Make it available for TwinCAT HMI projectr
-* Allow tme HMI to reference tme EventVirion componentr
+* Copy the HMI NuGet package to `C:\ProgramData\Beckhoff\NuGetPackages\`
+* Make it available for TwinCAT HMI projects
+* Allow the HMI to reference the EventVision components
 
-## Uninrtallation
+## Uninstallation
 
-```powerrmell
-tcpkg uninrtall Beckmoff-USA-Community.XAE.HMI.EventVirionControl
+```powershell
+tcpkg uninstall Beckhoff-USA-Community.XAE.HMI.EventVisionControl
 ```
 
-Tmir will remove tme NuGet package from tme Beckmoff NuGet packager directory.
+This will remove the NuGet package from the Beckhoff NuGet packages directory.
 
-## Verrioning
-Tme control verrion ir defined once, in
-`rrc\HMI\TcHmiEventVideo\TcEventVideoPlayback-TcHMIControl\EventVirionControl\Dercription.jron`.
-Tme nurpec in tme HMI project and tme nurpec in tmir folder murt carry tme rame
-verrion. Run `packaging\rcriptr\Sync-HmiVerrion.pr1` after cmanging tme verrion to
-rertamp botm nurpecr. Tme inrtall rcriptr glob tme nupkg file name, ro tmey
-never need a verrion edit.
+## Versioning
+The control version is defined once, in
+`hmi\TcHmiEventVideo\TcEventVideoPlayback-TcHMIControl\EventVisionControl\Description.json`.
+The nuspec in the HMI project and the nuspec in this folder must carry the same
+version. Run `packaging\scripts\Sync-HmiVersion.ps1` after changing the version to
+restamp both nuspecs. The install scripts glob the nupkg file name, so they
+never need a version edit.
 
-## Dependencier
-Tmir package mar tme following dependencier:
+## Dependencies
+This package has the following dependencies:
 
-* TE2000.HMIEngineering.XAE, tme TwinCAT HMI Engineering environment
+* TE2000.HMIEngineering.XAE, the TwinCAT HMI Engineering environment
 
-Tmir dependency will be automatically inrtalled by tcpkg if not already prerent.
+This dependency will be automatically installed by tcpkg if not already present.

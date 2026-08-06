@@ -1,6 +1,6 @@
 # TwinCAT Package Checksums
 
-**Generated:** 2025-11-18 14:35:28
+**Generated:** 2026-08-06 13:12:29
 **Release Folder:** C:\GitHub\EventVideoPlayback\packaging\.\release
 
 This file contains SHA256 checksums for all built packages to ensure integrity and traceability.
@@ -9,12 +9,9 @@ This file contains SHA256 checksums for all built packages to ensure integrity a
 
 | Package Name | Version | SHA256 Checksum |
 |--------------|---------|-----------------|
-| Beckhoff-USA-Community.EventVideoPlayback.XAE | 2.0.3 | `A11D6FD7200D4348927156F6696F167FBB754801CB6B9AA03FCFDB0F199CE700` |
-| Beckhoff-USA-Community.EventVideoPlayback.XAR | 2.0.3 | `51C9C7C163452E7BB8D83D744874319E33734BC5F3764897E49E36B05D1D17F7` |
-| Beckhoff-USA-Community.XAE.Documentation.EventVideoPlayback | 2.0.3 | `6452850BBB777EA92735790EF37B50420C0A18F4E1A0F3C914F528A8D73389E4` |
-| Beckhoff-USA-Community.XAE.HMI.EventVisionControl | 1.1.3 | `3BD210416439B9AA7E39D15981F2EF3546E51FDF49B758ED4FFF16007C9E9F43` |
-| Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback | 1.1.1 | `192E7A6C33FEB397D2BB8BB6E36BB72B8AD212A40D8EB4F135E53E356C5D45A7` |
-| Beckhoff-USA-Community.XAR.Service.EventVideoPlayback | 2.0.0 | `447A0012C5E2C83ABAC3EF37C346FCBED0C8CD294B67C03D996FED11C24EB4AC` |
+| Beckhoff-USA-Community.EventVideoPlayback.XAE | 2.0.3 | `5CB6EE438CD4E35B79F1FB6BECC9B6F7F2439198E3D8EFD851888FC3B4CB1766` |
+| Beckhoff-USA-Community.EventVideoPlayback.XAR | 2.0.3 | `10D9AA08361457AF9E5FFDB9226EF715C2F2A7FEF153507C215F62E7147E6B49` |
+| Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback | 1.1.1 | `08B301A50E3917DFE63EB69D623943F65AB5926547D6B079B96771D90984CAC7` |
 
 ## Verification Instructions
 

@@ -8,8 +8,8 @@
     <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
     <copyright>(c) Beckhoff Automation LLC</copyright>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-	<licenseUrl>https://packages.beckhoff-usa-community.com/assets/EventVision.HMI/LICENSE.txt</licenseUrl>
-	<iconUrl>https://packages.beckhoff-usa-community.com/assets/EventVision.HMI/icon.png</iconUrl>
+    <license type="file">LICENSE.md</license>
+    <icon>package-icon.png</icon>
     <readme>docs/README.md</readme>
     <summary>EventVision HMI control for TwinCAT HMI integration</summary>
     <tags>Beckhoff TwinCAT AllowMultipleVersions</tags>
@@ -23,5 +23,7 @@
     <file src="tools\**" target="tools" />
     <file src="bin\**" target="tools" />
 	<file src="docs\README.md" target="docs\README.md"/>
+    <file src="LICENSE.md" target="LICENSE.md" />
+    <file src="package-icon.png" target="package-icon.png" />
   </files>
 </package>

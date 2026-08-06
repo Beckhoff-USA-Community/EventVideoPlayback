@@ -9,7 +9,7 @@
     <copyright>(c) Beckhoff Automation LLC</copyright>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="file">LICENSE.md</license>
-  	<iconUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.Service/icon.png</iconUrl>
+    <icon>package-icon.png</icon>
     <readme>docs/README.md</readme>
     <summary>EventVideoPlayback runtime system service for TwinCAT XAR</summary>
     <tags>Beckhoff Setup SystemServiceRestart</tags>
@@ -24,5 +24,6 @@
     <file src="bin\**" target="tools\bin" />
     <file src="LICENSE.md" target="LICENSE.md" />
 	<file src="docs\README.md" target="docs\README.md"/>
+    <file src="package-icon.png" target="package-icon.png" />
   </files>
 </package>

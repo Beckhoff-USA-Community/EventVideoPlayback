@@ -12,7 +12,7 @@ packaging/
 │   ├── EventVision.HMI/
 │   ├── EventVideoPlayback.XAE/
 │   ├── EventVideoPlayback.XAR/
-│   └── EventvideoPlayback.Documentation/
+│   └── EventVideoPlayback.Documentation/
 ├── release/               # Built .nupkg files and checksums.md
 ├── scripts/               # Build scripts and documentation
 │   ├── Build-TcPackages.ps1
@@ -53,7 +53,7 @@ python convert_to_pdf.py
 This script:
 - Automatically installs required Python packages (markdown, weasyprint)
 - Converts all markdown files from `gh_pages\_docs\` to PDFs
-- Outputs individual PDFs to `packages\EventvideoPlayback.Documentation\bin\`
+- Outputs individual PDFs to `packages\EventVideoPlayback.Documentation\bin\`
 - Creates a combined `complete-documentation.pdf` with all documentation
 - No external dependencies needed (no LaTeX or pandoc required!)
 

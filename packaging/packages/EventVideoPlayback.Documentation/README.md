@@ -50,7 +50,7 @@ To build this package from source:
 
 ### Step 1: Navigate to Package Directory (Optional)
 ```powershell
-cd C:\GitHub\EventVideoPlayback\packaging\packages\EventvideoPlayback.Documentation
+cd C:\GitHub\EventVideoPlayback\packaging\packages\EventVideoPlayback.Documentation
 ```
 
 ### Step 2: Pack the Package
@@ -61,7 +61,7 @@ tcpkg pack EventVideoPlayback.Documentation.nuspec -o ../packages
 
 Or using the full path:
 ```powershell
-tcpkg pack "C:\GitHub\EventVideoPlayback\packaging\packages\EventvideoPlayback.Documentation\EventVideoPlayback.Documentation.nuspec" -o "C:\GitHub\EventVideoPlayback\packaging\packages"
+tcpkg pack "C:\GitHub\EventVideoPlayback\packaging\packages\EventVideoPlayback.Documentation\EventVideoPlayback.Documentation.nuspec" -o "C:\GitHub\EventVideoPlayback\packaging\packages"
 ```
 
 This will create the package in the packages directory.
@@ -69,7 +69,7 @@ This will create the package in the packages directory.
 ## Package Structure
 
 ```
-EventvideoPlayback.Documentation/
+EventVideoPlayback.Documentation/
 ├── EventVideoPlayback.Documentation.nuspec  # Package manifest
 ├── TF1000-Base.png                          # Package icon
 ├── README.md                                # This file

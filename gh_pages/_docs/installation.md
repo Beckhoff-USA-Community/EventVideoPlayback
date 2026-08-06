@@ -68,8 +68,8 @@ tcpkg config unset -n VerifySignatures
 
 Choose the installation method that best fits your environment:
 
-- **[Offline Installation](#offline-package-configuration)** - For air-gapped systems or manual installation (recommended)
-- **[Online Installation](#online-package-feed-connection)** - For systems with internet access
+- **[Online Installation](#online-package-feed-connection)** for systems with internet access (recommended, and how you get updates)
+- **[Offline Installation](#offline-package-configuration)** for air-gapped systems or when you need a specific version
 
 
 ---
@@ -112,34 +112,41 @@ tcpkg source add -n "Beckhoff USA Community Local" -s "C:\Program Files\Beckhoff
 
 ---
 
-## Online Package Feed Connection (Optional - Beta)
+## Online Package Feed Connection
 
-**Best for:** Systems with internet connectivity and access to the Beckhoff USA Community package feed.
+**Best for:** Systems with internet connectivity.
 
-### Option 1: Add Package Feed via GUI
+The packages are published to the GitHub package feed of the Beckhoff USA Community organization.
 
-Add the Beckhoff USA Community package feed to TwinCAT Package Manager:
+<div class="alert alert-warning">
+  <strong>Feed change:</strong> The old community feed at packages.beckhoff-usa-community.com has been retired. If you added it previously, remove it with <code>tcpkg source remove -n "Beckhoff USA Community Stable"</code> and add the feed below instead.
+</div>
 
-1. Open the **TwinCAT Package Manager GUI**
-2. Click the **Settings** (Gear Icon) in the bottom left corner
-3. Select **Feeds**
-4. Add a new feed with the following settings:
+### Step 1: Create a GitHub personal access token
 
-   - **Feed URL:** `https://packages.beckhoff-usa-community.com/stable/v3/index.json`
-   - **Feed Name:** `Beckhoff USA Community Stable`
-   - **Set credentials:** Deselect (not required)
+GitHub requires a login for its package feeds, even for public packages, so you need a GitHub account and a personal access token. In your GitHub account settings, under Developer settings, create a token of the **classic** type with the **read:packages** scope.
 
-5. Click **Save** and agree to the disclaimer
+<div class="alert alert-info">
+  <strong>Step by step:</strong> <a href="https://github.com/Beckhoff-USA-Community/BAUS_Community_General_Assets/blob/main/feed-setup.md" target="_blank">Adding the package feed</a> walks through creating the token click by click, and covers the common failures. It applies to every Beckhoff USA Community package, not just this project.
+</div>
 
-### Option 2: Add Package Feed via PowerShell
+### Step 2: Add the feed
 
-Run the following command in PowerShell:
+Run both commands from an administrator PowerShell, in this order:
 
 ```powershell
-tcpkg source add -n "Beckhoff USA Community Stable" -s "https://packages.beckhoff-usa-community.com/stable/v3/index.json"
+tcpkg config unset -n VerifySignatures
+tcpkg source add -n "Beckhoff-USA-Community" -s https://nuget.pkg.github.com/Beckhoff-USA-Community/index.json -u <your GitHub user name> --take 100
 ```
 
-Agree to the disclaimer when prompted.
+Enter the token as the password when prompted, then accept the community disclaimer.
+
+Both steps are required, and the order matters:
+
+- Community packages carry no Beckhoff signature, including the disclaimer package the feed presents while it is being added, so verification must be off before the feed is added.
+- GitHub rejects search requests larger than 100 results per page while the package manager asks for 500 by default. Without `--take 100` the command fails with "Failed to retrieve metadata from source".
+
+If adding the feed fails, confirm the token is the classic type (it starts with `ghp_`), that it has the read:packages scope, and that it has not expired.
 
 ---
 

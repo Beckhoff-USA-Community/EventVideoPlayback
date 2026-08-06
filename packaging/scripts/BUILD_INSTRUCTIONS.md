@@ -69,7 +69,7 @@ packaging/
 │   ├── EventVision.HMI/
 │   ├── EventVideoPlayback.XAE/
 │   ├── EventVideoPlayback.XAR/
-│   └── EventvideoPlayback.Documentation/
+│   └── EventVideoPlayback.Documentation/
 ├── release/               # Built .nupkg files and checksums.md
 └── scripts/               # Build scripts and documentation
     ├── Build-TcPackages.ps1
@@ -83,7 +83,7 @@ The script will automatically discover and build ALL packages in the `packages` 
 
 | Package | Directory | Nuspec File |
 |---------|-----------|-------------|
-| EventVideoPlayback.Documentation | `packages/EventvideoPlayback.Documentation` | EventVideoPlayback.Documentation.nuspec |
+| EventVideoPlayback.Documentation | `packages/EventVideoPlayback.Documentation` | EventVideoPlayback.Documentation.nuspec |
 | EventVideoPlayback.Library | `packages/EventVideoPlayback.Library` | EventVideoPlayback.Library.nuspec |
 | EventVideoPlayback.Service | `packages/EventVideoPlayback.Service` | EventVideoPlayback.Service.nuspec |
 | EventVideoPlayback.XAE.Workload | `packages/EventVideoPlayback.XAE` | EventVideoPlayback.XAE.Workload.nuspec |

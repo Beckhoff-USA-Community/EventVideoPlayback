@@ -6,7 +6,17 @@ This repository includes both the source files and the release package for the T
 
 ## Quick Start
 
-**For end users**: Instead of building from source, connect to the [Beckhoff USA Communtiy package](https://packages.beckhoff-usa-community.com/) feed like you would normally with Beckhoff Official Packages.
+**For end users**: Instead of building from source, install from the Beckhoff USA Community package feed with TwinCAT Package Manager. From an administrator PowerShell, entering your GitHub personal access token when it prompts for a password:
+
+```powershell
+tcpkg config unset -n VerifySignatures
+tcpkg source add -n "Beckhoff-USA-Community" -s https://nuget.pkg.github.com/Beckhoff-USA-Community/index.json -u <your GitHub user name> --take 100
+tcpkg install Beckhoff-USA-Community.EventVideoPlayback.XAE -y
+```
+
+Install `Beckhoff-USA-Community.EventVideoPlayback.XAR` instead on a runtime target. The first two commands set up the feed and are only needed once per machine. [Adding the package feed](https://github.com/Beckhoff-USA-Community/BAUS_Community_General_Assets/blob/main/feed-setup.md) walks through creating the token, explains why both are required and why the order matters, and covers the common failures. The [installation guide](https://beckhoff-usa-community.github.io/EventVideoPlayback/docs/installation/) covers this project specifically, including offline installs.
+
+The former community feed at packages.beckhoff-usa-community.com has been retired. If you added it previously, remove it and add the feed above instead.
 
 **For developers**: See [Building from Source](#building-from-source) below.
 
@@ -82,7 +92,7 @@ Built packages will be in `packaging/release/`.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ### Third-Party Licenses
 

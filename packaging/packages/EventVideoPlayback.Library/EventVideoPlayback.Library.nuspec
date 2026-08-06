@@ -8,8 +8,8 @@
     <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
     <copyright>(c) Beckhoff Automation LLC</copyright>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-	<licenseUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.Library/LICENSE.txt</licenseUrl>
-	<iconUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.Library/icon.png</iconUrl>
+    <license type="file">LICENSE.md</license>
+    <icon>package-icon.png</icon>
     <readme>docs/README.md</readme>
     <summary>PLC library for Event Video Playback system integration</summary>
     <tags>Beckhoff TwinCAT AllowMultipleVersions</tags>
@@ -24,5 +24,7 @@
     <file src="tools\**" target="tools" />
     <file src="bin\**" target="tools" />
 	<file src="docs\README.md" target="docs\README.md"/>
+    <file src="LICENSE.md" target="LICENSE.md" />
+    <file src="package-icon.png" target="package-icon.png" />
   </files>
 </package>

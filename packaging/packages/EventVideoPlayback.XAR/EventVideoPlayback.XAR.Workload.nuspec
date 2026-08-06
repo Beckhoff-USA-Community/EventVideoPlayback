@@ -6,8 +6,7 @@
     <title>Event Video Playback</title>
     <authors>Beckhoff Automation LLC</authors>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-	<licenseUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.XAR/LICENSE.txt</licenseUrl>
-	<iconUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.XAR/icon.png</iconUrl>
+    <license type="file">LICENSE.md</license>
     <readme>docs/README.md</readme>
     <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
     <description>
@@ -25,5 +24,6 @@
   <files>
     <file src="tools\**" target="tools" />
 	<file src="docs\README.md" target="docs\README.md"/>
+    <file src="LICENSE.md" target="LICENSE.md" />
   </files>
 </package>

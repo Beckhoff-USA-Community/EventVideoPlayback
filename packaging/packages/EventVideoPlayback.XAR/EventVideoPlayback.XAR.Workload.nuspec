@@ -13,7 +13,7 @@
       This workload contains the Event Video Playback system service, documentation, PLC library, and HMI user control.
     </description>
     <copyright>(c) Beckhoff Automation LLC</copyright>
-    <tags>Beckhoff TwinCAT Workload CategoryBeckhoff&#160;USA&#160;Community&#160;&#124;&#160;Vision VariantXAR</tags>
+    <tags>Beckhoff TwinCAT Workload CategoryBeckhoff&#160;USA&#160;Community VariantXAR</tags>
     <packageTypes>
       <packageType name="Workload" />
     </packageTypes>

@@ -57,8 +57,20 @@ artifacts/
 
 # ===== TwinCAT Specific =====
 _Boot/
+# Vendored library cache. TwinCAT restores these from the library repository on open, and the
+# placeholder resolutions float to the newest installed version, so committing them only pins
+# stale copies and duplicates versions.
+_Libraries/
+_Repository/
 *.tpy
 *.tmc
+# Editor session artifact XAE leaves next to the solution
+*.~u
+# Exception: the hand written event class, a source file the PLC project cannot build without
+!src/PLC/EventVideoPlayback/EventVideoPlayback/VideoAlarm.tmc
+# Exception: the PLC project's imported copy of that event class. XAE drops the project
+# reference when this file is absent, and the saved library then omits the event class.
+!src/PLC/EventVideoPlayback/EventVideoPlayback/EventVideoPlayback/ExternalTypes.tmc
 *.compiled-library
 *.compileinfo
 

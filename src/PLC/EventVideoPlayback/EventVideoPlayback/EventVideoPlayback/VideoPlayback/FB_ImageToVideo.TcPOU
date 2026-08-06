@@ -35,7 +35,13 @@ VAR
 	WriteFileState		 : INT;
 	sImageToSaveName	 : STRING;
 	fbWriteImage		 : FB_VN_WriteImage;
-	_fbEvent			 : REFERENCE TO FB_TcEvent;
+	// Timestamp of the event that started the current capture. Copied by value in OnAlarmRaised:
+	// the listener may reuse its event object before state 20 builds the file name from it.
+	EventTimestampUtc	 : ULINT;
+	// Consecutive failed write attempts for the current frame. Capped so a persistent disk problem
+	// abandons the capture and reports through Error and ErrorID, instead of retrying the same
+	// frame forever with no outward sign.
+	WriteImageFailCount	 : UINT;
 	BufferHasRolledOver	 : BOOL := FALSE;
 
 	// Video creation vars
@@ -59,13 +65,15 @@ VAR
 
 	// Properties to build image
 	_VideoOutputDirectory : STRING := 'C:\TcAlarmVideo';
-	_FramesPerSecond	  : UINT   := 10; //Set to 10 so no divide by zero if not setup
+	// Frame rate of the video. The setter clamps this to at least 1, because CyclicLogic divides by it.
+	_FramesPerSecond	  : UINT   := 10;
 	_CameraName			  : STRING := 'Camera1';
 	_JSONAttribute		  : T_MaxString;
+	// Scales each frame before buffering. The setter limits values above 1 and replaces values of
+	// 0 or below with this default.
 	_ReductionFactor	  : LREAL := 0.25;
 
 	// Alarm data
-	sJsonAttribute	 : STRING(10000);
 	JSONFilter		 : FB_TcEventFilter;
 	_Subscribe		 : BOOL := TRUE;
 	_Unsubscribe	 : BOOL;
@@ -104,7 +112,13 @@ END_VAR]]></Declaration>
     <Folder Name="Method" Id="{c8d9100b-95bf-4cf2-aac4-926e3efcf7b6}" />
     <Folder Name="Properties" Id="{01061cde-7221-4fb9-86e5-57ea53618717}" />
     <Method Name="AddImage" Id="{d6afcfa4-885a-4b7a-96df-7bf54c966958}" FolderPath="Method\">
-      <Declaration><![CDATA[METHOD AddImage
+      <Declaration><![CDATA[(* Adds one camera frame to the ring buffer. Call this every scan that produces a new image.
+   The frame is scaled by ReductionFactor (with odd pixel dimensions trimmed, which the video
+   encoder requires) and stored at the current ring position. Frames are ignored while a capture
+   is writing images to disk, and while the function block is in an error state.
+   An alarm is ignored until the buffer has filled once, so the first capture cannot start until
+   TimeBeforeEvent plus TimeAfterEvent has elapsed since start up. *)
+METHOD AddImage
 VAR_INPUT
 	ipImageIn : ITcVnImage;
 END_VAR
@@ -166,7 +180,8 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Busy" Id="{ccbb0dec-838f-46e4-85a7-c72d036ab9f7}" FolderPath="I_BaseFB\">
-      <Declaration><![CDATA[PROPERTY Busy : BOOL]]></Declaration>
+      <Declaration><![CDATA[(* TRUE while a video capture is in progress, from the alarm until the encode request has been sent. *)
+PROPERTY Busy : BOOL]]></Declaration>
       <Get Name="Get" Id="{a8a6efb9-92aa-4848-888a-fcd49584a512}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -176,7 +191,8 @@ END_VAR]]></Declaration>
       </Get>
     </Property>
     <Property Name="CameraName" Id="{e4cdef8f-51e2-04ed-3588-14c23e76c196}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY CameraName : STRING]]></Declaration>
+      <Declaration><![CDATA[(* Name of the camera this instance records. Forms part of the output path and identifies the alarm. Set before the first CyclicLogic call. Defaults to Camera1. *)
+PROPERTY CameraName : STRING]]></Declaration>
       <Set Name="Set" Id="{f300cdb3-04a7-0d8c-3a1f-a0ccf51a5f91}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -186,7 +202,12 @@ END_VAR]]></Declaration>
       </Set>
     </Property>
     <Method Name="CyclicLogic" Id="{a45ed927-9782-499f-8aba-ec4707a538c3}" FolderPath="I_CyclicFB\">
-      <Declaration><![CDATA[METHOD PUBLIC CyclicLogic
+      <Declaration><![CDATA[(* Drives the function block. Must be called once per PLC scan.
+   Runs Initialize on the first scans, services the event listener, executes the capture state
+   machine (dump buffered frames to disk, then ask the Windows service to encode them), keeps the
+   buffer size and router memory checks up to date, and retries the service connection while the
+   ImageToVideoService alarm is raised. *)
+METHOD PUBLIC CyclicLogic
 VAR_INPUT
 END_VAR
 
@@ -235,9 +256,10 @@ END_IF
 CASE VideoCaptureState OF
 	0:
 		IF TriggerVideoCapture THEN
-			_Busy			  := TRUE;
-			x				  := 1;
-			VideoCaptureState := 10;
+			_Busy				:= TRUE;
+			x					:= 1;
+			WriteImageFailCount	:= 0;
+			VideoCaptureState	:= 10;
 		END_IF
 
 	10: // wait for delay time to capture images after event
@@ -253,10 +275,33 @@ CASE VideoCaptureState OF
 		END_IF
 
 		IF WriteImage(Index := x, BufferImageSaveNameIndex := TmpIndex) THEN
-			x := x + 1;
+			x					:= x + 1;
+			WriteImageFailCount := 0;
+		ELSIF Error_FailedToWriteImagesToDisk THEN
+			// One attempt failed. WriteImage clears this flag when it starts the next attempt, so
+			// this branch runs once per failed attempt rather than once per scan.
+			WriteImageFailCount := WriteImageFailCount + 1;
+			IF WriteImageFailCount >= Parameters_EventVideoPlayback.MAX_IMAGE_WRITE_RETRIES THEN
+				// Give up on this capture. Without a cap the state machine retries the same frame
+				// forever, which silently freezes all further capture until a PLC restart.
+				// The error is reported through Error and ErrorID rather than an alarm: none of
+				// the four event entries describes a disk write failure, and the service alarm
+				// would be cleared by the unrelated service heartbeat. Reset clears it.
+				WriteImageFailCount				:= 0;
+				Error_FailedToWriteImagesToDisk	:= FALSE;
+				WriteFileState					:= 0;
+				VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].Clear(0, 0);
+				TriggerVideoCapture				:= FALSE;
+				WriteImageWaitResult			:= FALSE;
+				_Busy							:= FALSE;
+				_Error							:= TRUE;
+				_ErrorID						:= Parameters_EventVideoPlayback.ERROR_IMAGE_WRITE_FAILED;
+				VideoCaptureState				:= 0;
+			END_IF
 		END_IF
 
-		IF x > CurrentBufferMax THEN
+		// Only advance when this scan is still capturing. The give-up above already moved on.
+		IF VideoCaptureState = 15 AND x > CurrentBufferMax THEN
 			TriggerVideoCapture	 := FALSE;
 			VideoCaptureState	 := 20;
 			WriteImageWaitResult := FALSE;
@@ -265,7 +310,7 @@ CASE VideoCaptureState OF
 	20: // Build string paths and names
 
 		// Time is UTC and we need it in local time zone. 
-		EventTimestamp1 := FILETIME64_TO_SYSTEMTIME(_fbevent.nTimestamp);
+		EventTimestamp1 := FILETIME64_TO_SYSTEMTIME(EventTimestampUtc);
 		SystemTimeToTzSpecificLocalTime(in := EventTimestamp1, tzInfo := TimeZoneInfo, out => EventTimestamp2);
 		TimeDateStamp := SYSTEMTIME_TO_STRING(EventTimestamp2);
 		FindAndReplaceChar(ADR(TimeDateStamp),
@@ -295,7 +340,8 @@ CASE VideoCaptureState OF
 		JsonImageSource	  := CONCAT(_VideoOutputDirectory, '\');
 		JsonImageSource	  := CONCAT(JsonImageSource, _CameraName);
 		JsonImageSource	  := CONCAT(JsonImageSource, '\');
-		JsonImageSource	  := CONCAT(JsonImageSource, 'images');
+		// Capital I matches the folder WriteImage actually creates below.
+		JsonImageSource	  := CONCAT(JsonImageSource, 'Images');
 		VideoCaptureState := 30;
 		
 
@@ -369,12 +415,12 @@ AfterEventDelay(IN := VideoCaptureState = 10, PT := _TimeAfterEvent);
 	The parameters that can be adjusted
 		1. FramesPerSecond
 		2. Time Before Event
-		3. Time Afeter Event
+		3. Time After Event
 		4. MAX Number of Frames
 		5. Reduction Factor
-		
+
 	Fixed Parameters
-		1. The memmory - 50% of router memory (Parameter_Vision.MAX_PERCENT_ROUTER_MEM_FOR_BUFFER in %)	
+		1. The memory, 50% of router memory (Parameters_EventVideoPlayback.MAX_PERCENT_ROUTER_MEM_FOR_BUFFER in %)
 *)
 
 // Monitor the actual needed buffer size
@@ -383,7 +429,8 @@ IF CurrentBufferMax > Parameters_EventVideoPlayback.MAX_NUMBER_IMAGES_2_VIDEO TH
 	CurrentBufferMax := TO_UINT(Parameters_EventVideoPlayback.MAX_NUMBER_IMAGES_2_VIDEO);
 END_IF
 
-// Calculated Video length from parameters
+// Calculated Video length from parameters. _FramesPerSecond is clamped to at least 1 by its
+// setter, so this division is safe.
 VideoLengthCalculated := CurrentBufferMax * 1000 / _FramesPerSecond;
 VideoAskedLength	  := TO_LREAL(_TimeAfterEvent + _TimeBeforeEvent);
 IF VideoAskedLength > VideoLengthCalculated THEN
@@ -399,8 +446,13 @@ IF tmpIndex < 1 THEN
 	tmpIndex := CurrentBufferMax;
 END_IF
 
-// Get Image size
-F_VN_ExportImageSize(ipImage := BufferImageRing[tmpIndex], ImageMemCheckSize, S_OK);
+// Guard the ring index. CurrentBufferMax is 0 until the first scan computes it, and a very short
+// configured window can round it to 0, which would index element 0 of an ARRAY[1..MAX].
+IF tmpIndex >= 1 AND tmpIndex <= Parameters_EventVideoPlayback.MAX_NUMBER_IMAGES_2_VIDEO THEN
+	// Get Image size
+	F_VN_ExportImageSize(ipImage := BufferImageRing[tmpIndex], ImageMemCheckSize, S_OK);
+END_IF
+
 IF ImageMemCheckSize > 0 THEN
 	IF RouterInfo.maxMem = 0 THEN										  // Larger than 4095MB
 		TmpMemory := TO_ULINT(Parameters_EventVideoPlayback.LARGE_ROUTER_MEMORY) * 1024 * 1024; //Check to see if user put in a value
@@ -447,8 +499,14 @@ IF VideoCaptureAlarm[E_VideoAlarm.ImageToVideoService].bRaised AND (Check3rdPart
 		writeADSConnection(WRITE := FALSE);
 		IF NOT writeADSConnection.ERR THEN
 			VideoCaptureAlarm[E_VideoAlarm.ImageToVideoService].Clear(0, 0);
-			_Error	 := FALSE;
-			_ErrorID := 0;
+
+			// The service is reachable again, so clear the connection error only. An image write
+			// failure is a separate fault that this heartbeat says nothing about, and clearing it
+			// here would hide it. Reset owns that one.
+			IF _ErrorID <> Parameters_EventVideoPlayback.ERROR_IMAGE_WRITE_FAILED THEN
+				_Error	 := FALSE;
+				_ErrorID := 0;
+			END_IF
 		END_IF
 
 		Check3rdPartyRunning := FALSE;
@@ -465,7 +523,8 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="Error" Id="{2a11e0e7-1b92-4530-8ba4-bb24a785ca93}" FolderPath="I_BaseFB\">
-      <Declaration><![CDATA[PROPERTY Error : BOOL]]></Declaration>
+      <Declaration><![CDATA[(* TRUE when the function block has latched an error. Read ErrorID for the cause and call Reset to clear. The two configuration alarms also set this without an ErrorID; read IsTooLongForBufferFPS and IsImageBufferOrRouterMemoryTooSmall to tell them apart. *)
+PROPERTY Error : BOOL]]></Declaration>
       <Get Name="Get" Id="{bc5b4af7-7208-47b3-85f4-75023fc88bfb}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -475,7 +534,8 @@ END_VAR]]></Declaration>
       </Get>
     </Property>
     <Property Name="ErrorID" Id="{e42c558a-0a5c-4071-b956-2bb78ef957bf}" FolderPath="I_BaseFB\">
-      <Declaration><![CDATA[PROPERTY ErrorID : UDINT]]></Declaration>
+      <Declaration><![CDATA[(* Code of the most recent failure: an ADS result from the service write, the image write failure code, or the error of the time zone or router memory read during start up. The router memory code is recorded without setting Error, because that failure is not fatal. *)
+PROPERTY ErrorID : UDINT]]></Declaration>
       <Get Name="Get" Id="{813e648f-25d3-442b-bb4b-8107751d20e9}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -485,17 +545,25 @@ END_VAR]]></Declaration>
       </Get>
     </Property>
     <Property Name="FramesPerSecond" Id="{2794357e-43a7-0a8f-0e1e-7a734ceac7dc}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY FramesPerSecond : UINT]]></Declaration>
+      <Declaration><![CDATA[(* Frame rate of the recorded video, and the rate at which AddImage is expected to be called. Also sizes the ring buffer together with the time window. Clamped to at least 1. Defaults to 10. *)
+PROPERTY FramesPerSecond : UINT]]></Declaration>
       <Set Name="Set" Id="{b29710f5-6241-068f-139e-9a8e976b55c4}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
         <Implementation>
-          <ST><![CDATA[_FramesPerSecond := FramesPerSecond;]]></ST>
+          <ST><![CDATA[// Clamp to at least 1. CyclicLogic divides by this value when it works out the
+// video length, so a zero would fault the task.
+IF FramesPerSecond < 1 THEN
+	_FramesPerSecond := 1;
+ELSE
+	_FramesPerSecond := FramesPerSecond;
+END_IF]]></ST>
         </Implementation>
       </Set>
     </Property>
     <Property Name="InitComplete" Id="{6098a5b7-3796-4b71-8688-bfb08f704320}" FolderPath="I_BaseFB\">
-      <Declaration><![CDATA[PROPERTY InitComplete : BOOL]]></Declaration>
+      <Declaration><![CDATA[(* TRUE once the start up sequence has finished and the block is recording. *)
+PROPERTY InitComplete : BOOL]]></Declaration>
       <Get Name="Get" Id="{81542641-5245-44a8-87c1-aebfebfbf480}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -505,7 +573,12 @@ END_VAR]]></Declaration>
       </Get>
     </Property>
     <Method Name="Initialize" Id="{2692978a-1e77-45c5-8290-3652c94063d1}" FolderPath="Method\">
-      <Declaration><![CDATA[METHOD Initialize : BOOL
+      <Declaration><![CDATA[(* One time start up sequence. Called by CyclicLogic until it returns TRUE.
+   Reads the local time zone (used to name videos in local time), reads router memory for the
+   buffer size check, creates the four alarms, then writes once to the Windows service to confirm
+   it is reachable. A time zone or router failure sets Error and ErrorID but does not stop start
+   up: the block continues on documented fallbacks. *)
+METHOD Initialize : BOOL
 VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
@@ -521,8 +594,10 @@ END_VAR]]></Declaration>
 			GetTimeZone(sNetID := '', bExecute := FALSE);
 			SequenceState := 10;
 		ELSIF GetTimeZone.bError THEN
+			// Report the underlying code rather than a sentinel. Initialization still continues:
+			// without time zone information the stamps stay UTC, which is degraded but usable.
 			_Error		  := TRUE;
-			_ErrorID	  := 16#FFFFFFFF;
+			_ErrorID	  := GetTimeZone.nErrId;
 			SequenceState := 10;
 		END_IF
 
@@ -537,6 +612,16 @@ END_VAR]]></Declaration>
 				  info	   => RouterInfo);
 
 		IF NOT RouterMem.bBusy THEN
+			// Read the outputs before the terminating call, so a block that clears them on the
+			// falling edge of bExecute cannot hide the failure.
+			IF RouterMem.bError THEN
+				// Record the code but deliberately do NOT latch _Error. RouterInfo.maxMem stays 0,
+				// which the memory check in CyclicLogic treats as "use LARGE_ROUTER_MEMORY", so
+				// this is a degraded start rather than a fault. Latching _Error here would gate
+				// AddImage and silently stop all image capture for a transient read failure.
+				_ErrorID := RouterMem.nErrID;
+			END_IF
+
 			RouterMem(sNetId := '', bExecute := FALSE);
 			SequenceState := 20;
 		END_IF
@@ -544,7 +629,7 @@ END_VAR]]></Declaration>
 	// Create alarms
 	20:
 		_JSONAttribute := CONCAT(STR1 := '{CreateVid: 1, CameraName: "', STR2 := _CameraName);
-		_JSONAttribute := CONCAT(STR1 := _JSONAttribute, STR2 := '"}',);
+		_JSONAttribute := CONCAT(STR1 := _JSONAttribute, STR2 := '"}');
 		VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].CreateEx(stEventEntry := TC_EVENTS.VideoAlarm.Camera1Alarm, bWithConfirmation := FALSE, ipSourceInfo := 0);
 		VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].SetJsonAttribute(sJsonAttribute := _JSONAttribute);
 		VideoCaptureAlarm[E_VideoAlarm.Camera1Alarm].ipArguments.AddString(value := _CameraName);
@@ -553,7 +638,8 @@ END_VAR]]></Declaration>
 		VideoCaptureAlarm[E_VideoAlarm.VideoConfigTooLongForBufferSize].CreateEx(stEventEntry := TC_EVENTS.VideoAlarm.VideoConfigTooLongForBufferSize, bWithConfirmation := FALSE, ipSourceInfo := 0);
 		SequenceState := 30;
 
-	30: // This delay is to make sure we can talk to the ADS server correctly and not fail. Timing tested at 10s
+	30: // Settle delay so the first ADS write to the service does not fail on a cold start.
+		// The delay is the DelayTON preset at the end of this method.
 		IF DelayTON.Q THEN
 			SequenceState := 35;
 		END_IF
@@ -588,7 +674,8 @@ DelayTON(IN := SequenceState = 30, PT := T#3S);]]></ST>
       </Implementation>
     </Method>
     <Property Name="IsImageBufferOrRouterMemoryTooSmall" Id="{d7da6870-5180-4628-ad40-8067d8896635}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY IsImageBufferOrRouterMemoryTooSmall : bool]]></Declaration>
+      <Declaration><![CDATA[(* TRUE when the configured buffer needs more router memory than is available. Raises the RouterMemoryTooSmall alarm. Reduce the time window, frame rate or reduction factor, or increase router memory. *)
+PROPERTY IsImageBufferOrRouterMemoryTooSmall : BOOL]]></Declaration>
       <Get Name="Get" Id="{fb63b9c9-0608-4be4-aa01-b8c2fd81072d}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -599,7 +686,8 @@ END_VAR
       </Get>
     </Property>
     <Property Name="IsTooLongForBufferFPS" Id="{5d985bb3-104d-4d66-b8af-1a64e807be67}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY IsTooLongForBufferFPS : bool]]></Declaration>
+      <Declaration><![CDATA[(* TRUE when the configured time window needs more frames than the buffer can hold. Raises the VideoConfigTooLongForBufferSize alarm. Shorten the window or raise MAX_NUMBER_IMAGES_2_VIDEO. *)
+PROPERTY IsTooLongForBufferFPS : BOOL]]></Declaration>
       <Get Name="Get" Id="{ba27a5fe-e721-474b-be9e-46454827fc54}">
         <Declaration><![CDATA[VAR
 END_VAR
@@ -610,7 +698,8 @@ END_VAR
       </Get>
     </Property>
     <Property Name="JsonAttribute" Id="{bc5c6c9f-27e5-45e1-a6fc-10942dc86275}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY JsonAttribute : T_MaxString]]></Declaration>
+      <Declaration><![CDATA[(* JSON attribute used to filter subscribed events. Initialize always rebuilds this from CameraName, so a value written before the first CyclicLogic call is replaced. Write it after initialization to use a custom filter. *)
+PROPERTY JsonAttribute : T_MaxString]]></Declaration>
       <Set Name="Set" Id="{5f19d56c-26af-4e98-bfe1-6db55793388a}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -620,21 +709,22 @@ END_VAR]]></Declaration>
       </Set>
     </Property>
     <Method Name="OnAlarmRaised" Id="{a4216244-1602-09d6-0b03-bc06f4eb6cd4}" FolderPath="ListenerBase2\">
-      <Declaration><![CDATA[METHOD OnAlarmRaised : HRESULT
+      <Declaration><![CDATA[(* Listener callback. Latches a capture request for the next CyclicLogic scan.
+   Called by the event logger when a subscribed alarm is raised. *)
+METHOD OnAlarmRaised : HRESULT
 VAR_INPUT
 	fbEvent : REFERENCE TO FB_TcEvent;
-END_VAR
-
-VAR
-	hr : HRESULT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// This is where we actually do the work
-IF NOT TriggerVideoCapture  AND BufferHasRolledOver THEN
+IF NOT TriggerVideoCapture AND BufferHasRolledOver THEN
 	TriggerVideoCapture := TRUE;
 	ImageWriteCount		:= 1;
-	hr					:= fbEvent.GetJsonAttribute(sJsonAttribute, SIZEOF(sJsonAttribute));
-	_fbEvent			REF= fbevent;
+
+	// Copy the timestamp by value. The capture runs across many later scans and the listener is
+	// free to reuse its event object in the meantime, so holding a reference here would let a
+	// second event overwrite the stamp and name the video after the wrong alarm.
+	EventTimestampUtc := fbEvent.nTimestamp;
 ELSE
 	MissedEventCount := MissedEventCount + 1;
 END_IF
@@ -643,17 +733,29 @@ OnAlarmRaised := S_OK;]]></ST>
       </Implementation>
     </Method>
     <Property Name="ReductionFactor" Id="{e7c1975c-171a-423c-b46e-fd49a7ac01d7}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY ReductionFactor : LREAL]]></Declaration>
+      <Declaration><![CDATA[(* Scale applied to each frame before buffering, which trades video resolution for memory. Values above 1 are limited to 1, and values of 0 or below are replaced with the 0.25 default. 1 keeps full size. *)
+PROPERTY ReductionFactor : LREAL]]></Declaration>
       <Set Name="Set" Id="{48310df7-a11a-4c06-b689-997afa81dd7d}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
         <Implementation>
-          <ST><![CDATA[_ReductionFactor := ReductionFactor;]]></ST>
+          <ST><![CDATA[// Clamp to a usable scale. Zero or negative produces a zero size resize, and above 1
+// enlarges every frame, which defeats the point of the reduction.
+IF ReductionFactor <= 0 THEN
+	_ReductionFactor := 0.25;
+ELSIF ReductionFactor > 1 THEN
+	_ReductionFactor := 1;
+ELSE
+	_ReductionFactor := ReductionFactor;
+END_IF]]></ST>
         </Implementation>
       </Set>
     </Property>
     <Method Name="Reset" Id="{de2b7674-77b7-46bd-a0ea-4c6052e3c6d4}" FolderPath="Method\">
-      <Declaration><![CDATA[METHOD Reset
+      <Declaration><![CDATA[(* Clears the configuration alarms and the latched error state.
+   Use after correcting a configuration or after the video service has been restored. Does not
+   interrupt a capture that is already running. *)
+METHOD Reset
 VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
@@ -670,7 +772,8 @@ _Reset := TRUE;
       </Implementation>
     </Method>
     <Property Name="SubscribedEvents" Id="{fa27ebeb-13ea-0182-05e6-7047decd22f3}" FolderPath="ListenerBase2\">
-      <Declaration><![CDATA[PROPERTY SubscribedEvents : BOOL]]></Declaration>
+      <Declaration><![CDATA[(* TRUE while the block is subscribed to the event logger. *)
+PROPERTY SubscribedEvents : BOOL]]></Declaration>
       <Get Name="Get" Id="{ece6223f-0ef0-0646-29e9-970c8168bc95}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -680,7 +783,8 @@ END_VAR]]></Declaration>
       </Get>
     </Property>
     <Property Name="SubscribeEvents" Id="{71454155-952e-0eb2-314d-87c5203208ce}" FolderPath="ListenerBase2\">
-      <Declaration><![CDATA[PROPERTY SubscribeEvents : BOOL]]></Declaration>
+      <Declaration><![CDATA[(* Set TRUE to subscribe to matching events. The subscription is made on the next CyclicLogic call. *)
+PROPERTY SubscribeEvents : BOOL]]></Declaration>
       <Set Name="Set" Id="{964adbeb-75d6-0d60-3180-1f7e4d4a1a67}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -690,7 +794,8 @@ END_VAR]]></Declaration>
       </Set>
     </Property>
     <Property Name="TimeAfterEvent" Id="{a61fddf6-6152-0777-3afd-46836a8aa557}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY TimeAfterEvent : TIME]]></Declaration>
+      <Declaration><![CDATA[(* How much footage to keep after the alarm. Added to TimeBeforeEvent to size the buffer. Defaults to 3 seconds. *)
+PROPERTY TimeAfterEvent : TIME]]></Declaration>
       <Set Name="Set" Id="{1981a076-88fc-0427-377c-cb6fd7370037}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -700,7 +805,8 @@ END_VAR]]></Declaration>
       </Set>
     </Property>
     <Property Name="TimeBeforeEvent" Id="{1aa13f19-75de-4546-b1a4-369e949efbe9}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY TimeBeforeEvent : TIME]]></Declaration>
+      <Declaration><![CDATA[(* How much footage to keep before the alarm. Added to TimeAfterEvent to size the buffer. Defaults to 7 seconds. *)
+PROPERTY TimeBeforeEvent : TIME]]></Declaration>
       <Set Name="Set" Id="{dc460ac9-796d-4731-a912-ff44c2867fa5}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -710,7 +816,11 @@ END_VAR]]></Declaration>
       </Set>
     </Property>
     <Method Name="TriggerAlarmForVideoCapture" Id="{2355e316-b6d2-49ed-9430-7db9c90ea34b}" FolderPath="Method\">
-      <Declaration><![CDATA[METHOD PUBLIC TriggerAlarmForVideoCapture
+      <Declaration><![CDATA[(* Raises the camera alarm from PLC code, which starts a video capture.
+   Use this when the condition worth recording is detected in the PLC rather than by another
+   event source. LogEntryName is shown in the alarm text and identifies what happened.
+   Ignored while the alarm is already raised, or before the ring buffer has filled once. *)
+METHOD PUBLIC TriggerAlarmForVideoCapture
 VAR_INPUT
 	LogEntryName : STRING;
 END_VAR]]></Declaration>
@@ -722,7 +832,8 @@ END_IF]]></ST>
       </Implementation>
     </Method>
     <Property Name="UnsubscribeEvents" Id="{752ce0f7-bc09-0370-158c-993e9a9082a9}" FolderPath="ListenerBase2\">
-      <Declaration><![CDATA[PROPERTY UnsubscribeEvents : BOOL]]></Declaration>
+      <Declaration><![CDATA[(* Set TRUE to unsubscribe from events. The unsubscribe happens on the next CyclicLogic call. *)
+PROPERTY UnsubscribeEvents : BOOL]]></Declaration>
       <Set Name="Set" Id="{6e6813a4-c831-0192-1157-e8b7eb471407}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -732,7 +843,8 @@ END_VAR]]></Declaration>
       </Set>
     </Property>
     <Property Name="VideoOutputDirectory" Id="{338cb32a-2e12-02b7-2a0b-cfa934436f1b}" FolderPath="Properties\">
-      <Declaration><![CDATA[PROPERTY VideoOutputDirectory : STRING]]></Declaration>
+      <Declaration><![CDATA[(* Root directory for images and videos, which the Windows service must also be able to reach. Videos are written to <directory>\<CameraName>\. Read each time a capture builds its paths, so a change takes effect on the next capture. Defaults to C:\TcAlarmVideo. *)
+PROPERTY VideoOutputDirectory : STRING]]></Declaration>
       <Set Name="Set" Id="{5d78897d-a29a-0c23-3af8-a7a2fcb5135e}">
         <Declaration><![CDATA[VAR
 END_VAR]]></Declaration>
@@ -742,7 +854,12 @@ END_VAR]]></Declaration>
       </Set>
     </Property>
     <Method Name="WriteImage" Id="{196768c3-fed0-05e7-0363-23a08fbc093e}" FolderPath="Method\">
-      <Declaration><![CDATA[METHOD WriteImage : BOOL
+      <Declaration><![CDATA[(* Writes one buffered frame to disk as a PNG. Called repeatedly by the capture state machine.
+   Index is the frame number used in the file name (Image0001.png and upward), and
+   BufferImageSaveNameIndex is the ring position to read. Returns TRUE when the frame has been
+   written. FALSE means either that the write is still in progress or that it failed; the caller
+   tells them apart through the internal failure flag and bounds the number of attempts. *)
+METHOD WriteImage : BOOL
 VAR_INPUT
 	BufferImageSaveNameIndex : UINT;
 	Index					 : UINT;
@@ -776,6 +893,10 @@ END_VAR]]></Declaration>
 
 		sImageToSaveName := CONCAT(sImageToSaveName, '.png');
 		ipImageToSave	 := BufferImageRing[BufferImageSaveNameIndex];
+
+		// Starting a fresh attempt. Clearing here is what makes the caller's failure counter
+		// count attempts: the flag stays set only for the single scan that reports a failure.
+		Error_FailedToWriteImagesToDisk := FALSE;
 
 		// Copy write image here
 		fbWriteImage(ipImage   := ipImageToSave,

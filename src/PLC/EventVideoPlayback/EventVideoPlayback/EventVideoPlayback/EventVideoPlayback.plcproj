@@ -9,7 +9,7 @@
     <WriteProductVersion>false</WriteProductVersion>
     <GenerateTpy>false</GenerateTpy>
     <Name>EventVideoPlayback</Name>
-    <ProgramVersion>3.1.4026.19</ProgramVersion>
+    <ProgramVersion>3.1.4026.25</ProgramVersion>
     <Application>{37e2cf14-fdc9-4377-b855-24520925603b}</Application>
     <TypeSystem>{0d4e2307-2369-401e-9ca0-e48bc10db715}</TypeSystem>
     <Implicit_Task_Info>{8b3b7b01-af0c-4397-a28c-7321c378ac18}</Implicit_Task_Info>
@@ -19,7 +19,7 @@
     <Company>Beckhoff Automation LLC</Company>
     <Released>true</Released>
     <Title>Event Video Playback</Title>
-    <ProjectVersion>1.1.1</ProjectVersion>
+    <ProjectVersion>1.2.0</ProjectVersion>
     <POUsForPropertyAccessIncluded>true</POUsForPropertyAccessIncluded>
     <VirtualLibrary>true</VirtualLibrary>
     <CompilerDefines>VISU_USEPROPERTYINFO</CompilerDefines>

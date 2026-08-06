@@ -3,10 +3,24 @@
   <GVL Name="Parameters_EventVideoPlayback" Id="{56c9dfe6-e032-0b0f-1edc-689100bf16fe}" ParameterList="True">
     <Declaration><![CDATA[{attribute 'qualified_only'}
 VAR_GLOBAL CONSTANT
+	// Frames the ring buffer can hold. Sets the upper bound on TimeBeforeEvent + TimeAfterEvent
+	// at a given FramesPerSecond, and on the router memory the buffer needs.
 	MAX_NUMBER_IMAGES_2_VIDEO : UDINT := 200;
+	// Share of router memory the image buffer is allowed to occupy, in percent.
 	MAX_PERCENT_ROUTER_MEM_FOR_BUFFER : UDINT := 50;
+	// AMS port of the Event Video Playback Windows service. Must match the AdsPort in the
+	// service configuration file.
 	ADS_PORT_FOR_IMAGE_TO_VIDEO		  : UINT  := 26129;
+	// Router memory in MB assumed whenever the reported value is 0, which happens both when the
+	// router has more memory than it can express and when the read itself failed.
 	LARGE_ROUTER_MEMORY				  : UINT  := 4096;
+	// Consecutive failed attempts to write one frame before the capture is abandoned. Counts
+	// attempts, not PLC scans: one attempt spans the scans that FB_VN_WriteImage is busy.
+	MAX_IMAGE_WRITE_RETRIES			  : UINT  := 10;
+	// ErrorID reported when a capture is abandoned because frames could not be written to disk.
+	// Clear it with the Reset method once the storage problem is corrected. Bit 29 is set so the
+	// value is in the customer defined HRESULT range and cannot collide with an ADS result code.
+	ERROR_IMAGE_WRITE_FAILED		  : UDINT := 16#AEE00001;
 END_VAR]]></Declaration>
   </GVL>
 </TcPlcObject>

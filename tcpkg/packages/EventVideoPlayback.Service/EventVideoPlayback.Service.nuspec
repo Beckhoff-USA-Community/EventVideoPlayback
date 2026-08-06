@@ -8,7 +8,7 @@
     <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
     <copyright>(c) Beckhoff Automation LLC</copyright>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-	<licenseUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.Service/LICENSE.txt</licenseUrl>
+    <license type="file">LICENSE.md</license>
   	<iconUrl>https://packages.beckhoff-usa-community.com/assets/EventVideoPlayback.Service/icon.png</iconUrl>
     <readme>docs/README.md</readme>
     <summary>EventVideoPlayback runtime system service for TwinCAT XAR</summary>
@@ -22,6 +22,7 @@
   <files>
     <file src="tools\**" target="tools" />
     <file src="bin\**" target="tools\bin" />
+    <file src="LICENSE.md" target="LICENSE.md" />
 	<file src="docs\README.md" target="docs\README.md"/>
   </files>
 </package>

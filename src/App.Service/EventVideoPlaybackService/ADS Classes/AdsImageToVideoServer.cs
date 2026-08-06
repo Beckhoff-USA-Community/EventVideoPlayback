@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using TwinCAT.Ads.Server;
 using TwinCAT.Ads;
@@ -22,12 +23,6 @@ namespace EventVideoPlaybackService
     /// </summary>
     public class AdsImageToVideoServer : AdsServer
     {
-        private string? JsonString;
-        private String? ImagePathSource;
-        private String? VideoFilename;
-        private UInt16 VideoFPS;
-        private Int32 CodecValue;
-
         private AdsState _localAdsState = AdsState.Config;
         private ushort _localDeviceState = 0;
         private readonly ConcurrentDictionary<uint, NotificationRequestEntry> _notificationTable = new();
@@ -38,6 +33,20 @@ namespace EventVideoPlaybackService
         readonly private double KeepVideoTime;   // Video retention period in days
         readonly private string CodecFourCC;
         readonly private ulong maxFolderSize;  // Maximum folder size in MB (1024 MB = 1 GB)
+        readonly private string _videoRootDirectory;  // When non-empty, requests are confined to this directory
+
+        // A single-consumer bounded queue serializes encoding and maintenance. Encode requests are
+        // decoupled from the ADS handler (which must stay responsive) but run one at a time, so two
+        // cameras firing at once no longer race on shared state, the output file, or File.Delete.
+        // A full queue produces backpressure (DeviceBusy) at the only point the wire contract allows.
+        private const int EncodeQueueCapacity = 8;
+        private readonly Channel<(string imagePathSource, string videoFilename, ushort videoFPS)> _encodeQueue =
+            Channel.CreateBounded<(string, string, ushort)>(new BoundedChannelOptions(EncodeQueueCapacity)
+            {
+                SingleReader = true,
+                FullMode = BoundedChannelFullMode.Wait
+            });
+        private readonly Task _encodeConsumer;
 
         /// <summary>
         /// Initializes a new instance of the AdsImageToVideoServer with the specified configuration parameters.
@@ -48,13 +57,15 @@ namespace EventVideoPlaybackService
         /// <param name="videoDeleteTime">The number of days to keep video files before automatic deletion.</param>
         /// <param name="codecFourCC">The FourCC code for the video codec (e.g., "avc1" for H.264, "mp4v" for MPEG-4).</param>
         /// <param name="maxFileSize">The maximum total size of video files in the folder in megabytes.</param>
-        public AdsImageToVideoServer(ushort port, string portName, ILogger logger, double videoDeleteTime, string codecFourCC,ulong maxFileSize) : base(port, portName, null)
+        /// <param name="videoRootDirectory">When non-empty, requests whose paths resolve outside this directory are rejected.</param>
+        public AdsImageToVideoServer(ushort port, string portName, ILogger logger, double videoDeleteTime, string codecFourCC, ulong maxFileSize, string videoRootDirectory = "") : base(port, portName, null)
         {
             _serverLogger = new ServerLogger(logger);
             this.CodecFourCC = codecFourCC;
             this.KeepVideoTime = videoDeleteTime;
             this.maxFolderSize = maxFileSize;
-            _serverLogger.Logger.LogWarning(videoDeleteTime.ToString()+ " : "+ port);
+            this._videoRootDirectory = videoRootDirectory ?? "";
+            _encodeConsumer = Task.Run(ProcessEncodeQueueAsync);
         }
 
         /// <summary>
@@ -69,6 +80,8 @@ namespace EventVideoPlaybackService
             this.CodecFourCC = "";
             this.KeepVideoTime = 0;
             this.maxFolderSize = 0;
+            this._videoRootDirectory = "";
+            _encodeConsumer = Task.Run(ProcessEncodeQueueAsync);
         }
 
         /// <summary>
@@ -77,7 +90,7 @@ namespace EventVideoPlaybackService
         /// </summary>
         protected override void OnConnected()
         {
-             _serverLogger.Logger.LogWarning($"Server '{this.GetType()}', Address: {base.ServerAddress} connected!");
+             _serverLogger.Logger.LogInformation($"Server '{this.GetType()}', Address: {base.ServerAddress} connected!");
         }
 
         /// <summary>
@@ -90,7 +103,7 @@ namespace EventVideoPlaybackService
         {
             base.OnServerConnectionStateChanged(sender, e);
 
-            _serverLogger.Logger.LogWarning("ConnectionState Changed " + e.State );
+            _serverLogger.Logger.LogInformation("ConnectionState Changed " + e.State );
         }
 
         /// <summary>
@@ -117,53 +130,128 @@ namespace EventVideoPlaybackService
         /// </example>
         protected override Task<ResultWrite> OnWriteAsync(AmsAddress sender, uint invokeId, uint indexGroup, uint indexOffset, ReadOnlyMemory<byte> writeData, CancellationToken cancel)
         {
-            ResultWrite result;
-            Int32 dataSize = writeData.Length;
-
-            // IndexGroup 10 is used as a heartbeat/keep-alive mechanism
+            // IndexGroup 10 is a heartbeat/keep-alive; the payload is ignored. Any other index group
+            // is treated as a video creation request (index offset is not used).
             if (indexGroup == 10)
             {
-                result = ResultWrite.CreateSuccess();
-                return Task.FromResult(result);
+                return Task.FromResult(ResultWrite.CreateSuccess());
             }
-            else
+
+            // Parse into locals so concurrent requests cannot overwrite each other's state or let a
+            // malformed follow-up validate against a prior request's values.
+            // NOTE: the PLC builds this JSON from codepage STRING bytes; ASCII paths decode identically
+            // as UTF-8. Non-ASCII camera names/paths are verified against the live target before any
+            // codepage change (deferred, see PLAN Phase 2).
+            string jsonString = Encoding.UTF8.GetString(writeData.Span);
+            _serverLogger.Logger.LogDebug("Video request payload: {Payload}", jsonString);
+
+            string? imagePathSource = null;
+            string? videoFilename = null;
+            ushort videoFPS = 0;
+
+            try
             {
-                // Parse the JSON data from the write request
-                JsonString = System.Text.Encoding.UTF8.GetString(writeData.ToArray(), 0, dataSize);
-                _serverLogger.Logger.LogWarning(JsonString);
-
-                using var doc = JsonDocument.Parse(JsonString);
-                var root = doc.RootElement;
-
-                // Extract video creation parameters from JSON
-                foreach (var item in root.EnumerateObject())
+                using var doc = JsonDocument.Parse(jsonString);
+                foreach (var item in doc.RootElement.EnumerateObject())
                 {
                     switch (item.Name)
                     {
                         case "ImagePathSource":
-                            ImagePathSource = item.Value.GetString();
+                            imagePathSource = item.Value.GetString();
                             break;
                         case "VideoFilename":
-                            VideoFilename = item.Value.GetString();
+                            videoFilename = item.Value.GetString();
                             break;
                         case "VideoFPS":
-                            VideoFPS = item.Value.GetUInt16();
+                            videoFPS = item.Value.GetUInt16();
                             break;
                     }
                 }
+            }
+            catch (Exception ex) when (ex is JsonException or InvalidOperationException or FormatException)
+            {
+                // Return an ADS error so the PLC sees a defined failure instead of a 10 second timeout.
+                _serverLogger.Logger.LogError(ex, "Malformed video request payload: {Payload}", jsonString);
+                return Task.FromResult(ResultWrite.CreateError(AdsErrorCode.DeviceInvalidData));
+            }
 
-                // Validate that all required parameters are present
-                if (ImagePathSource is not null && VideoFilename is not null && VideoFPS > 0)
+            // Validate that all required parameters are present
+            if (imagePathSource is null || videoFilename is null || videoFPS == 0)
+            {
+                return Task.FromResult(ResultWrite.CreateError(AdsErrorCode.ClientInvalidParameter));
+            }
+
+            // Confine both paths to the configured root (when configured) before the service acts on
+            // them; the image directory is deleted recursively, so an unconfined path is dangerous.
+            if (!IsPathAllowed(imagePathSource) || !IsPathAllowed(videoFilename))
+            {
+                _serverLogger.Logger.LogError("Rejected request with a path outside VideoRootDirectory. ImagePathSource={Image}, VideoFilename={Video}", imagePathSource, videoFilename);
+                return Task.FromResult(ResultWrite.CreateError(AdsErrorCode.ClientInvalidParameter));
+            }
+
+            // Hand the request to the single-consumer encode queue. Success means accepted, not that
+            // the video is ready; a full queue returns DeviceBusy so the PLC gets backpressure.
+            if (_encodeQueue.Writer.TryWrite((imagePathSource, videoFilename, videoFPS)))
+            {
+                return Task.FromResult(ResultWrite.CreateSuccess());
+            }
+
+            _serverLogger.Logger.LogWarning("Encode queue full; rejecting request for {Video}", videoFilename);
+            return Task.FromResult(ResultWrite.CreateError(AdsErrorCode.DeviceBusy));
+        }
+
+        /// <summary>
+        /// Returns true when the given path is allowed by the configured confinement root.
+        /// </summary>
+        /// <param name="path">The absolute path from a request (image source or video output).</param>
+        /// <returns>
+        /// True when no confinement is configured, or when the resolved path is the root or sits
+        /// beneath it. UNC paths and paths that fail to resolve are rejected when confinement is on.
+        /// </returns>
+        private bool IsPathAllowed(string path)
+        {
+            if (string.IsNullOrEmpty(_videoRootDirectory))
+            {
+                return true;   // confinement disabled
+            }
+
+            try
+            {
+                string full = Path.GetFullPath(path);
+                if (full.StartsWith(@"\\", StringComparison.Ordinal))
                 {
-                    // Queue video creation in background to avoid blocking ADS communication
-                    _ = Task.Run(() => CreateVideoFromImagesAsync(ImagePathSource, VideoFilename, VideoFPS));
-                    result = ResultWrite.CreateSuccess();
-                    return Task.FromResult(result);
+                    return false;   // reject UNC when confinement is on
                 }
-                else
+
+                string root = Path.GetFullPath(_videoRootDirectory);
+                string rootTrimmed = root.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                string rootWithSeparator = rootTrimmed + Path.DirectorySeparatorChar;
+
+                return full.StartsWith(rootWithSeparator, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(full.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar), rootTrimmed, StringComparison.OrdinalIgnoreCase);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Single consumer that drains the encode queue, running one encode (and its maintenance
+        /// pass) to completion before starting the next. Runs until the queue writer is completed
+        /// during disposal.
+        /// </summary>
+        private async Task ProcessEncodeQueueAsync()
+        {
+            await foreach (var job in _encodeQueue.Reader.ReadAllAsync().ConfigureAwait(false))
+            {
+                try
                 {
-                    result = ResultWrite.CreateError(AdsErrorCode.ClientInvalidParameter);
-                    return Task.FromResult(result);
+                    await CreateVideoFromImagesAsync(job.imagePathSource, job.videoFilename, job.videoFPS).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    _serverLogger.Logger.LogError(ex, "Encode job failed for {VideoFilename}", job.videoFilename);
                 }
             }
         }
@@ -189,53 +277,61 @@ namespace EventVideoPlaybackService
                 // Validate the image source directory exists
                 if (!Directory.Exists(imagePathSource))
                 {
-                    _serverLogger.Logger.LogError($"Image directory does not exist: {imagePathSource}");
+                    _serverLogger.Logger.LogError("Image directory does not exist: {ImagePathSource}", imagePathSource);
                     return;
                 }
 
-                // Load all PNG files from the source directory
+                // Load all PNG files from the source directory. Directory.GetFiles order is not
+                // guaranteed, so sort to keep frames in ImageNNNN order regardless of filesystem.
                 string[] imageFiles = Directory.GetFiles(imagePathSource, "*.png");
+                Array.Sort(imageFiles, StringComparer.OrdinalIgnoreCase);
 
                 if (imageFiles.Length == 0)
                 {
-                    _serverLogger.Logger.LogError($"No PNG files found in directory: {imagePathSource}");
+                    _serverLogger.Logger.LogError("No PNG files found in directory: {ImagePathSource}", imagePathSource);
                     return;
                 }
 
                 // Read the first image to determine video dimensions (all images must be the same size)
-                using Mat firstImage = Cv2.ImRead(imageFiles[0]);
-                if (firstImage.Empty())
+                using (Mat firstImage = Cv2.ImRead(imageFiles[0]))
                 {
-                    _serverLogger.Logger.LogError($"Failed to read first image: {imageFiles[0]}");
-                    return;
-                }
-
-                // Convert the FourCC string to codec value (e.g., "avc1" for H.264)
-                CodecValue = FourCC.FromString(this.CodecFourCC);
-
-                // Initialize the video writer with codec, frame rate, and dimensions
-                using var videoWriter = new VideoWriter(videoFilename, CodecValue, videoFPS, firstImage.Size(), true);
-
-                if (!videoWriter.IsOpened())
-                {
-                    _serverLogger.Logger.LogError($"Failed to open video writer for: {videoFilename}");
-                    return;
-                }
-
-                // Process each image and write it as a frame to the video
-                foreach (var imageFile in imageFiles)
-                {
-                    using Mat image = Cv2.ImRead(imageFile);
-                    if (!image.Empty())
+                    if (firstImage.Empty())
                     {
-                        videoWriter.Write(image);
+                        _serverLogger.Logger.LogError("Failed to read first image: {FirstImage}", imageFiles[0]);
+                        return;
+                    }
+
+                    // Convert the FourCC string to codec value (e.g., "avc1" for H.264)
+                    int codecValue = FourCC.FromString(this.CodecFourCC);
+
+                    // Scope the writer so it is disposed (finalizing the container) BEFORE the source
+                    // images are deleted and maintenance runs. Otherwise the file is still open and
+                    // its length is read while unflushed.
+                    using (var videoWriter = new VideoWriter(videoFilename, codecValue, videoFPS, firstImage.Size(), true))
+                    {
+                        if (!videoWriter.IsOpened())
+                        {
+                            _serverLogger.Logger.LogError("Failed to open video writer for: {VideoFilename}", videoFilename);
+                            // Some codec backends create/truncate the container before the codec is
+                            // opened; remove any partial file this failure may have left behind.
+                            TryDeletePartialVideo(videoFilename);
+                            return;
+                        }
+
+                        // Process each image and write it as a frame to the video
+                        foreach (var imageFile in imageFiles)
+                        {
+                            using Mat image = Cv2.ImRead(imageFile);
+                            if (!image.Empty())
+                            {
+                                videoWriter.Write(image);
+                            }
+                        }
                     }
                 }
 
-                // VideoWriter is automatically disposed here, finalizing the video file
-
-                // Clean up: delete the source image directory after successful video creation
-                // This saves disk space by removing the original images once they're encoded into video
+                // Clean up: delete the source image directory now that the video is finalized.
+                // This runs only on the success path, so a failed encode keeps its images for retry.
                 try
                 {
                     Directory.Delete(imagePathSource, true);
@@ -244,7 +340,7 @@ namespace EventVideoPlaybackService
                 {
                     // Expected exceptions: UnauthorizedAccessException (permissions), IOException (files in use), DirectoryNotFoundException
                     // Non-critical failure - log warning and continue (video was created successfully)
-                    _serverLogger.Logger.LogWarning($"Failed to delete image directory {imagePathSource}: {ex.Message}");
+                    _serverLogger.Logger.LogWarning(ex, "Failed to delete image directory {ImagePathSource}", imagePathSource);
                 }
 
                 // Perform video maintenance (cleanup old videos and enforce folder size limits)
@@ -252,7 +348,30 @@ namespace EventVideoPlaybackService
             }
             catch (Exception ex)
             {
-                _serverLogger.Logger.LogError($"Video creation failed: {ex.Message}");
+                _serverLogger.Logger.LogError(ex, "Video creation failed for {VideoFilename}", videoFilename);
+
+                // Remove the partial/unfinalized output; source images are left intact for retry.
+                TryDeletePartialVideo(videoFilename);
+            }
+        }
+
+        /// <summary>
+        /// Best-effort removal of a partial or unfinalized output file so it does not count toward
+        /// the folder size cap or masquerade as a playable video. Source images are never touched.
+        /// </summary>
+        /// <param name="videoFilename">The output file to remove if it exists.</param>
+        private void TryDeletePartialVideo(string videoFilename)
+        {
+            try
+            {
+                if (File.Exists(videoFilename))
+                {
+                    File.Delete(videoFilename);
+                }
+            }
+            catch (Exception ex)
+            {
+                _serverLogger.Logger.LogWarning(ex, "Failed to remove partial video {VideoFilename}", videoFilename);
             }
         }
 
@@ -343,10 +462,35 @@ namespace EventVideoPlaybackService
             }
             catch (Exception ex)
             {
-                _serverLogger.Logger.LogError($"Video maintenance failed: {ex.Message}");
+                _serverLogger.Logger.LogError(ex, "Video maintenance failed for directory of {VideoFilename}", videoFilename);
             }
 
             await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Completes the encode queue and waits briefly for the in-flight encode to finish before
+        /// disposing the base server, so a stop does not abandon a video mid-write.
+        /// </summary>
+        /// <param name="disposing">True when called from Dispose (not a finalizer).</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _encodeQueue.Writer.TryComplete();
+                try
+                {
+                    // Bounded well under the host shutdown timeout (default 30 s) so the base
+                    // Disconnect still runs inside the shutdown window even if an encode is in flight.
+                    _encodeConsumer?.Wait(TimeSpan.FromSeconds(15));
+                }
+                catch (Exception ex)
+                {
+                    _serverLogger.Logger.LogWarning(ex, "Encode queue did not drain cleanly during shutdown.");
+                }
+            }
+
+            base.Dispose(disposing);
         }
 
 
@@ -547,7 +691,7 @@ namespace EventVideoPlaybackService
             {
                 _serverLogger.LogReadStateInd(rAddr, invokeId);
             }
-            return base.ReadDeviceInfoIndicationAsync(rAddr, invokeId, cancel);
+            return base.ReadDeviceStateIndicationAsync(rAddr, invokeId, cancel);
         }
 
         protected override Task<AdsErrorCode> WriteControlIndicationAsync(AmsAddress rAddr, uint invokeId, AdsState adsState, ushort deviceState, ReadOnlyMemory<byte> data, CancellationToken cancel)
@@ -656,8 +800,7 @@ namespace EventVideoPlaybackService
         {
             if (_serverLogger != null)
             {
-                _serverLogger.LogReadDeviceInfoCon(rAddr, invokeId, result);
-                _serverLogger.Log("Received Write Control Confirmation");
+                _serverLogger.Logger.LogDebug($"WriteControlCon(Address: {rAddr}, InvokeId: {invokeId}, Result: {result})");
             }
 
             return base.OnWriteControlConfirmationAsync(rAddr, invokeId, result, cancel);
@@ -700,13 +843,14 @@ namespace EventVideoPlaybackService
 
         /// <summary>
         /// Counter for generating unique invoke IDs for outgoing ADS requests.
-        /// Automatically incremented with each Trigger* method call to ensure request uniqueness.
         /// </summary>
-        /// <remarks>
-        /// This field is not thread-safe. If multiple threads call Trigger methods concurrently,
-        /// consider using Interlocked.Increment for atomic operations.
-        /// </remarks>
         uint invokeId = 0;
+
+        /// <summary>
+        /// Atomically returns the current invoke ID and advances the counter, so concurrent
+        /// Trigger* calls cannot hand out the same id.
+        /// </summary>
+        private uint NextInvokeId() => unchecked(Interlocked.Increment(ref invokeId) - 1);
 
         /// <summary>
         /// Triggers an ADS request to read device information from a target ADS device.
@@ -720,7 +864,7 @@ namespace EventVideoPlaybackService
         /// </remarks>
         public Task<AdsErrorCode> TriggerReadDeviceInfoRequestAsync(AmsAddress target, CancellationToken cancel)
         {
-            return base.ReadDeviceInfoRequestAsync(target, invokeId++, cancel);
+            return base.ReadDeviceInfoRequestAsync(target, NextInvokeId(), cancel);
         }
 
         /// <summary>
@@ -738,7 +882,7 @@ namespace EventVideoPlaybackService
         /// </remarks>
         public Task<AdsErrorCode> TriggerReadRequestAsync(AmsAddress target, uint indexGroup, uint indexOffset, int readLength, CancellationToken cancel)
         {
-            return ReadRequestAsync(target, invokeId++, indexGroup, indexOffset, readLength, cancel);
+            return ReadRequestAsync(target, NextInvokeId(), indexGroup, indexOffset, readLength, cancel);
         }
 
         /// <summary>
@@ -756,7 +900,7 @@ namespace EventVideoPlaybackService
         /// </remarks>
         public Task<AdsErrorCode> TriggerWriteRequestAsync(AmsAddress target, uint indexGroup, uint indexOffset, ReadOnlyMemory<byte> data, CancellationToken cancel)
         {
-            return WriteRequestAsync(target, invokeId++, indexGroup, indexOffset, data, cancel);
+            return WriteRequestAsync(target, NextInvokeId(), indexGroup, indexOffset, data, cancel);
         }
 
         /// <summary>
@@ -771,7 +915,7 @@ namespace EventVideoPlaybackService
         /// </remarks>
         public Task<AdsErrorCode> TriggerReadStateRequestAsync(AmsAddress target, CancellationToken cancel)
         {
-            return ReadDeviceStateRequestAsync(target, invokeId++, cancel);
+            return ReadDeviceStateRequestAsync(target, NextInvokeId(), cancel);
         }
 
         /// <summary>
@@ -789,7 +933,7 @@ namespace EventVideoPlaybackService
         /// </remarks>
         public Task<AdsErrorCode> TriggerWriteControlRequestAsync(AmsAddress target, AdsState state, ushort deviceState, ReadOnlyMemory<byte> data, CancellationToken cancel)
         {
-            return WriteControlRequestAsync(target, invokeId++, state, deviceState, data, cancel);
+            return WriteControlRequestAsync(target, NextInvokeId(), state, deviceState, data, cancel);
         }
 
         /// <summary>
@@ -809,7 +953,7 @@ namespace EventVideoPlaybackService
         /// </remarks>
         public Task<AdsErrorCode> TriggerAddDeviceNotificationRequestAsync(AmsAddress target, uint indexGroup, uint indexOffset, int dataLength, NotificationSettings settings, CancellationToken cancel)
         {
-            return AddDeviceNotificationRequestAsync(target, invokeId++, indexGroup, indexOffset, dataLength, settings, cancel);
+            return AddDeviceNotificationRequestAsync(target, NextInvokeId(), indexGroup, indexOffset, dataLength, settings, cancel);
         }
 
         /// <summary>
@@ -825,7 +969,7 @@ namespace EventVideoPlaybackService
         /// </remarks>
         public Task<AdsErrorCode> TriggerDeleteDeviceNotificationRequestAsync(AmsAddress target, uint handle, CancellationToken cancel)
         {
-            return DeleteDeviceNotificationRequestAsync(target, invokeId++, handle, cancel);
+            return DeleteDeviceNotificationRequestAsync(target, NextInvokeId(), handle, cancel);
         }
 
         /// <summary>
@@ -846,7 +990,7 @@ namespace EventVideoPlaybackService
         /// </remarks>
         public Task<AdsErrorCode> TriggerReadWriteRequestAsync(AmsAddress target, uint indexGroup, uint indexOffset, int readLength, ReadOnlyMemory<byte> data, CancellationToken cancel)
         {
-            return ReadWriteRequestAsync(target, invokeId++, indexGroup, indexOffset, readLength, data, cancel);
+            return ReadWriteRequestAsync(target, NextInvokeId(), indexGroup, indexOffset, readLength, data, cancel);
         }
     }
 }

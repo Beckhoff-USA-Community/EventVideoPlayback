@@ -7,8 +7,8 @@
     This script reads it from there and rewrites the version element in the two
     files that must carry the same number:
 
-    * src\HMI\TcHmiEventVideo\TcEventVideoPlayback-TcHMIControl\EventVision.nuspec
-    * tcpkg\packages\EventVision.HMI\EventVision.HMI.nuspec
+    * hmi\TcHmiEventVideo\TcEventVideoPlayback-TcHMIControl\EventVision.nuspec
+    * packaging\packages\EventVision.HMI\EventVision.HMI.nuspec
 
     Run it after changing the version in Description.json. The chocolatey
     install scripts glob the nupkg file name, so they never need a version edit.
@@ -24,9 +24,9 @@
 $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$descriptionPath = Join-Path $repoRoot 'src\HMI\TcHmiEventVideo\TcEventVideoPlayback-TcHMIControl\EventVisionControl\Description.json'
-$projectNuspec = Join-Path $repoRoot 'src\HMI\TcHmiEventVideo\TcEventVideoPlayback-TcHMIControl\EventVision.nuspec'
-$tcpkgNuspec = Join-Path $repoRoot 'tcpkg\packages\EventVision.HMI\EventVision.HMI.nuspec'
+$descriptionPath = Join-Path $repoRoot 'hmi\TcHmiEventVideo\TcEventVideoPlayback-TcHMIControl\EventVisionControl\Description.json'
+$projectNuspec = Join-Path $repoRoot 'hmi\TcHmiEventVideo\TcEventVideoPlayback-TcHMIControl\EventVision.nuspec'
+$tcpkgNuspec = Join-Path $repoRoot 'packaging\packages\EventVision.HMI\EventVision.HMI.nuspec'
 
 $description = Get-Content $descriptionPath -Raw | ConvertFrom-Json
 $version = '{0}.{1}.{2}' -f $description.version.major, $description.version.minor, $description.version.revision

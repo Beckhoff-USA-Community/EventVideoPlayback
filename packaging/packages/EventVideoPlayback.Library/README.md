@@ -12,7 +12,7 @@ Compile your PLC library in TwinCAT XAE to generate the library files in the bin
 ### Step 2: Copy Library Files to Package
 Ensure the compiled library files (.library, .compiled-library) are in:
 ```bash
-C:\GitHub\EventVideoPlayback\tcpkg\packages\EventVideoPlayback.Library\bin\
+C:\GitHub\EventVideoPlayback\packaging\packages\EventVideoPlayback.Library\bin\
 ```
 
 ### Step 3: Add an Icon (Optional)
@@ -25,7 +25,7 @@ tcpkg pack EventVideoPlayback.Library.nuspec -o ../packages
 
 Or using the full path:
 ```bash
-tcpkg pack "C:\GitHub\EventVideoPlayback\tcpkg\packages\EventVideoPlayback.Library\EventVideoPlayback.Library.nuspec" -o "C:\GitHub\EventVideoPlayback\tcpkg\packages"
+tcpkg pack "C:\GitHub\EventVideoPlayback\packaging\packages\EventVideoPlayback.Library\EventVideoPlayback.Library.nuspec" -o "C:\GitHub\EventVideoPlayback\packaging\packages"
 ```
 
 ## Installation

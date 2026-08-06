@@ -3,7 +3,7 @@
     Convenience wrapper for Build-TcPackages.ps1 located in scripts directory.
 
 .DESCRIPTION
-    This script allows you to run the build from the tcpkg root directory
+    This script allows you to run the build from the packaging root directory
     without navigating to the scripts subdirectory.
 
 .PARAMETER BuildFolder

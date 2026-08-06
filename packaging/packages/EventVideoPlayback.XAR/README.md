@@ -18,7 +18,7 @@ tcpkg pack EventVideoPlayback.XAR.Workload.nuspec -o ../packages
 
 Or using the full path:
 ```bash
-tcpkg pack "C:\GitHub\EventVideoPlayback\tcpkg\packages\EventVideoPlayback.XAR\EventVideoPlayback.XAR.Workload.nuspec" -o "C:\GitHub\EventVideoPlayback\tcpkg\packages"
+tcpkg pack "C:\GitHub\EventVideoPlayback\packaging\packages\EventVideoPlayback.XAR\EventVideoPlayback.XAR.Workload.nuspec" -o "C:\GitHub\EventVideoPlayback\packaging\packages"
 ```
 
 ## Installation

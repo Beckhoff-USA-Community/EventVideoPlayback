@@ -3,7 +3,7 @@
     Automates the building of all TwinCAT packages in the tcpkg directory.
 
 .DESCRIPTION
-    This script discovers all .nuspec files in subdirectories of the tcpkg folder,
+    This script discovers all .nuspec files in subdirectories of the packaging folder,
     executes 'tcpkg pack' on each, and stores the resulting .nupkg files in a
     centralized release folder.
 

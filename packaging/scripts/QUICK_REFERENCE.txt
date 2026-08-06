@@ -4,16 +4,16 @@ TwinCAT Package Builder - Quick Reference
 
 DIRECTORY STRUCTURE
 -------------------
-tcpkg/
+packaging/
 ├── packages/           # Add your package directories here
 ├── release/            # Built .nupkg files output here
 └── scripts/            # Build scripts (YOU ARE HERE)
 
 LOCATION
 --------
-Script: C:\GitHub\EventVideoPlayback\tcpkg\scripts\Build-TcPackages.ps1
-Packages: C:\GitHub\EventVideoPlayback\tcpkg\packages\
-Output: C:\GitHub\EventVideoPlayback\tcpkg\release\
+Script: C:\GitHub\EventVideoPlayback\packaging\scripts\Build-TcPackages.ps1
+Packages: C:\GitHub\EventVideoPlayback\packaging\packages\
+Output: C:\GitHub\EventVideoPlayback\packaging\release\
 
 BASIC COMMANDS (run from scripts/ directory)
 ---------------------------------------------

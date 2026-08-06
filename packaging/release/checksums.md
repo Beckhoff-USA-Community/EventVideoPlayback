@@ -1,7 +1,7 @@
-﻿# TwinCAT Package Checksums
+# TwinCAT Package Checksums
 
 **Generated:** 2025-11-18 14:35:28
-**Release Folder:** C:\GitHub\EventVideoPlayback\tcpkg\.\release
+**Release Folder:** C:\GitHub\EventVideoPlayback\packaging\.\release
 
 This file contains SHA256 checksums for all built packages to ensure integrity and traceability.
 

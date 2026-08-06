@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\App.Service\EventVideoPlaybackService\EventVideoPlaybackService.csproj" />
+    <ProjectReference Include="..\..\src\EventVideoPlaybackService\EventVideoPlaybackService.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ This directory contains the automated build system for all TwinCAT packages in t
 ## Directory Structure
 
 ```
-tcpkg/
+packaging/
 ├── packages/              # Package source directories
 │   ├── EventVideoPlayback.Library/
 │   ├── EventVideoPlayback.Service/

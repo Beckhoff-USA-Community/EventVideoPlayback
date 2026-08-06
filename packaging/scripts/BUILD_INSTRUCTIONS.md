@@ -21,7 +21,7 @@ This directory contains an automated PowerShell script for building all TwinCAT 
 
 ```powershell
 # Navigate to the scripts directory
-cd C:\GitHub\EventVideoPlayback\tcpkg\scripts
+cd C:\GitHub\EventVideoPlayback\packaging\scripts
 
 # Run the build script
 .\Build-TcPackages.ps1
@@ -29,7 +29,7 @@ cd C:\GitHub\EventVideoPlayback\tcpkg\scripts
 
 This will:
 1. Discover all `.nuspec` files in the `packages` directory
-2. Create a `release` folder at tcpkg root if it doesn't exist
+2. Create a `release` folder at the packaging root if it doesn't exist
 3. Build each package using `tcpkg pack`
 4. Store all `.nupkg` files in the `release` folder
 5. Generate `checksums.md` with SHA256 checksums
@@ -62,7 +62,7 @@ For detailed build information:
 ## Directory Structure
 
 ```
-tcpkg/
+packaging/
 ├── packages/              # All package source directories
 │   ├── EventVideoPlayback.Library/
 │   ├── EventVideoPlayback.Service/
@@ -96,7 +96,7 @@ The script will automatically discover and build ALL packages in the `packages` 
 
 After a successful build, you'll find:
 
-- **Release Folder**: `C:\GitHub\EventVideoPlayback\tcpkg\release\`
+- **Release Folder**: `C:\GitHub\EventVideoPlayback\packaging\release\`
 - **Package Files**: `.nupkg` files for each successfully built package
 - **checksums.md**: SHA256 checksums for all package files for integrity verification
 - **Console Output**: Colored status messages showing progress and results
@@ -118,7 +118,7 @@ Pre-flight Checks
 
 [INFO] Checking for tcpkg tool...
 [SUCCESS] tcpkg tool found: 1.0.0
-[SUCCESS] tcpkg directory found: C:\GitHub\EventVideoPlayback\tcpkg
+[SUCCESS] packaging directory found: C:\GitHub\EventVideoPlayback\packaging
 
 ========================================
 Discovering Packages
@@ -150,7 +150,7 @@ Total Packages: 6
 Successful:     6
 Failed:         0
 
-Release folder: C:\GitHub\EventVideoPlayback\tcpkg\release
+Release folder: C:\GitHub\EventVideoPlayback\packaging\release
 
 [SUCCESS] All packages built successfully!
 ```
@@ -229,7 +229,7 @@ This script can be integrated into automated build pipelines:
 ```yaml
 - name: Build TwinCAT Packages
   run: |
-    cd C:\GitHub\EventVideoPlayback\tcpkg
+    cd C:\GitHub\EventVideoPlayback\packaging
     .\Build-TcPackages.ps1 -CleanBuild
   shell: powershell
 ```

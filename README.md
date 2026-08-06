@@ -22,11 +22,11 @@ The latest examples for using EventVideoPlayback are held in a seperate [GitHub 
 
 ```
 EventVideoPlayback/
-├── src/
-│   ├── App.Service/           # EventVideoPlaybackService (C# Windows Service)
-│   ├── HMI/                   # EventVision HMI Control (TwinCAT HMI)
-│   └── PLC/                   # EventVideoPlayback PLC Library (TwinCAT PLC)
-├── tcpkg/                     # TwinCAT Package build system
+├── src/                       # EventVideoPlaybackService (C# Windows service)
+├── plc/                       # EventVideoPlayback PLC library (TwinCAT PLC)
+├── hmi/                       # EventVision HMI control (TwinCAT HMI)
+├── tests/                     # Service unit tests
+├── packaging/                 # TwinCAT Package build system
 ├── docs/                      # Documentation assets
 └── LICENSE                    # License information
 ```
@@ -54,31 +54,31 @@ EventVideoPlayback/
 #### 1. Windows Service
 
 ```bash
-cd src/App.Service
-dotnet restore EventVideoPlaybackService.sln
-dotnet build EventVideoPlaybackService.sln --configuration Release
+dotnet restore EventVideoPlayback.sln
+dotnet build EventVideoPlayback.sln --configuration Release
+dotnet test EventVideoPlayback.sln
 ```
 
 #### 2. TwinCAT PLC Library
 
-1. Open `src/PLC/EventVideoPlayback/EventVideoPlayback.sln` in TwinCAT XAE
+1. Open `plc/EventVideoPlayback/EventVideoPlayback.sln` in TwinCAT XAE
 2. Build the solution (F7)
 3. Install as library via TwinCAT Library Repository
 
 #### 3. TwinCAT HMI Control
 
-1. Open `src/HMI/TcHmiEventVideo/TcEventVideoPlayback-TcHMIControl.sln` in Visual Studio
+1. Open `hmi/TcHmiEventVideo/TcEventVideoPlayback-TcHMIControl.sln` in Visual Studio
 2. Restore NuGet packages
 3. Build solution (Ctrl+Shift+B)
 
 #### 4. TwinCAT Packages
 
 ```powershell
-cd tcpkg
+cd packaging
 .\Build.ps1 -CleanBuild
 ```
 
-Built packages will be in `tcpkg/release/`.
+Built packages will be in `packaging/release/`.
 
 ## License
 

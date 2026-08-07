@@ -102,8 +102,7 @@ hmi/TcHmiEventVideo/TcEventVideoPlayback-TcHMIControl/Server/
 # ===== TwinCAT Package Build System =====
 packaging/release/*.nupkg
 packaging/release/*.txt
-# Exception: Track checksums file in packaging/release
-!packaging/release/checksums.md
+packaging/release/*.md
 
 # Exception: Track packaging/packages directory (override global [Bb]in/ exclusion)
 !packaging/packages/
@@ -112,6 +111,11 @@ packaging/release/*.txt
 packaging/packages/*/bin/*
 # Exception: Keep .md files in bin folders
 !packaging/packages/*/bin/*.md
+# Exception: committed package payloads that hosted runners cannot build. The PLC
+# library comes from an XAE save as library, the HMI control package from a TwinCAT
+# HMI Engineering build. CI guards their presence and their versions at tag time.
+!packaging/packages/EventVideoPlayback.Library/bin/EventVideoPlayback.library
+!packaging/packages/EventVision.HMI/bin/EventVision.*.nupkg
 
 # Exclude tools folder contents in packages
 packaging/packages/*/tools/*

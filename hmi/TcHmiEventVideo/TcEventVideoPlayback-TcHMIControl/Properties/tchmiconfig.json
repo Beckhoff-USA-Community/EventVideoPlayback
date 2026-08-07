@@ -122,13 +122,6 @@
       "symbols": {
         "package": {}
       }
-    },
-    {
-      "name": "Beckhoff.TwinCAT.HMI.Functions",
-      "basePath": "/Beckhoff.TwinCAT.HMI.Functions",
-      "symbols": {
-        "package": {}
-      }
     }
   ],
   "keyboardLayouts": [],

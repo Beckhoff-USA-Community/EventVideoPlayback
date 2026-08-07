@@ -19,14 +19,12 @@
         <dependency id="Beckhoff.TwinCAT.HMI.Framework" version="14.5.1" />
         <dependency id="Beckhoff.TwinCAT.HMI.Controls" version="14.7.1" />
         <dependency id="Beckhoff.TwinCAT.HMI.EventLogger" version="23.0.275" />
-        <dependency id="Beckhoff.TwinCAT.HMI.Functions" version="14.5.1" />
-        <dependency id="Beckhoff.TwinCAT.HMI.Server.Engineering" version="23.0.421" />
       </group>
     </dependencies>
   </metadata>
   <files>
     <file src="LICENSE.txt" target="" />
-    <file src="**\*" target="runtimes\native1.12-tchmi\" exclude=".eslintrc.json;**\*.nuspec;**\*.tpl.json;**\*.hmi*proj;**\~*;**\*.tmp;**\tmp*;**\*.user;**\tsconfig.json;**\*.log;**\*.bak;**\obj\**\*;packages.config;packages.xsd;.hmiframework\**\*;.hmipkgs\**\*;.git;.gitignore;.gitattributes" />
+    <file src="**\*" target="runtimes\native1.12-tchmi\" exclude=".eslintrc.json;**\*.nuspec;**\*.tpl.json;**\*.hmi*proj;**\~*;**\*.tmp;**\tmp*;**\*.user;**\tsconfig.json;**\*.log;**\*.bak;**\obj\**\*;packages.config;packages.xsd;.hmiframework\**\*;.hmipkgs\**\*;.git;.gitignore;.gitattributes;Server\**\*;Properties\**\*;Fonts\**\*;bin\**\*" />
     <file src="images\EventVideoPlayback_512x512.png" target="images\" />
   </files>
 </package>

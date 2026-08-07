@@ -1,0 +1,343 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Run tests
+        run: dotnet test EventVideoPlayback.sln -c Release
+
+      - name: Publish service
+        run: dotnet publish src/EventVideoPlaybackService -c Release -r win-x64 --self-contained -o packaging/packages/EventVideoPlayback.Service/bin
+
+      - name: Stage documentation payload
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path packaging/packages/EventVideoPlayback.Documentation/bin | Out-Null
+          Copy-Item README.md packaging/packages/EventVideoPlayback.Documentation/bin/README.md
+          Copy-Item CHANGELOG.md packaging/packages/EventVideoPlayback.Documentation/bin/CHANGELOG.md
+          Copy-Item docs/COMPONENT_DESCRIPTIONS.md packaging/packages/EventVideoPlayback.Documentation/bin/COMPONENT_DESCRIPTIONS.md
+          Copy-Item gh_pages/_docs/*.md packaging/packages/EventVideoPlayback.Documentation/bin/
+
+      - name: Check committed payloads
+        shell: pwsh
+        run: |
+          # The PLC library and the HMI control package cannot be built on a hosted
+          # runner. Both are committed at their packing paths. A missing payload is
+          # a warning on a branch build and an error on a release tag.
+          $missing = @()
+          if (-not (Test-Path 'packaging/packages/EventVideoPlayback.Library/bin/EventVideoPlayback.library')) {
+            $missing += 'packaging/packages/EventVideoPlayback.Library/bin/EventVideoPlayback.library (save as library from XAE and commit)'
+          }
+          if (-not (Get-ChildItem 'packaging/packages/EventVision.HMI/bin' -Filter 'EventVision.*.nupkg' -ErrorAction SilentlyContinue)) {
+            $missing += 'packaging/packages/EventVision.HMI/bin/EventVision.<version>.nupkg (build the control in TwinCAT HMI Engineering and commit)'
+          }
+          foreach ($m in $missing) {
+            if ('${{ github.ref_type }}' -eq 'tag') { throw "Missing committed payload: $m" }
+            Write-Host "::warning::Missing committed payload, its package will not pack on this run: $m"
+          }
+          Set-Content payload-state.txt ($missing.Count)
+
+      - name: Scan committed payloads for secrets
+        shell: pwsh
+        run: |
+          # TwinCAT HMI Engineering keeps live server state, including TLS private
+          # keys, under the project Server folder, and a pack that sweeps the
+          # project directory carries that state into the package. Key material or
+          # swept project scaffolding in a committed payload fails every build,
+          # branch or tag. Rebuild the payload clean instead.
+          $findings = @()
+          $payloads = @(Get-ChildItem 'packaging/packages/EventVision.HMI/bin' -Filter 'EventVision.*.nupkg' -ErrorAction SilentlyContinue)
+          if (Test-Path 'packaging/packages/EventVideoPlayback.Library/bin/EventVideoPlayback.library') {
+            $payloads += Get-Item 'packaging/packages/EventVideoPlayback.Library/bin/EventVideoPlayback.library'
+          }
+          foreach ($payload in $payloads) {
+            $work = Join-Path ([IO.Path]::GetTempPath()) ([IO.Path]::GetRandomFileName())
+            Copy-Item $payload.FullName "$work.zip"
+            Expand-Archive "$work.zip" $work -Force
+            if ($payload.Extension -eq '.nupkg') {
+              foreach ($dir in Get-ChildItem $work -Recurse -Directory) {
+                if ($dir.Name -in @('Server', 'Properties', 'Fonts')) {
+                  $findings += "$($payload.Name) packs a project $($dir.Name) folder. The pack swept HMI project scaffolding; check the nuspec excludes and rebuild."
+                }
+              }
+            }
+            foreach ($file in Get-ChildItem $work -Recurse -File) {
+              $text = [IO.File]::ReadAllText($file.FullName)
+              if ($text.Contains('-----BEGIN') -or $text.Contains('LS0tLS1CRUdJTi')) {
+                $findings += "$($payload.Name): $($file.Name) contains what looks like PEM key or certificate material."
+              }
+            }
+            Remove-Item "$work.zip"
+            Remove-Item $work -Recurse -Force
+          }
+          foreach ($f in $findings) { Write-Host "::error::$f" }
+          if ($findings.Count -gt 0) { throw 'Secret material or swept scaffolding found in a committed payload.' }
+
+      - name: Check version consistency
+        if: github.ref_type == 'tag'
+        shell: pwsh
+        run: |
+          $tagVersion = '${{ github.ref_name }}'.TrimStart('v')
+          [xml]$xae = Get-Content packaging/packages/EventVideoPlayback.XAE/EventVideoPlayback.XAE.Workload.nuspec
+          [xml]$xar = Get-Content packaging/packages/EventVideoPlayback.XAR/EventVideoPlayback.XAR.Workload.nuspec
+          [xml]$docs = Get-Content packaging/packages/EventVideoPlayback.Documentation/EventVideoPlayback.Documentation.nuspec
+          [xml]$hmi = Get-Content packaging/packages/EventVision.HMI/EventVision.HMI.nuspec
+          [xml]$plc = Get-Content packaging/packages/EventVideoPlayback.Library/EventVideoPlayback.Library.nuspec
+          [xml]$service = Get-Content packaging/packages/EventVideoPlayback.Service/EventVideoPlayback.Service.nuspec
+
+          # The release train: the tag, both workloads and the documentation package
+          $train = @(
+            $xae.package.metadata.version,
+            $xar.package.metadata.version,
+            $docs.package.metadata.version
+          )
+          $mismatched = $train | Where-Object { $_ -ne $tagVersion }
+          if ($mismatched) {
+            throw "Version mismatch: tag $tagVersion but the workloads and documentation carry $($train -join ', '). Update both workload nuspecs and the documentation nuspec before tagging."
+          }
+
+          # A workload must pin every component at the version being shipped,
+          # otherwise a released workload pulls an outdated component
+          function Get-PinnedVersion([xml]$nuspec, [string]$id) {
+            ($nuspec.package.metadata.dependencies.dependency | Where-Object { $_.id -eq $id }).version
+          }
+          $pins = @(
+            @{ Nuspec = $xae; Id = 'Beckhoff-USA-Community.XAE.HMI.EventVisionControl'; Expected = $hmi.package.metadata.version },
+            @{ Nuspec = $xae; Id = 'Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback'; Expected = $plc.package.metadata.version },
+            @{ Nuspec = $xae; Id = 'Beckhoff-USA-Community.XAE.Documentation.EventVideoPlayback'; Expected = $docs.package.metadata.version },
+            @{ Nuspec = $xar; Id = 'Beckhoff-USA-Community.XAR.Service.EventVideoPlayback'; Expected = $service.package.metadata.version }
+          )
+          foreach ($pin in $pins) {
+            $actual = Get-PinnedVersion $pin.Nuspec $pin.Id
+            if ($actual -ne $pin.Expected) {
+              throw "A workload pins $($pin.Id) at $actual but that package version is $($pin.Expected)."
+            }
+          }
+
+          # The HMI version lives in three places that must agree: the control
+          # Description.json, the control project nuspec and the packaging nuspec
+          $description = Get-Content hmi/TcHmiEventVideo/TcEventVideoPlayback-TcHMIControl/EventVisionControl/Description.json -Raw | ConvertFrom-Json
+          $descVersion = "$($description.version.major).$($description.version.minor).$($description.version.revision)"
+          [xml]$controlNuspec = Get-Content hmi/TcHmiEventVideo/TcEventVideoPlayback-TcHMIControl/EventVision.nuspec
+          foreach ($candidate in @($descVersion, $controlNuspec.package.metadata.version)) {
+            if ($candidate -ne $hmi.package.metadata.version) {
+              throw "HMI version drift: packaging nuspec $($hmi.package.metadata.version), control nuspec $($controlNuspec.package.metadata.version), Description.json $descVersion. Run packaging/scripts/Sync-HmiVersion.ps1."
+            }
+          }
+
+          # The committed HMI nupkg is the artifact that ships. Engineering syncs
+          # its installed package list into the pack, so Engineering side packages
+          # can appear as dependencies of the control, and a stale artifact can
+          # ship old code under a new number. Check the artifact, not just files.
+          $hmiPayload = Get-ChildItem 'packaging/packages/EventVision.HMI/bin' -Filter 'EventVision.*.nupkg' | Select-Object -First 1
+          Copy-Item $hmiPayload.FullName hmi-check.zip
+          Expand-Archive hmi-check.zip hmi-check -Force
+          [xml]$embedded = Get-Content hmi-check/EventVision.nuspec
+          if ($embedded.package.metadata.version -ne $hmi.package.metadata.version) {
+            throw "The committed HMI nupkg carries version $($embedded.package.metadata.version) but the packaging nuspec says $($hmi.package.metadata.version). Rebuild the control package."
+          }
+          $allowedDeps = 'Beckhoff.TwinCAT.HMI.Framework', 'Beckhoff.TwinCAT.HMI.Controls', 'Beckhoff.TwinCAT.HMI.EventLogger'
+          $extraDeps = @($embedded.package.metadata.dependencies.group.dependency | Where-Object { $_.id -notin $allowedDeps })
+          if ($extraDeps.Count -gt 0) {
+            throw "The committed HMI nupkg declares dependencies outside the runtime set: $(($extraDeps | ForEach-Object { $_.id }) -join ', '). Uninstall Engineering side packages from the control project and rebuild."
+          }
+          $expectedDeps = @($controlNuspec.package.metadata.dependencies.group.dependency | ForEach-Object { "$($_.id)=$($_.version)" } | Sort-Object)
+          $actualDeps = @($embedded.package.metadata.dependencies.group.dependency | ForEach-Object { "$($_.id)=$($_.version)" } | Sort-Object)
+          if (Compare-Object $expectedDeps $actualDeps) {
+            throw "The committed HMI nupkg dependencies ($($actualDeps -join ', ')) do not match the control nuspec ($($expectedDeps -join ', ')). Rebuild the control package."
+          }
+          $packedJs = (Get-FileHash 'hmi-check/runtimes/native1.12-tchmi/EventVisionControl/EventVisionControl.js').Hash
+          $repoJs = (Get-FileHash 'hmi/TcHmiEventVideo/TcEventVideoPlayback-TcHMIControl/EventVisionControl/EventVisionControl.js').Hash
+          if ($packedJs -ne $repoJs) {
+            throw 'The committed HMI nupkg was built from different control code than the repo carries. Rebuild the control package from the committed sources.'
+          }
+          Remove-Item hmi-check.zip
+          Remove-Item hmi-check -Recurse -Force
+
+          # The committed library must carry the version its nuspec claims. A
+          # released library version is immutable in the TwinCAT repository, so a
+          # stale payload would ship old code under a new number
+          $libraryPath = 'packaging/packages/EventVideoPlayback.Library/bin/EventVideoPlayback.library'
+          Copy-Item $libraryPath library-check.zip
+          Expand-Archive library-check.zip library-check -Force
+          [xml]$info = Get-Content library-check/projectinformations.auxiliary
+          $libraryVersion = @($info.ProjectInformations.properties.Version)[0]
+          if ($libraryVersion -ne $plc.package.metadata.version) {
+            throw "The committed library carries version $libraryVersion but its nuspec says $($plc.package.metadata.version). Rebuild and save the library, or fix the nuspec."
+          }
+
+          # The library must embed the VideoAlarm event class with the shipped
+          # identifiers, or logged events on fielded systems stop resolving
+          $external = 'library-check/externaltypes.auxiliary'
+          if (-not (Test-Path $external)) {
+            throw 'The committed library does not embed the VideoAlarm event class. The build did not resolve the TMC files; see the PLC project readme.'
+          }
+          [xml]$types = Get-Content $external
+          $eventClass = $types.TcModuleClass.DataTypes.DataType | Where-Object { $_.Name.InnerText -eq 'VideoAlarm' }
+          if ($eventClass.Name.GUID -ne '{2191492B-F0E2-44F2-B369-C5243DE90BAD}') {
+            throw "The VideoAlarm event class GUID changed: $($eventClass.Name.GUID). Fielded systems depend on the shipped GUID."
+          }
+          $expectedEvents = 'Camera1Alarm', 'ImageToVideoService', 'RouterMemoryTooSmall', 'VideoConfigTooLongForBufferSize'
+          $actualEvents = @($eventClass.EventId | Sort-Object { [int]$_.Name.Id } | ForEach-Object { $_.Name.InnerText })
+          if (Compare-Object $expectedEvents $actualEvents -SyncWindow 0) {
+            throw "The VideoAlarm event ids changed: $($actualEvents -join ', '). Fielded systems depend on ids 1 to 4 as shipped."
+          }
+          Remove-Item library-check.zip
+          Remove-Item library-check -Recurse -Force
+
+      - name: Check for nuspec changes without a version bump
+        shell: pwsh
+        run: |
+          # A published package version is immutable on the feed, so a nuspec edit
+          # without a version bump can never ship. Compare every nuspec against the
+          # previous release tag. A branch build warns, a release tag fails.
+          $tags = git tag --list 'v*' 'V*' --sort=-version:refname | Where-Object { "refs/tags/$_" -ne '${{ github.ref }}' }
+          if (-not $tags) { Write-Host 'No previous release tag, skipping.'; exit 0 }
+          $previous = $tags[0]
+          $failures = @()
+          foreach ($nuspec in Get-ChildItem packaging/packages -Recurse -Filter *.nuspec) {
+            [xml]$current = Get-Content $nuspec.FullName
+            $id = $current.package.metadata.id
+            $oldPath = git grep -l "<id>$id</id>" $previous 2>$null | Select-Object -First 1
+            if (-not $oldPath) { continue }
+            $oldPath = $oldPath -replace "^${previous}:", ''
+            $old = git show "${previous}:${oldPath}" 2>$null
+            if (-not $old) { continue }
+            [xml]$oldXml = $old
+            $currentText = (Get-Content $nuspec.FullName -Raw) -replace "`r", ''
+            $oldText = ($old -join "`n") -replace "`r", ''
+            if ($oldXml.package.metadata.version -eq $current.package.metadata.version -and $currentText -ne $oldText) {
+              $failures += "$id changed since $previous but is still version $($current.package.metadata.version)."
+            }
+          }
+          foreach ($f in $failures) {
+            if ('${{ github.ref_type }}' -eq 'tag') { throw "$f Bump the version so the change can publish." }
+            Write-Host "::warning::$f The change cannot publish until the version is bumped."
+          }
+
+      - name: Pack TwinCAT packages
+        shell: pwsh
+        run: |
+          $nuspecs = @(
+            'packaging/packages/EventVideoPlayback.Service/EventVideoPlayback.Service.nuspec',
+            'packaging/packages/EventVideoPlayback.Documentation/EventVideoPlayback.Documentation.nuspec',
+            'packaging/packages/EventVideoPlayback.XAE/EventVideoPlayback.XAE.Workload.nuspec',
+            'packaging/packages/EventVideoPlayback.XAR/EventVideoPlayback.XAR.Workload.nuspec'
+          )
+          if (Test-Path 'packaging/packages/EventVideoPlayback.Library/bin/EventVideoPlayback.library') {
+            $nuspecs += 'packaging/packages/EventVideoPlayback.Library/EventVideoPlayback.Library.nuspec'
+          }
+          if (Get-ChildItem 'packaging/packages/EventVision.HMI/bin' -Filter 'EventVision.*.nupkg' -ErrorAction SilentlyContinue) {
+            $nuspecs += 'packaging/packages/EventVision.HMI/EventVision.HMI.nuspec'
+          }
+          foreach ($nuspec in $nuspecs) {
+            nuget pack $nuspec -OutputDirectory package-output -NoPackageAnalysis
+            if ($LASTEXITCODE -ne 0) { throw "Packing $nuspec failed." }
+          }
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: twincat-packages
+          path: package-output/*.nupkg
+
+      - name: Push to GitHub Packages
+        if: github.ref_type == 'tag'
+        run: dotnet nuget push package-output\*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/Beckhoff-USA-Community/index.json
+        # No skip-duplicate on purpose. A duplicate version means something changed
+        # without a bump, and that must fail loudly rather than publish nothing.
+
+      - name: Verify the packages landed on the feed
+        if: github.ref_type == 'tag'
+        shell: pwsh
+        run: |
+          # A green push is not a published package. Ask the feed for every version
+          # that was just pushed. The push step already fails loudly on error, so a
+          # feed lookup that cannot complete only warns, it does not fail the release.
+          $token = '${{ secrets.GITHUB_TOKEN }}'
+          $auth = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("x:$token"))
+          $headers = @{ Authorization = "Basic $auth" }
+
+          # Discover the flat container base from the service index rather than
+          # assuming its URL shape.
+          $base = $null
+          try {
+            $service = Invoke-RestMethod -Headers $headers -Uri 'https://nuget.pkg.github.com/Beckhoff-USA-Community/index.json'
+            $base = ($service.resources | Where-Object { $_.'@type' -like 'PackageBaseAddress/*' } | Select-Object -First 1).'@id'
+          } catch {
+            Write-Host "::warning::Could not read the feed service index: $($_.Exception.Message). Skipping the feed check; the push step already reported success."
+            exit 0
+          }
+          if (-not $base) {
+            Write-Host '::warning::The service index has no PackageBaseAddress resource. Skipping the feed check.'
+            exit 0
+          }
+          $base = $base.TrimEnd('/')
+
+          foreach ($package in Get-ChildItem package-output -Filter *.nupkg) {
+            if ($package.BaseName -match '^(?<id>.+?)\.(?<version>\d+\.\d+\.\d+(\.\d+)?)$') {
+              $id = $Matches.id.ToLowerInvariant()
+              $version = $Matches.version
+            } else { throw "Could not parse id and version from $($package.Name)." }
+            $found = $false
+            foreach ($attempt in 1..10) {
+              try {
+                $index = Invoke-RestMethod -Headers $headers -Uri "$base/$id/index.json"
+                if ($index.versions -contains $version) { $found = $true; break }
+              } catch { }
+              Start-Sleep -Seconds 15
+            }
+            if ($found) { Write-Host "$id $version is on the feed." }
+            else { Write-Host "::warning::$id $version was pushed but did not appear on the feed within the wait window. Confirm it manually." }
+          }
+
+  release:
+    if: github.ref_type == 'tag'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: twincat-packages
+          path: dist
+
+      - name: Create the draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          cd dist
+          sha256sum *.nupkg > SHA256SUMS
+          if gh api "repos/$GH_REPO/releases" --jq '.[].tag_name' | grep -qx "$GITHUB_REF_NAME"; then
+            echo "A release for $GITHUB_REF_NAME already exists, leaving it untouched."
+            exit 0
+          fi
+          gh release create "$GITHUB_REF_NAME" \
+            --verify-tag \
+            --draft \
+            --title "Event Video Playback ${GITHUB_REF_NAME#v}" \
+            --notes "The release notes are written here before publishing." \
+            *.nupkg SHA256SUMS

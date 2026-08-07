@@ -36,9 +36,8 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path packaging/packages/EventVideoPlayback.Documentation/bin | Out-Null
           Copy-Item README.md packaging/packages/EventVideoPlayback.Documentation/bin/README.md
-          Copy-Item CHANGELOG.md packaging/packages/EventVideoPlayback.Documentation/bin/CHANGELOG.md
-          Copy-Item docs/COMPONENT_DESCRIPTIONS.md packaging/packages/EventVideoPlayback.Documentation/bin/COMPONENT_DESCRIPTIONS.md
-          Copy-Item gh_pages/_docs/*.md packaging/packages/EventVideoPlayback.Documentation/bin/
+          Copy-Item docs/*.md packaging/packages/EventVideoPlayback.Documentation/bin/
+          Copy-Item -Recurse docs/assets packaging/packages/EventVideoPlayback.Documentation/bin/assets
 
       - name: Check committed payloads
         shell: pwsh

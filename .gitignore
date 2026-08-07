@@ -139,3 +139,6 @@ Desktop.ini
 *.bak
 *.backup
 *~
+
+# ===== Docs build output =====
+/site/

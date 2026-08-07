@@ -20,8 +20,7 @@ packaging/
 │   ├── BUILD_INSTRUCTIONS.md
 │   └── QUICK_REFERENCE.txt
 ├── Build.ps1              # Convenience wrapper (run from here)
-├── Build.bat              # Convenience wrapper (double-click)
-└── convert_to_pdf.py      # Generate documentation PDFs (Python)
+└── Build.bat              # Convenience wrapper (double-click)
 ```
 
 ## Quick Start
@@ -42,20 +41,15 @@ cd scripts
 .\Build-TcPackages.ps1 -CleanBuild
 ```
 
-### Generate Documentation PDFs
+### Stage the documentation payload
 
-To generate PDF documentation from the markdown files:
+The CI build stages the documentation package payload from the repository docs before packing. To reproduce that locally for a dress rehearsal:
 
-```bash
-python convert_to_pdf.py
+```powershell
+Copy-Item ..\README.md packages\EventVideoPlayback.Documentation\bin\README.md
+Copy-Item ..\docs\*.md packages\EventVideoPlayback.Documentation\bin\
+Copy-Item -Recurse ..\docs\assets packages\EventVideoPlayback.Documentation\bin\assets
 ```
-
-This script:
-- Automatically installs required Python packages (markdown, weasyprint)
-- Converts all markdown files from `gh_pages\_docs\` to PDFs
-- Outputs individual PDFs to `packages\EventVideoPlayback.Documentation\bin\`
-- Creates a combined `complete-documentation.pdf` with all documentation
-- No external dependencies needed (no LaTeX or pandoc required!)
 
 ## Adding New Packages
 
@@ -63,7 +57,7 @@ To add a new package to the build:
 
 1. Create a new directory under `packages/`
 2. Add your `.nuspec` file and source files
-3. Run the build script - it will automatically discover and build your package!
+3. Run the build script. It will automatically discover and build your package.
 
 **Example:**
 ```
@@ -83,7 +77,7 @@ All built packages are output to:
 
 ## Package Verification
 
-Packages that contain a `bin/` directory will automatically get a `VERIFICATION.md` file generated in their `tools/` directory with SHA256 checksums of all installation files.
+Packages that contain a `bin/` directory automatically get a `VERIFICATION.md` file in their `tools/` directory with SHA256 checksums of all installation files.
 
 ## Documentation
 

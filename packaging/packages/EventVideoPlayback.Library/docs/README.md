@@ -11,7 +11,7 @@ TwinCAT PLC library package containing the FB_ImageToVideo function block and su
 
 ## Installation
 
-Install via TwinCAT Package Manager:
+The package feed must be set up once per machine. [Adding the package feed](https://github.com/Beckhoff-USA-Community/BAUS_Community_General_Assets/blob/main/feed-setup.md) walks through it. Then install via TwinCAT Package Manager:
 ```
 tcpkg install Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback
 ```

@@ -1,35 +1,30 @@
 # EventVideoPlayback.XAE
 
-TwinCAT XAE workload package bundling the complete EventVideoPlayback system for engineering environments.
+TwinCAT XAE workload that installs the complete Event Video Playback engineering tooling.
 
 ## What's Included
 
 This workload installs:
-- EventVideoPlayback PLC Library
-- EventVision HMI Control
-- Documentation Package
-- Sample projects demonstrating FB_ImageToVideo usage
-
-## Features
-
-- Complete engineering environment setup
-- Sample PLC project with event logger configuration
-- Integration patterns for TwinCAT Vision cameras
-- Alarm-triggered video creation examples
+* EventVideoPlayback PLC library
+* EventVision HMI control
+* Documentation package
 
 ## Installation
 
-Install via TwinCAT Package Manager:
+The package feed must be set up once per machine. [Adding the package feed](https://github.com/Beckhoff-USA-Community/BAUS_Community_General_Assets/blob/main/feed-setup.md) walks through it. Then install via TwinCAT Package Manager:
+
 ```
-tcpkg install Beckhoff-USA-Community.XAE.EventVideoPlayback
+tcpkg install Beckhoff-USA-Community.EventVideoPlayback.XAE
 ```
 
 ## Requirements
 
-- TwinCAT 3 XAE (Build 4026 or higher)
-- TF7xxx Vision License
-- TE2000 HMI Engineering (optional, for HMI components)
+* TwinCAT 3 XAE (Build 4026 or higher)
+* TwinCAT Vision XAE
+* TE2000 HMI Engineering (optional, for the HMI control)
 
 ## Documentation
 
-Full documentation available at: https://github.com/Beckhoff-USA-Community/EventVideoPlayback
+Full documentation: https://beckhoff-usa-community.github.io/EventVideoPlayback/
+
+Sample projects: https://github.com/Beckhoff-USA-Community/EventVideoPlayback_Samples

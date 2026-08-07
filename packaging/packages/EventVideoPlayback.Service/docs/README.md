@@ -20,7 +20,7 @@ Windows service package for the EventVideoPlayback system that processes image s
 
 ## Installation
 
-Install via TwinCAT Package Manager:
+The package feed must be set up once per machine. [Adding the package feed](https://github.com/Beckhoff-USA-Community/BAUS_Community_General_Assets/blob/main/feed-setup.md) walks through it. Then install via TwinCAT Package Manager:
 ```
 tcpkg install Beckhoff-USA-Community.XAR.Service.EventVideoPlayback
 ```

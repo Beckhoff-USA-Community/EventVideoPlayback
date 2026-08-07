@@ -19,10 +19,6 @@ Write-Host "EventVideoPlayback Documentation installed successfully."
 Write-Host "Documentation Location: $installDir"
 Write-Host ""
 Write-Host "Available documentation files:"
-Write-Host "  - Introduction.md - Overview of EventVideoPlayback system"
-Write-Host "  - Installation.md - Installation instructions"
-Write-Host "  - SystemRequirements.md - System requirements and prerequisites"
-Write-Host "  - FirstProgram.md - Getting started with your first program"
-Write-Host "  - AddToExist.md - Adding EventVideoPlayback to existing projects"
-Write-Host "  - ServiceDoc.md - EventVideoPlayback service documentation"
-Write-Host "  - Licenses.md - License information"
+Get-ChildItem -Path $installDir -Filter '*.md' | ForEach-Object {
+    Write-Host "  $($_.Name)"
+}

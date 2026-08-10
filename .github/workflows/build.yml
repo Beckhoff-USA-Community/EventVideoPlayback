@@ -285,9 +285,12 @@ jobs:
 
       - name: Push to GitHub Packages
         if: github.ref_type == 'tag'
-        run: dotnet nuget push package-output\*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/Beckhoff-USA-Community/index.json
-        # No skip-duplicate on purpose. A duplicate version means something changed
-        # without a bump, and that must fail loudly rather than publish nothing.
+        run: dotnet nuget push package-output\*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source https://nuget.pkg.github.com/Beckhoff-USA-Community/index.json --skip-duplicate
+        # skip-duplicate is required: a patch train re-ships unchanged components at
+        # their existing versions, and those pushes 409 (learned at v2.1.1, which
+        # died re-pushing the unchanged PLC library). The protection against an
+        # unbumped CHANGE is the bump guard above, which fails the tag on content
+        # changes without a version bump before anything is pushed.
 
       - name: Verify the packages landed on the feed
         if: github.ref_type == 'tag'

@@ -83,5 +83,19 @@ The virtual directory name must match the control's Virtual Drive attribute. The
 
 ![Publish settings for the remote configuration](./assets/images/HmiPublishSettings.png)
 
+## Content Security Policy
+
+Recent HMI server versions send a Content Security Policy header with every HMI page. CSP is a browser mechanism that only allows a page to load the resource types the server has listed. The default policy of the 14.16 server line contains no media directive, because the stock controls never load audio or video, so the browser refuses to load the video and the player stays a black rectangle. The browser console then shows a refusal naming the directive `default-src 'none'` and noting that `media-src` was not set.
+
+To allow video playback, extend the policy on the server that serves the published project:
+
+1. Open the server configuration page and log in as an administrator user.
+2. On the **TcHmiSrv** page, **General** tab, expand **Regular expressions for files**.
+3. Open the entry whose regular expression is `.*\.(htm|html|shtml)$`. Its HTTP headers field holds the Content-Security-Policy line and a Content-Type line.
+4. Append `; media-src 'self'` to the end of the Content-Security-Policy line, after `frame-ancestors 'self'`. Leave the Content-Type line unchanged.
+5. Accept the change and reload the HMI with a forced refresh.
+
+`'self'` is sufficient because the virtual directory serves the videos from the same origin as the HMI page. Without this change every video request is blocked by the browser before it reaches the server, so no network request appears in the developer tools.
+
 !!! note
     Videos play from a published project viewed in a web browser. They do not play in the Live display inside the engineering environment.

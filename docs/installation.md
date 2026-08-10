@@ -149,6 +149,10 @@ The service ships self contained, so there is no separate .NET runtime to instal
 * Check the service configuration file for correct paths
 * Verify sufficient disk space is available
 
+### Video player stays black in the HMI
+
+* The HMI server's default Content Security Policy blocks media. See [Content Security Policy](./hmi-control.md#content-security-policy) for the required server setting
+
 ### PLC function block errors
 
 * Make sure the library reference is added to the PLC project

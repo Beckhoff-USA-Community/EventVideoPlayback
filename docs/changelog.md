@@ -2,6 +2,39 @@
 
 All components ship together as a release train. The train number is the version of the XAE and XAR workload packages. The PLC library, the HMI control, and the service each carry their own version and are listed when they change.
 
+## 2.1.0 (2026-08-10)
+
+The train ships PLC library 1.2.0, HMI control EventVision 1.2.0, and service 2.1.0. The packages are published on the GitHub Packages feed; the old community feed is retired.
+
+Version 2.1.0 targets the current TE2000 line. EventVision 1.2.0 requires HMI Framework 14.5.1, Controls 14.7.1, and EventLogger 23.0.275 or newer; it does not work on the 14.3 package line, and 1.1.x does not work on the 14.6 line or newer. Version 14.16 is the tested Engineering and Server line. On current servers video playback also needs one server setting; see [Content Security Policy](./hmi-control.md#content-security-policy).
+
+### Added
+
+* `VideoRootDirectory` service setting that confines every path the PLC commands to one directory tree (off by default, see [Service Configuration](./service-configuration.md))
+* The service logs its effective configuration to the Application event log at startup
+* The video button, its states, and the dialog title are localized in English and German
+* Documentation site rebuilt with reference pages for the [PLC library](./plc-library.md), the [HMI control](./hmi-control.md), and the [service configuration](./service-configuration.md)
+
+### Changed
+
+* The HMI control is rebuilt for the current TE2000 packages: new details popup integration, time zone conversion with daylight saving handling, and a capped file poll with clear button states
+* The service runs on .NET 10 and ships self contained
+* The service reads its configuration file from the install directory. Earlier versions resolved it against the process working directory, which for a Windows service meant the shipped configuration was silently ignored in the field
+* One default set for all service configuration fallbacks. The 2.0.x releases carried three divergent fallback sets
+* The project builds from a clean clone; the event class definition ships in the repository and is binary compatible with the fielded 1.1.1 library
+
+### Fixed
+
+* PLC: a failing image write gives up after a bounded number of attempts, latches an error code, and recovers through `Reset`. Before, a full disk froze capture silently with no alarm and no recovery
+* PLC: the event timestamp is copied when the alarm fires, so a second event during a capture no longer changes the video filename mid capture
+* PLC: `ErrorID` carries the real ADS error code instead of a fixed sentinel value, and `FramesPerSecond` and `ReductionFactor` validate their values
+* Service: video frames are sorted before encoding, so videos play in capture order on every file system
+* Service: the encode queue is bounded and a full queue answers the PLC with a busy error instead of accepting work it cannot finish
+* Service: a failed encode deletes the partial video file and keeps the captured images
+* Service: malformed command payloads are answered with an error instead of running the PLC into a timeout
+* Service: a failed ADS connection at startup stops the service so the service manager restarts it, instead of leaving a running service that serves nothing
+* HMI: the event grid row icons ship with the control, so they render on the current Controls packages
+
 ## 2.0.3 (2025-11-18)
 
 ### Changed

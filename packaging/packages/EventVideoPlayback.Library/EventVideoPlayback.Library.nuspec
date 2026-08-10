@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Beckhoff-USA-Community.XAE.PLC.Lib.EventVideoPlayback</id>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <title>EventVideoPlayback PLC Library</title>
     <authors>Beckhoff Automation LLC</authors>
     <projectUrl>https://github.com/Beckhoff-USA-Community/EventVideoPlayback</projectUrl>
@@ -13,7 +13,7 @@
     <readme>docs/README.md</readme>
     <summary>PLC library for Event Video Playback system integration</summary>
     <tags>Beckhoff TwinCAT AllowMultipleVersions</tags>
-    <releaseNotes>Version 1.1.1 - Compatible with EventVideoPlayback 2.0.0</releaseNotes>
+    <releaseNotes>https://beckhoff-usa-community.github.io/EventVideoPlayback/changelog/</releaseNotes>
     <description>EventVideoPlayback PLC Library - TwinCAT 3 library for video playback event management.</description>
     <dependencies>
 		<dependency id="TwinCAT.Standard.XAE" version="0.0.0" />

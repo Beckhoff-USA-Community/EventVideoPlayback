@@ -228,8 +228,11 @@ jobs:
             $old = git show "${previous}:${oldPath}" 2>$null
             if (-not $old) { continue }
             [xml]$oldXml = $old
-            $currentText = (Get-Content $nuspec.FullName -Raw) -replace "`r", ''
-            $oldText = ($old -join "`n") -replace "`r", ''
+            # Trim trailing newlines on both sides: capturing git show output as
+            # lines and rejoining drops the final newline, so an unchanged file
+            # would otherwise compare as changed.
+            $currentText = ((Get-Content $nuspec.FullName -Raw) -replace "`r", '').TrimEnd("`n")
+            $oldText = (($old -join "`n") -replace "`r", '').TrimEnd("`n")
             if ($oldXml.package.metadata.version -eq $current.package.metadata.version -and $currentText -ne $oldText) {
               $failures += "$id changed since $previous but is still version $($current.package.metadata.version)."
             }
@@ -255,8 +258,24 @@ jobs:
             $nuspecs += 'packaging/packages/EventVision.HMI/EventVision.HMI.nuspec'
           }
           foreach ($nuspec in $nuspecs) {
-            nuget pack $nuspec -OutputDirectory package-output -NoPackageAnalysis
+            # NoDefaultExcludes is load bearing: nuget pack silently drops *.nupkg
+            # files by default, which strips the EventVision control payload out of
+            # its wrapper package (shipped broken as 1.2.0, caught 2026-08-10).
+            nuget pack $nuspec -OutputDirectory package-output -NoPackageAnalysis -NoDefaultExcludes
             if ($LASTEXITCODE -ne 0) { throw "Packing $nuspec failed." }
+          }
+
+          # The wrapper is only as good as its payload. Assert the packed HMI
+          # wrapper actually carries the inner control nupkg before it can ship.
+          $wrapper = Get-ChildItem package-output -Filter '*XAE.HMI.EventVisionControl*.nupkg' | Select-Object -First 1
+          if ($wrapper) {
+            Copy-Item $wrapper.FullName wrapper-check.zip
+            Expand-Archive wrapper-check.zip wrapper-check -Force
+            if (-not (Get-ChildItem 'wrapper-check/tools' -Filter 'EventVision.*.nupkg' -ErrorAction SilentlyContinue)) {
+              throw "The packed HMI wrapper $($wrapper.Name) does not contain the inner EventVision nupkg in tools. The pack dropped the payload."
+            }
+            Remove-Item wrapper-check.zip
+            Remove-Item wrapper-check -Recurse -Force
           }
 
       - uses: actions/upload-artifact@v7

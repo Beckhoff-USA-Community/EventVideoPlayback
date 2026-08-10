@@ -2,6 +2,14 @@
 
 All components ship together as a release train. The train number is the version of the XAE and XAR workload packages. The PLC library, the HMI control, and the service each carry their own version and are listed when they change.
 
+## 2.1.1 (2026-08-10)
+
+The train ships PLC library 1.2.0, HMI control EventVision 1.2.1, and service 2.1.0.
+
+### Fixed
+
+* The EventVision control package published with 2.1.0 was missing its payload: the release pipeline's pack step silently dropped the inner control file, so the package failed to install. The control itself is unchanged; its package version moves to 1.2.1 and the pipeline now verifies the payload before anything publishes. The broken 1.2.0 control package and the 2.1.0 XAE workload are removed from the feed; install the 2.1.1 workload instead.
+
 ## 2.1.0 (2026-08-10)
 
 The train ships PLC library 1.2.0, HMI control EventVision 1.2.0, and service 2.1.0. The packages are published on the GitHub Packages feed; the old community feed is retired.

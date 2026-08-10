@@ -107,10 +107,9 @@ packaging/release/*.md
 # Exception: Track packaging/packages directory (override global [Bb]in/ exclusion)
 !packaging/packages/
 
-# Exclude bin folder contents in packages (but not the folder itself)
+# Exclude bin folder contents in packages (but not the folder itself). The
+# documentation payload staged into its bin before packing stays untracked.
 packaging/packages/*/bin/*
-# Exception: Keep .md files in bin folders
-!packaging/packages/*/bin/*.md
 # Exception: committed package payloads that hosted runners cannot build. The PLC
 # library comes from an XAE save as library, the HMI control package from a TwinCAT
 # HMI Engineering build. CI guards their presence and their versions at tag time.

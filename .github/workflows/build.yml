@@ -167,8 +167,11 @@ jobs:
           if (Compare-Object $expectedDeps $actualDeps) {
             throw "The committed HMI nupkg dependencies ($($actualDeps -join ', ')) do not match the control nuspec ($($expectedDeps -join ', ')). Rebuild the control package."
           }
-          $packedJs = (Get-FileHash 'hmi-check/runtimes/native1.12-tchmi/EventVisionControl/EventVisionControl.js').Hash
-          $repoJs = (Get-FileHash 'hmi/TcHmiEventVideo/TcEventVideoPlayback-TcHMIControl/EventVisionControl/EventVisionControl.js').Hash
+          # Compare as text with normalized line endings. The repo stores the file
+          # with LF while a Windows checkout can convert it to CRLF, so raw byte
+          # hashes cannot agree; the check is about the code, not the line endings.
+          $packedJs = (Get-Content 'hmi-check/runtimes/native1.12-tchmi/EventVisionControl/EventVisionControl.js' -Raw) -replace "`r", ''
+          $repoJs = (Get-Content 'hmi/TcHmiEventVideo/TcEventVideoPlayback-TcHMIControl/EventVisionControl/EventVisionControl.js' -Raw) -replace "`r", ''
           if ($packedJs -ne $repoJs) {
             throw 'The committed HMI nupkg was built from different control code than the repo carries. Rebuild the control package from the committed sources.'
           }
@@ -329,7 +332,6 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           cd dist
-          sha256sum *.nupkg > SHA256SUMS
           if gh api "repos/$GH_REPO/releases" --jq '.[].tag_name' | grep -qx "$GITHUB_REF_NAME"; then
             echo "A release for $GITHUB_REF_NAME already exists, leaving it untouched."
             exit 0
@@ -339,4 +341,4 @@ jobs:
             --draft \
             --title "Event Video Playback ${GITHUB_REF_NAME#v}" \
             --notes "The release notes are written here before publishing." \
-            *.nupkg SHA256SUMS
+            *.nupkg

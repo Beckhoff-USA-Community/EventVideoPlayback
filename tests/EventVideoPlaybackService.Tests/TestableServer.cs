@@ -12,8 +12,8 @@ namespace EventVideoPlaybackService.Tests
     /// </summary>
     internal sealed class TestableServer : AdsImageToVideoServer
     {
-        public TestableServer(ILogger logger, string videoRootDirectory = "")
-            : base(0, "EventVideoPlaybackTestServer", logger, videoDeleteTime: 5, codecFourCC: "avc1", maxFileSize: 250, videoRootDirectory)
+        public TestableServer(ILogger logger, string videoRootDirectory = "", double videoDeleteTime = 5, ulong maxFolderSizeMb = 250)
+            : base(0, "EventVideoPlaybackTestServer", logger, videoDeleteTime, codecFourCC: "avc1", maxFileSize: maxFolderSizeMb, videoRootDirectory)
         {
         }
 

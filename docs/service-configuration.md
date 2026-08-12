@@ -28,8 +28,15 @@ Open it with Notepad or any editor. The shipped file looks like this:
 The file is read once at startup. Restart the service to apply changes:
 
 1. Open the Windows Services window (run `services.msc`).
-2. Right click the **EventVideoPlayback** service.
+2. Right click **EventVideoPlayback Service**.
 3. Choose **Stop**, then **Start**. A reboot also works.
+
+From PowerShell, use the service name rather than the display name:
+
+```powershell
+Stop-Service EventVideoPlaybackService
+Start-Service EventVideoPlaybackService
+```
 
 ## Settings
 
@@ -78,6 +85,9 @@ The ADS port the service hosts its server on.
 * Default: `250`
 
 The size cap for a video folder in MB. After each encode the service sums the videos in the folder the new video landed in and deletes the oldest one when the total is over the cap. The cap applies per camera folder, not to the disk as a whole, so budget `MaxFolderSize` times the number of cameras when sizing storage. See [Video maintenance](#video-maintenance) for the exact behavior.
+
+!!! warning
+    Set `MaxFolderSize` comfortably above the largest single video you expect. A cap smaller than one video puts the folder over the limit the moment a video is written. The newly created video is protected from the size pass, but every following encode deletes the oldest remaining video, so the folder shrinks toward a single file instead of keeping a useful history.
 
 ### VideoRootDirectory
 

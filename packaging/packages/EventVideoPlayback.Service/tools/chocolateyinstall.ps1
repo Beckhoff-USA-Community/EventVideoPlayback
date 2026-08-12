@@ -15,9 +15,29 @@ if (-not (Test-Path $installDir)) {
     Write-Host "Created directory: $installDir"
 }
 
+# Preserve an existing configuration file across upgrades. The customer edits
+# EventVideoPlaybackService.config.json in place, and a blind Copy-Item -Force used to
+# overwrite it with the shipped defaults on every upgrade, silently reverting their
+# codec, retention, port, and confinement settings.
+$configFileName = "EventVideoPlaybackService.config.json"
+$existingConfig = Join-Path $installDir $configFileName
+$preserveConfig = Test-Path $existingConfig
+if ($preserveConfig) {
+    Write-Host "Existing configuration found; it will be preserved across this upgrade."
+    $savedConfig = Join-Path $env:TEMP "$configFileName.$PID.bak"
+    Copy-Item -Path $existingConfig -Destination $savedConfig -Force
+}
+
 # Copy service files to installation directory
 Write-Host "Copying service files to $installDir..."
 Copy-Item -Path "$serviceDir\*" -Destination $installDir -Recurse -Force
+
+# Restore the customer's configuration over the shipped default
+if ($preserveConfig) {
+    Copy-Item -Path $savedConfig -Destination $existingConfig -Force
+    Remove-Item -Path $savedConfig -Force -ErrorAction SilentlyContinue
+    Write-Host "Restored the existing configuration file."
+}
 
 # Update the service executable path to installation directory
 $serviceExecutable = Join-Path $installDir "EventVideoPlaybackService.exe"

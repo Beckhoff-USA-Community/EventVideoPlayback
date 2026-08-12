@@ -44,6 +44,19 @@ namespace EventVideoPlaybackService.Tests
         }
 
         [Fact]
+        public void LockedFile_UsesCanonicalDefaults_InsteadOfThrowing()
+        {
+            // A file that exists but cannot be read (exclusive lock, ACL) used to escape
+            // LoadConfig, reach the generic handler in ExecuteAsync, and exit the process,
+            // so the service manager restarted it into the same locked file forever.
+            string dir = NewDirWith("{\"AdsPort\":26129}");
+            using var exclusiveLock = new FileStream(
+                Path.Combine(dir, ConfigFileName), FileMode.Open, FileAccess.Read, FileShare.None);
+
+            AssertCanonicalDefaults(Load(dir));
+        }
+
+        [Fact]
         public void EmptyFile_UsesCanonicalDefaults()
         {
             AssertCanonicalDefaults(Load(NewDirWith("")));

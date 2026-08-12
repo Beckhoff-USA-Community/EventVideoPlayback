@@ -124,6 +124,14 @@ namespace EventVideoPlaybackService
                 logger.LogError(ex, "Configuration file at {ConfigPath} is malformed; using defaults.", configPath);
                 config = new ConfigData();
             }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                // A locked or permission blocked file must not stop the service: the escape
+                // used to reach the generic handler in ExecuteAsync, which exits the process,
+                // and the service manager then restarted it into the same locked file forever.
+                logger.LogError(ex, "Configuration file at {ConfigPath} could not be read; using defaults.", configPath);
+                config = new ConfigData();
+            }
 
             // Per-field validation. A partial or mis-cased file used to leave AdsPort/MaxFolderSize/
             // VideoDeleteTime at zero, which routes to a dynamic port and deletes every video; apply

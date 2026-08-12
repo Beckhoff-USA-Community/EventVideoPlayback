@@ -31,7 +31,7 @@ Version 14.16 is the tested TwinCAT HMI Engineering and Server line for the curr
 
 ### HMI NuGet Packages
 
-You do not need to pick HMI NuGet package versions by hand. The EventVision control package declares its minimum dependency versions (Beckhoff.TwinCAT.HMI.Framework 14.5.1, Beckhoff.TwinCAT.HMI.Controls 14.7.1, Beckhoff.TwinCAT.HMI.EventLogger 23.0.275) and NuGet resolves them automatically when you add the control package to an HMI project. The tested combinations are recorded in the [EventVision version matrix](https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/packaging/packages/EventVision.HMI/docs/README.md).
+You do not need to pick HMI NuGet package versions by hand. The EventVision control package declares its minimum dependency versions (Beckhoff.TwinCAT.HMI.Framework 14.5.1, Beckhoff.TwinCAT.HMI.Controls 14.7.1, Beckhoff.TwinCAT.HMI.EventLogger 23.0.275) and NuGet resolves them automatically when you add the control package to an HMI project. The current control version is 1.2.1. The tested combinations for the 1.2.x line are recorded in the [EventVision version matrix](https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/packaging/packages/EventVision.HMI/docs/README.md).
 
 !!! danger
     Previous versions of the legacy 4024 Tc_EventVideoPlayback project must be uninstalled before you use the new 4026 build. The 4026 packages replace the legacy project rather than upgrade it in place.
@@ -140,13 +140,15 @@ After installation is complete, continue with the [Getting Started](./getting-st
 
 The service ships self contained, so there is no separate .NET runtime to install and a missing runtime is not a possible cause.
 
+* The service appears in the Windows Services list as **EventVideoPlayback Service**. From PowerShell, check it with `Get-Service EventVideoPlaybackService` and start it with `Start-Service EventVideoPlaybackService`
 * Check Windows Event Viewer for error messages from the service
 * Make sure no other application is using ADS port 26129. The service hosts its own ADS server on that port and cannot start while another program has it registered
 
 ### Videos are not created
 
 * Confirm TwinCAT Vision is saving images to the configured path
-* Check the service configuration file for correct paths
+* The image and video paths are not in the service configuration file; they are set on the PLC function block. Check `VideoOutputDirectory` on your `FB_ImageToVideo` instance and confirm the service can reach that path
+* If `VideoRootDirectory` is set in the service configuration, confirm the PLC paths fall inside it
 * Verify sufficient disk space is available
 
 ### Video player stays black in the HMI
@@ -156,7 +158,7 @@ The service ships self contained, so there is no separate .NET runtime to instal
 ### PLC function block errors
 
 * Make sure the library reference is added to the PLC project
-* Verify the service is running
+* Verify the service is running (`Get-Service EventVideoPlaybackService`)
 * Check the ADS communication settings
 
 ## Support

@@ -14,10 +14,10 @@ The EventVision package declares three minimum dependencies, so the NuGet packag
 
 The Controls floor is the important one. Since the 14.6 line of the Controls package the event grid's details popup ships as an ES module, the native JavaScript module format, inside the Controls package. EventVision imports that module at runtime and extends it to build the video popup, so a Controls package older than the 14.6 line has nothing to import. The EventLogger extension supplies the events the grid displays.
 
-The exact package combinations each release was tested against are listed in the [package README](https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/packaging/packages/EventVision.HMI/docs/README.md).
+The current control version is 1.2.1. The exact package combinations each release was tested against are listed in the [package README](https://github.com/Beckhoff-USA-Community/EventVideoPlayback/blob/main/packaging/packages/EventVision.HMI/docs/README.md); the tested matrix covers the 1.2.x line.
 
 !!! note
-    Since EventVision 1.2.0 the details popup is rebuilt for the current TE2000 packages. The 1.1.x releases that shipped with the 2.0.x train predate the ES module popups and do not work on the 14.6 Controls line or newer.
+    Since the EventVision 1.2 line the details popup is rebuilt for the current TE2000 packages. Install 1.2.1, since the 1.2.0 package was broken and has been removed from the feed. The 1.1.x releases that shipped with the 2.0.x train predate the ES module popups and do not work on the 14.6 Controls line or newer.
 
 ## Attributes
 
@@ -60,7 +60,7 @@ Details worth knowing:
 * Selecting a different alarm while the popup is open restarts the check for the new alarm and cancels the old poll, so a late result cannot enable the button for the wrong alarm.
 * The video plays muted. Browsers block unmuted autoplay, and the service encodes no audio track anyway.
 * Closing the playback dialog stops the video rather than hiding it, and closing the details popup cancels any running poll.
-* The video file name is the alarm's raise time expressed in the HMI server's local time. With Time Zone Info bound, the control converts the timestamp using the base bias plus the daylight or standard bias and the Windows transition rules, so daylight saving time is handled. Without it, the control falls back to the browser's local time, which only lines up when the browser and the server share a time zone. This is why Time Zone Info matters for remote viewing: a browser one time zone away computes a file name that does not exist, and the button ends at VIDEO UNAVAILABLE.
+* The video file name is the alarm's raise time expressed in the local time of the PLC runtime target, the TwinCAT machine that runs `FB_ImageToVideo`. With Time Zone Info bound, the control converts the timestamp using the base bias plus the daylight or standard bias and the Windows transition rules, so daylight saving time is handled. Without it, the control falls back to the browser's local time, which only lines up when the browser and the PLC target share a time zone. This is why Time Zone Info matters for remote viewing: a browser one time zone away computes a file name that does not exist, and the button ends at VIDEO UNAVAILABLE.
 * The button texts (PLAY VIDEO, WAITING FOR VIDEO, VIDEO UNAVAILABLE) and the dialog title are localized in English and German. The button texts follow a locale switch at runtime; the dialog title is applied each time the dialog opens.
 * If the video popup cannot be built, for example because the Controls popup module fails to load, the control logs a warning and falls back to the stock details popup without the video button. The grid itself keeps working.
 * Once per page load the control logs its own version together with the loaded Framework and Controls package versions, which is useful when reporting an issue after a TwinCAT HMI update.

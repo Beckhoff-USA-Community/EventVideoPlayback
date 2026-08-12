@@ -2,6 +2,22 @@
 
 All components ship together as a release train. The train number is the version of the XAE and XAR workload packages. The PLC library, the HMI control, and the service each carry their own version and are listed when they change.
 
+## 2.1.2 (2026-08-12)
+
+The train ships PLC library 1.2.0, HMI control EventVision 1.2.1, and service 2.1.1. The PLC library and the HMI control are unchanged from 2.1.1; only the service and the documentation move.
+
+### Fixed
+
+* Camera names with non ASCII characters (for example an umlaut) now produce videos. The service decoded the request path as UTF-8 while the PLC sends it in the machine's Windows codepage, so the folder name did not match and the encode found nothing. Images piled up with no video and no alarm. ASCII names are unaffected.
+* Video maintenance no longer deletes the video it just created. When that video was the only file over the folder size cap, it was deleted seconds after encoding, after its source images were already gone, destroying the footage. The just created video is now always kept.
+* The folder size cap now counts fractional megabytes, so a folder slightly over the cap is cleaned instead of being left until it grows past the next whole megabyte.
+* A service configuration file that exists but cannot be read (locked or permission blocked) now falls back to defaults instead of stopping the service, which the service manager would restart into the same unreadable file.
+* Upgrading the service keeps the existing configuration file. Earlier upgrades overwrote it with the shipped defaults, silently reverting customer settings.
+
+### Documentation
+
+* Corrected the Windows service name, the video file timestamp source, and the service troubleshooting steps; added guidance that the folder size cap must exceed a single video.
+
 ## 2.1.1 (2026-08-10)
 
 The train ships PLC library 1.2.0, HMI control EventVision 1.2.1, and service 2.1.0.

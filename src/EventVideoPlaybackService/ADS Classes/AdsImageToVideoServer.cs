@@ -48,6 +48,31 @@ namespace EventVideoPlaybackService
             });
         private readonly Task _encodeConsumer;
 
+        // The PLC builds the request JSON from PLC STRING bytes, which carry the machine's
+        // Windows ANSI codepage, not UTF-8. The PLC's file API writes folder names with that
+        // same codepage, and the service runs on the same machine, so decoding with the
+        // machine codepage makes the service see exactly the folder names the PLC created.
+        // ASCII payloads decode identically under both encodings, so existing installs are
+        // unaffected. Proven in the field 2026-08-10: an umlaut camera name decoded as UTF-8
+        // produced a replacement character and the encode never found the image folder.
+        internal static readonly Encoding PayloadEncoding = CreatePayloadEncoding();
+
+        private static Encoding CreatePayloadEncoding()
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            try
+            {
+                return Encoding.GetEncoding(GetACP());
+            }
+            catch (ArgumentException)
+            {
+                return Encoding.UTF8;
+            }
+        }
+
+        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+        private static extern int GetACP();
+
         /// <summary>
         /// Initializes a new instance of the AdsImageToVideoServer with the specified configuration parameters.
         /// </summary>
@@ -139,10 +164,7 @@ namespace EventVideoPlaybackService
 
             // Parse into locals so concurrent requests cannot overwrite each other's state or let a
             // malformed follow-up validate against a prior request's values.
-            // NOTE: the PLC builds this JSON from codepage STRING bytes; ASCII paths decode identically
-            // as UTF-8. Non-ASCII camera names/paths are verified against the live target before any
-            // codepage change (deferred, see PLAN Phase 2).
-            string jsonString = Encoding.UTF8.GetString(writeData.Span);
+            string jsonString = PayloadEncoding.GetString(writeData.Span);
             _serverLogger.Logger.LogDebug("Video request payload: {Payload}", jsonString);
 
             string? imagePathSource = null;
@@ -392,12 +414,19 @@ namespace EventVideoPlaybackService
         /// the next video creation will trigger another maintenance cycle. This gradual approach
         /// prevents accidentally deleting multiple videos at once.
         /// </remarks>
-        private async Task PerformVideoMaintenanceAsync(string videoFilename)
+        internal async Task PerformVideoMaintenanceAsync(string videoFilename)
         {
             try
             {
                 string? VideoFilePath = Path.GetDirectoryName(videoFilename);
                 if (VideoFilePath == null) return;
+
+                // The video this maintenance run was triggered for is never a deletion
+                // candidate. With an aggressive retention or a size cap smaller than one
+                // video it can be the only candidate left, and its source images were
+                // already deleted on the success path, so deleting it would silently
+                // destroy the footage the event was recorded for.
+                string newVideoFullPath = Path.GetFullPath(videoFilename);
 
                 DateTime currentTime = DateTime.Now;
                 string[] VideoFiles = Directory.GetFiles(VideoFilePath, "*.mp4");
@@ -415,9 +444,10 @@ namespace EventVideoPlaybackService
                         FileInfo fileInfo = new FileInfo(videoFile);
                         DateTime creationTime = fileInfo.CreationTime;
                         TimeSpan difference = currentTime - creationTime;
+                        bool isNewVideo = string.Equals(Path.GetFullPath(videoFile), newVideoFullPath, StringComparison.OrdinalIgnoreCase);
 
                         // Delete videos that exceed the retention period
-                        if (difference.TotalDays >= KeepVideoTime)
+                        if (difference.TotalDays >= KeepVideoTime && !isNewVideo)
                         {
                             File.Delete(videoFile);
                         }
@@ -427,8 +457,9 @@ namespace EventVideoPlaybackService
                             // We only count non-expired videos because expired ones will be deleted above
                             size += (double)fileInfo.Length / (1024.0 * 1024.0);    // Convert bytes to MB
 
-                            // Track the oldest non-expired video for potential size-based deletion
-                            if (fileInfo.CreationTime < oldestFileTime)
+                            // Track the oldest non-expired video for potential size-based deletion,
+                            // never nominating the just-created video
+                            if (!isNewVideo && fileInfo.CreationTime < oldestFileTime)
                             {
                                 oldestFileTime = fileInfo.CreationTime;
                                 oldestFileName = fileInfo.FullName;
@@ -446,7 +477,9 @@ namespace EventVideoPlaybackService
                 // Second pass: Size-based cleanup (if necessary)
                 // After removing expired videos, check if total size still exceeds limit
                 // If yes, delete the oldest remaining video to bring size down
-                if ((ulong)size > maxFolderSize && oldestFileName != "")
+                // Compare without casting: the cast to ulong truncated fractional megabytes,
+                // so a folder up to a megabyte over the cap slipped through.
+                if (size > maxFolderSize && oldestFileName != "")
                 {
                     try
                     {

@@ -242,6 +242,54 @@ jobs:
             Write-Host "::warning::$f The change cannot publish until the version is bumped."
           }
 
+      - name: Check for component content changes without a version bump
+        shell: pwsh
+        run: |
+          # The push uses skip-duplicate, so a package rebuilt at an unchanged version
+          # is silently skipped and the feed keeps the old bits. The nuspec text guard
+          # above only sees the nuspec file. This guard watches each component's real
+          # SHIPPED INPUTS: if any changed since the previous tag but the component's
+          # version did not, a release would publish new content under an old version
+          # number that skip-duplicate refuses. A branch warns, a release tag fails.
+          $tags = git tag --list 'v*' 'V*' --sort=-version:refname | Where-Object { "refs/tags/$_" -ne '${{ github.ref }}' }
+          if (-not $tags) { Write-Host 'No previous release tag, skipping.'; exit 0 }
+          $previous = @($tags)[0]
+
+          $changed = @(git diff --name-only "$previous..HEAD")
+          if (-not $changed) { Write-Host "No file changes since $previous."; exit 0 }
+
+          # Each component: the nuspec whose version gates it, and the repo paths whose
+          # content ends up inside that component's package.
+          $components = @(
+            @{ Name = 'Service'; Nuspec = 'packaging/packages/EventVideoPlayback.Service/EventVideoPlayback.Service.nuspec';
+               Paths = @('src/EventVideoPlaybackService/', 'src/CodecLibs/', 'packaging/packages/EventVideoPlayback.Service/') },
+            @{ Name = 'PLC library'; Nuspec = 'packaging/packages/EventVideoPlayback.Library/EventVideoPlayback.Library.nuspec';
+               Paths = @('packaging/packages/EventVideoPlayback.Library/') },
+            @{ Name = 'HMI control'; Nuspec = 'packaging/packages/EventVision.HMI/EventVision.HMI.nuspec';
+               Paths = @('packaging/packages/EventVision.HMI/') },
+            @{ Name = 'Documentation'; Nuspec = 'packaging/packages/EventVideoPlayback.Documentation/EventVideoPlayback.Documentation.nuspec';
+               Paths = @('docs/', 'README.md', 'packaging/packages/EventVideoPlayback.Documentation/') }
+          )
+
+          $failures = @()
+          foreach ($c in $components) {
+            $touched = @($changed | Where-Object { $file = $_; ($c.Paths | Where-Object { $file -like "$_*" }) })
+            if (-not $touched) { continue }
+            [xml]$current = Get-Content $c.Nuspec
+            $currentVersion = $current.package.metadata.version
+            $oldNuspec = git show "${previous}:$($c.Nuspec)" 2>$null
+            if (-not $oldNuspec) { continue }
+            [xml]$oldXml = $oldNuspec
+            $oldVersion = $oldXml.package.metadata.version
+            if ($currentVersion -eq $oldVersion) {
+              $failures += "$($c.Name) content changed since $previous (e.g. $($touched[0])) but its version is still $currentVersion. Bump the $($c.Name) package version, or the feed keeps the old bits under skip-duplicate."
+            }
+          }
+          foreach ($f in $failures) {
+            if ('${{ github.ref_type }}' -eq 'tag') { throw $f }
+            Write-Host "::warning::$f"
+          }
+
       - name: Pack TwinCAT packages
         shell: pwsh
         run: |

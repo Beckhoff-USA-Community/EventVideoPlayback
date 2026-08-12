@@ -95,6 +95,9 @@ END_IF
 
 A unique identifier for each `FB_ImageToVideo` instance, for example `Camera1`, `Infeed_Camera`, or `Arm_Camera`. The name selects the output subfolder and tags the alarm, so it must be unique across all instances.
 
+!!! note
+    Use standard English keyboard characters for the camera name: letters, digits, and underscore. The name becomes a folder name on disk and travels through the alarm to the HMI, and accented or other non ASCII characters do not survive that trip intact, so the HMI cannot find the video. This is a naming rule, not a limit on how many cameras you can run.
+
 ### FramesPerSecond
 
 The rate at which images are added to the ring buffer, as an integer. The setter clamps values below 1 to 1 because the video length calculation divides by this value.
@@ -167,12 +170,26 @@ After adding the control, set its properties:
 
 The full attribute reference and the virtual directory and publish configuration setup are in [HMI Control](./hmi-control.md).
 
+### Allow video in the server security policy
+
+!!! danger
+    This step is required on every HMI server that plays the videos, and it is easy to miss. Without it the player opens as a black box and never plays, even though the video file is on disk and every other setting is correct.
+
+The TwinCAT HMI server sends a Content Security Policy header that tells the browser which kinds of content a page may load. The default policy has no rule for video, so the browser blocks the player. Add a video rule once per server:
+
+1. Open the server configuration page, log in as an administrator, and go to **TcHmiSrv**, the **General** tab.
+2. Expand **Regular expressions for files** and open the entry whose expression is `.*\.(htm|html|shtml)$`.
+3. In its HTTP headers field, find the line that begins `Content-Security-Policy:` and append `; media-src 'self'` to the end of that line. Leave the Content-Type line unchanged.
+4. Accept the change and reload the HMI with a forced refresh.
+
+The full explanation is in [HMI Control](./hmi-control.md#content-security-policy). If a video will not play and the browser console shows a message about a refused media source, this is the cause.
+
 ## Next steps
 
 With all three components wired up you can:
 
 * Trigger a test event from your PLC code and confirm a video file appears under the output directory.
-* Publish the HMI project and play the video from the alarm's details popup in a browser.
+* Publish the HMI project and play the video from the alarm's details popup in a browser. Confirm the server security policy step above is done, or the player stays black.
 * Tune the service settings, see [Service Configuration](./service-configuration.md).
 * Add more cameras by declaring more `FB_ImageToVideo` instances, one per camera.
 

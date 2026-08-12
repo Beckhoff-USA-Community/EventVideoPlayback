@@ -8,7 +8,7 @@ The train ships PLC library 1.2.0, HMI control EventVision 1.2.1, and service 2.
 
 ### Fixed
 
-* Camera names with non ASCII characters (for example an umlaut) now produce videos. The service decoded the request path as UTF-8 while the PLC sends it in the machine's Windows codepage, so the folder name did not match and the encode found nothing. Images piled up with no video and no alarm. ASCII names are unaffected.
+* The service now decodes request paths with the machine's Windows codepage instead of UTF-8, matching how the PLC and its file API write folder names. This makes the image folder lookup reliable. Camera names should use standard English keyboard characters (letters, digits, underscore); other characters do not survive the alarm path to the HMI, so the HMI cannot play their videos. See the camera name note in [Getting Started](./getting-started.md#cameraname).
 * Video maintenance no longer deletes the video it just created. When that video was the only file over the folder size cap, it was deleted seconds after encoding, after its source images were already gone, destroying the footage. The just created video is now always kept.
 * The folder size cap now counts fractional megabytes, so a folder slightly over the cap is cleaned instead of being left until it grows past the next whole megabyte.
 * A service configuration file that exists but cannot be read (locked or permission blocked) now falls back to defaults instead of stopping the service, which the service manager would restart into the same unreadable file.

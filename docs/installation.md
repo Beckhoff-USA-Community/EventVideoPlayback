@@ -63,23 +63,41 @@ The packages are published to the GitHub package feed of the Beckhoff USA Commun
 !!! warning
     The old community feed at packages.beckhoff-usa-community.com has been retired. If you added it previously, remove it with `tcpkg source remove -n "Beckhoff USA Community Stable"` and add the feed below instead.
 
-### Step 1: Create a GitHub personal access token
-
-GitHub requires a login for its package feeds, even for public packages, so you need a GitHub account and a personal access token. In your GitHub account settings, under Developer settings, create a token of the classic type with the read:packages scope.
-
 !!! tip
-    [Adding the package feed](https://github.com/Beckhoff-USA-Community/BAUS_Community_General_Assets/blob/main/feed-setup.md) walks through creating the token click by click, and covers the common failures. It applies to every Beckhoff USA Community package, not just this project.
+    This page [Adding the package feed](https://github.com/Beckhoff-USA-Community/BAUS_Community_General_Assets/blob/main/feed-setup.md) walks through creating the token click by click, and covers the common failures. It applies to every Beckhoff USA Community package, not just this project.
+
+GitHub requires a login for its package feeds, even for public packages, so you need a GitHub account and a personal access token.
+
+### Step 1: Create a GitHub Personal access token (classic)
+
+1. Sign in to GitHub using a web browser and then select this link [Personal access tokens (classic)](https://github.com/settings/tokens).
+
+   If you prefer to navigate by hand: click your profile photo in the top right, then **Settings**, then **Developer settings** at the bottom of the left sidebar, then **Personal access tokens**, then **Tokens (classic)**.
+
+2. Click **Generate new token**, then **Generate new token (classic)**.
+
+   GitHub also offers fine grained tokens. Those do not work here. You need the classic type.
+
+3. Fill in the token details:
+
+   * **Note**: something you will recognize later, such as `TwinCAT Package Manager`.
+   * **Expiration**: your choice. I selected **No expiration**. When the token expires the feed stops working until you replace it, so pick a period you can live with and note the date.
+   * **Scopes**: tick **read:packages**. That is the only scope required. Leave everything else unticked.
+
+4. Click **Generate token**.
+
+5. Copy the token now and keep it somewhere safe. GitHub shows it once and never again. A classic token starts with `ghp_`. This token will be required in Step 2.
 
 ### Step 2: Add the feed
 
-Run both commands from an administrator PowerShell, in this order:
+Run these commands from an administrator PowerShell. Copy the commands from below, paste them into PowerShell, and **change <your GitHub user name> to your actual GitHub user name before executing**.
 
 ```powershell
 tcpkg config unset -n VerifySignatures
 tcpkg source add -n "Beckhoff-USA-Community" -s https://nuget.pkg.github.com/Beckhoff-USA-Community/index.json -u <your GitHub user name> --take 100
 ```
 
-Enter the token as the password when prompted, then accept the community disclaimer.
+Enter the GitHub Personal access token created above as the password when prompted, then accept the community disclaimer.
 
 Both steps are required, and the order matters:
 

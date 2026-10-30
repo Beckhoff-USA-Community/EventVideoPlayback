@@ -90,7 +90,7 @@ GitHub requires a login for its package feeds, even for public packages, so you 
 
 ### Step 2: Add the feed
 
-Run these commands from an administrator PowerShell. Copy the commands from below, paste them into PowerShell, and **change ""<your GitHub user name>"" to your actual GitHub user name before executing**.
+Run these commands from an administrator PowerShell. Copy the commands from below, paste them into PowerShell, and change `<your GitHub user name>` to your actual GitHub user name before executing.
 
 ```powershell
 tcpkg config unset -n VerifySignatures
